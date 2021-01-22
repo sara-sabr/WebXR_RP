@@ -1,3 +1,8 @@
+//import * as BABYLON from 'babylonjs';
+
+// Get the canvas element
+const canvas = document.getElementById("renderCanvas"); 
+
 //TODO: Items that need to be rendered start in this function
 var createScene = async function() {
         
@@ -23,13 +28,33 @@ var createScene = async function() {
         uiOptions: {
             sessionMode: "immersive-ar",
         },
-        optionalFeatures: ["hit-test", "anchors"],
+        //optionalFeatures: ["hit-test", "anchors"],
+        optionalFeatures: true
     });
 
     const fm = xr.baseExperience.featuresManager;
 
     const xrTest = fm.enableFeature(BABYLON.WebXRHitTest, "latest");
 
+/*
+    // HIT TEST setup
+    // featuresManager from the base webxr experience helper
+    const hitTest = featuresManager.enableFeature(BABYLON.WebXRHitTest, "latest");
+
+
+    // ANCHOR setup
+    // featuresManager from the base webxr experience helper
+    const anchorSystem = featuresManager.enableFeature(BABYLON.WebXRAnchorSystem, 'latest');    
+    const model = BABYLON.MeshBuilder.CreateBox("box", options, scene); //scene is optional and defaults to the current scene
+    const box = model.meshes[0];
+    box.setEnabled(true);
+
+
+    // PLANE DETECTION setup
+    // featuresManager from the base webxr experience helper
+    const planeDetector = featuresManager.enableFeature(BABYLON.WebXRPlaneDetector, "latest");
+*/
+    
     const marker = BABYLON.MeshBuilder.CreateTorus('marker', { diameter: 0.15, thickness: 0.05 });
     marker.isVisible = false;
     marker.rotationQuaternion = new BABYLON.Quaternion();
@@ -43,18 +68,32 @@ var createScene = async function() {
             marker.isVisible = false;
         }
     });
-
+/*
+    if (anchors){
+        console.log("anchorsAttached");
+        anchorSystem.onAnchorAddedObservable.add((anchor) => {
+            // ... do what you want with the anchor after it was added
+            console.log("attaching", anchor);
+            box.isVisible = true;
+            box.setEnabled(true);
+            anchor.attachedNode = box;
+        })
+        anchorSystem.onAnchorRemovedObservable.add((anchor) => {
+            // ... do what you want with the anchor after it was removed
+        })
+    }
+*/
     return scene;
 };
-        const canvas = document.getElementById("renderCanvas"); // Get the canvas element
-        const engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
-        // Add your code here matching the playground format
-        const scene = createScene(); //Call the createScene function
-        // Register a render loop to repeatedly render the scene
-        engine.runRenderLoop(function () {
-                scene.render();
-        });
-        // Watch for browser/canvas resize events
-        window.addEventListener("resize", function () {
-                engine.resize();
-        });
+
+const engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
+// Add your code here matching the playground format
+const scene = createScene(); //Call the createScene function
+// Register a render loop to repeatedly render the scene
+engine.runRenderLoop(function () {
+        scene.render();
+});
+// Watch for browser/canvas resize events
+window.addEventListener("resize", function () {
+        engine.resize();
+});
