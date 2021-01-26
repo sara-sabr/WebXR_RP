@@ -4,12 +4,16 @@ const canvas = document.getElementById('renderCanvas');
 let engine = null;
 let scene = null;
 let sceneToRender = null;
-const createDefaultEngine = function() {
-  return new BABYLON.Engine(canvas, true, {preserveDrawingBuffer: true, stencil: true, disableWebGL2Support: false});
+const createDefaultEngine = function () {
+  return new BABYLON.Engine(canvas, true, {
+    preserveDrawingBuffer: true,
+    stencil: true,
+    disableWebGL2Support: false
+  });
 };
 
 // TODO: Items that need to be rendered start in this function
-const createScene = async function() {
+const createScene = async function () {
   // This creates a basic Babylon Scene object (non-mesh)
   const scene = new BABYLON.Scene(engine);
 
@@ -39,17 +43,26 @@ const createScene = async function() {
 
   const xrTest = fm.enableFeature(BABYLON.WebXRHitTest, 'latest');
 
-//  BABYLON.SceneLoader.Append("assets/models/", "SC_Kiosk.gltf", scene, function (scene) {
-//       scene.createDefaultCameraOrLight(true, true, true);
-//       scene.activeCamera.alpha += Math.PI;
-//   } )
+  //  BABYLON.SceneLoader.Append("assets/models/", "SC_Kiosk.gltf", scene, function (scene) {
+  //       scene.createDefaultCameraOrLight(true, true, true);
+  //       scene.activeCamera.alpha += Math.PI;
+  //   } )
 
   // const marker = BABYLON.MeshBuilder.CreateTorus('marker', {diameter: 0.15, thickness: 0.05});
 
-  const marker = BABYLON.SceneLoader.Append("assets/models/", "SC_Kiosk.gltf", scene, function (scene) {
-    scene.createDefaultCameraOrLight(true, true, true);
-    scene.activeCamera.alpha += Math.PI;
-} )
+  //   const marker = BABYLON.SceneLoader.Append("assets/models/", "SC_Kiosk.gltf", scene, function (scene) {
+  //     scene.createDefaultCameraOrLight(true, true, true);
+
+  // } );
+
+  const kioskScale = 0.5;
+  
+  const marker = BABYLON.SceneLoader.ImportMeshAsync(null, "assets/models/", "SC_Kiosk.gltf").then((result) => {
+    const kiosk = result.meshes[0]
+    kiosk.scaling.x = kioskScale;
+    kiosk.scaling.y = kioskScale;
+    kiosk.scaling.z = kioskScale;
+  });
 
   marker.isVisible = false;
   marker.rotationQuaternion = new BABYLON.Quaternion();
@@ -58,7 +71,8 @@ const createScene = async function() {
     if (results.length) {
       marker.isVisible = true;
       hitTest = results[0];
-      hitTest.transformationMatrix.decompose(marker.scaling, marker.rotationQuaternion, marker.position);
+
+      // hitTest.transformationMatrix.decompose(marker.scaling, marker.rotationQuaternion, marker.position);
     } else {
       marker.isVisible = false;
     }
@@ -67,8 +81,8 @@ const createScene = async function() {
   return scene;
 };
 
-initFunction = async function() {
-  const asyncEngineCreation = async function() {
+initFunction = async function () {
+  const asyncEngineCreation = async function () {
     try {
       return createDefaultEngine();
     } catch (e) {
@@ -88,7 +102,7 @@ initFunction().then(() => {
     sceneToRender = returnedScene;
   });
 
-  engine.runRenderLoop(function() {
+  engine.runRenderLoop(function () {
     if (sceneToRender && sceneToRender.activeCamera) {
       sceneToRender.render();
     }
@@ -96,6 +110,6 @@ initFunction().then(() => {
 });
 
 // Resize
-window.addEventListener('resize', function() {
+window.addEventListener('resize', function () {
   engine.resize();
 });
