@@ -8,10 +8,13 @@
   },
   "devDependencies": {
     "@babylonjs/core": "^4.2.0",
-    "@babylonjs/inspector": "^4.2.0"
+    "@babylonjs/inspector": "^4.2.0",
+    "eslint": "^7.18.0",
+    "eslint-config-google": "^0.14.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --fix ."
   },
   "repository": {
     "type": "git",
@@ -22,5 +25,6 @@
   "bugs": {
     "url": "https://github.com/sara-sabr/WebXR_RP/issues"
   },
-  "homepage": "https://github.com/sara-sabr/WebXR_RP#readme"
+  "homepage": "https://github.com/sara-sabr/WebXR_RP#readme",
+  "root": true
 }
