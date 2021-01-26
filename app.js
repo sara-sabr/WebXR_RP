@@ -39,7 +39,18 @@ const createScene = async function() {
 
   const xrTest = fm.enableFeature(BABYLON.WebXRHitTest, 'latest');
 
-  const marker = BABYLON.MeshBuilder.CreateTorus('marker', {diameter: 0.15, thickness: 0.05});
+//  BABYLON.SceneLoader.Append("assets/models/", "SC_Kiosk.gltf", scene, function (scene) {
+//       scene.createDefaultCameraOrLight(true, true, true);
+//       scene.activeCamera.alpha += Math.PI;
+//   } )
+
+  // const marker = BABYLON.MeshBuilder.CreateTorus('marker', {diameter: 0.15, thickness: 0.05});
+
+  const marker = BABYLON.SceneLoader.Append("assets/models/", "SC_Kiosk.gltf", scene, function (scene) {
+    scene.createDefaultCameraOrLight(true, true, true);
+    scene.activeCamera.alpha += Math.PI;
+} )
+
   marker.isVisible = false;
   marker.rotationQuaternion = new BABYLON.Quaternion();
 
