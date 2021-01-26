@@ -55,7 +55,7 @@ const createScene = async function () {
 
   // } );
 
-  const kioskScale = 0.075;
+  const kioskScale = 0.15;
   
   const marker = BABYLON.SceneLoader.ImportMeshAsync(null, "assets/models/", "SC_Kiosk.gltf").then((result) => {
     const kiosk = result.meshes[0]
