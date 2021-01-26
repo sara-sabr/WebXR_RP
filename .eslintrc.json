@@ -10,8 +10,6 @@
         "ecmaVersion": 12
     },
     "rules": {
-        "semi": ["error", "always"],
-        "new-cap": "off",
-        "max-len": "off"
+        "semi": ["error", "always"]
     }
 }
