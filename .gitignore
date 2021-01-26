@@ -1,2 +1,7 @@
 /node_modules
 /.vscode
+my.key
+my.crt
+key.pem
+certificate.pem
+certificate.p12
