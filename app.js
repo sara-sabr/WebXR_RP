@@ -1,4 +1,12 @@
 // Get the canvas element
+
+// TODO: Fix scalling
+// TODO: Position kiosk
+// TODO: Teleport/Place Kiosk 
+// TODO: Modular code 
+
+
+
 const canvas = document.getElementById('renderCanvas');
 
 let engine = null;
@@ -55,13 +63,15 @@ const createScene = async function () {
 
   // } );
 
-  const kioskScale = 0.15;
-  
+  const kioskScale = 0.3;
+  // TODO: Clean scaling 
   const marker = BABYLON.SceneLoader.ImportMeshAsync(null, "assets/models/", "SC_Kiosk.gltf").then((result) => {
     const kiosk = result.meshes[0]
-    kiosk.scaling.x = kioskScale;
+    kiosk.scaling.x = -kioskScale;
     kiosk.scaling.y = kioskScale;
     kiosk.scaling.z = kioskScale;
+    kiosk.position.z = 3
+
   });
 
   marker.isVisible = false;
