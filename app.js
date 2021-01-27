@@ -67,22 +67,27 @@ const createScene = async function () {
   // TODO: Clean scaling 
   const marker = BABYLON.SceneLoader.ImportMeshAsync(null, "assets/models/", "SC_Kiosk.gltf").then((result) => {
     const kiosk = result.meshes[0]
-    kiosk.scaling.x = -kioskScale;
+    kiosk.scaling.x = kioskScale;
     kiosk.scaling.y = kioskScale;
-    kiosk.scaling.z = kioskScale;
-    kiosk.position.z = 3
-
+    kiosk.scaling.z = -kioskScale;
+    kiosk.position.z = 3;
+    kiosk.id = "myKiosk"
+    console.log("Z is :" + kiosk.position.z);
+    // kiosk.setEnabled(false);
+    kiosk.rotationQuaternion = new BABYLON.Quaternion();
   });
-
-  marker.isVisible = false;
-  marker.rotationQuaternion = new BABYLON.Quaternion();
 
   xrTest.onHitTestResultObservable.add((results) => {
     if (results.length) {
-      marker.isVisible = true;
+      const kiosk = scene.getMeshByID("myKiosk");
+      kiosk.setEnabled(true);
       hitTest = results[0];
-
-      // hitTest.transformationMatrix.decompose(marker.scaling, marker.rotationQuaternion, marker.position);
+      // console.log(marker.position.x + " " + marker.position.y + " " + marker.position.z)
+      // console.log("Before Transformation :" + kiosk.position.z + " "+ kiosk.position.x + " " +  kiosk.position.y);
+      // hitTest.transformationMatrix.decompose(kiosk.scaling, kiosk.position, kiosk.rotationQuaternion);
+      hitTest.transformationMatrix.decompose({position: kiosk.position, rotation: kiosk.rotationQuaternion});
+    
+      // console.log("After Transformation :" + kiosk.position.z + " "+ kiosk.position.x + " " +  kiosk.position.y);
     } else {
       marker.isVisible = false;
     }
