@@ -84,8 +84,11 @@ const createScene = async function () {
       hitTest = results[0];
       // console.log(marker.position.x + " " + marker.position.y + " " + marker.position.z)
       // console.log("Before Transformation :" + kiosk.position.z + " "+ kiosk.position.x + " " +  kiosk.position.y);
+      kiosk.position.x = hitTest.position.x
+      kiosk.position.y = hitTest.position.y
+      kiosk.position.z = hitTest.position.z
       // hitTest.transformationMatrix.decompose(kiosk.scaling, kiosk.position, kiosk.rotationQuaternion);
-      hitTest.transformationMatrix.decompose({position: kiosk.position, rotation: kiosk.rotationQuaternion});
+      // hitTest.transformationMatrix.decompose({position: kiosk.position, rotation: kiosk.rotationQuaternion});
     
       // console.log("After Transformation :" + kiosk.position.z + " "+ kiosk.position.x + " " +  kiosk.position.y);
     } else {
