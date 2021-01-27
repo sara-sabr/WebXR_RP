@@ -65,15 +65,18 @@ const createScene = async function () {
 
   const kioskScale = 0.3;
   // TODO: Clean scaling 
-  const marker = BABYLON.SceneLoader.ImportMeshAsync(null, "assets/models/", "SC_Kiosk.gltf").then((result) => {
+  var marker = null;
+  
+  BABYLON.SceneLoader.ImportMeshAsync(null, "assets/models/", "SC_Kiosk.gltf").then((result) => {
     const kiosk = result.meshes[0]
     kiosk.scaling.x = kioskScale;
     kiosk.scaling.y = kioskScale;
     kiosk.scaling.z = -kioskScale;
-    kiosk.position.z = 3;
+    // kiosk.position.z = 3;
     kiosk.id = "myKiosk"
     console.log("Z is :" + kiosk.position.z);
     // kiosk.setEnabled(false);
+    marker = kiosk
     kiosk.rotationQuaternion = new BABYLON.Quaternion();
   });
 
@@ -89,10 +92,10 @@ const createScene = async function () {
       kiosk.position.z = hitTest.position.z
       // hitTest.transformationMatrix.decompose(kiosk.scaling, kiosk.position, kiosk.rotationQuaternion);
       // hitTest.transformationMatrix.decompose({position: kiosk.position, rotation: kiosk.rotationQuaternion});
-    
+      hitTest.transformationMatrix.decompose({rotation: kiosk.rotationQuaternion, scaling: kiosk.scaling});
       // console.log("After Transformation :" + kiosk.position.z + " "+ kiosk.position.x + " " +  kiosk.position.y);
     } else {
-      marker.isVisible = false;
+      marker.setEnabled(false);
     }
   });
 
