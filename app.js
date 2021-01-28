@@ -51,51 +51,57 @@ const createScene = async function () {
 
   const xrTest = fm.enableFeature(BABYLON.WebXRHitTest, 'latest');
 
-  //  BABYLON.SceneLoader.Append("assets/models/", "SC_Kiosk.gltf", scene, function (scene) {
-  //       scene.createDefaultCameraOrLight(true, true, true);
-  //       scene.activeCamera.alpha += Math.PI;
-  //   } )
+  // Create donut - original hit test
+  const marker = BABYLON.MeshBuilder.CreateTorus('marker', { diameter: 0.15, thickness: 0.05 });
+  marker.isVisible = false;
+  marker.rotationQuaternion = new BABYLON.Quaternion();
 
-  // const marker = BABYLON.MeshBuilder.CreateTorus('marker', {diameter: 0.15, thickness: 0.05});
-
-  //   const marker = BABYLON.SceneLoader.Append("assets/models/", "SC_Kiosk.gltf", scene, function (scene) {
-  //     scene.createDefaultCameraOrLight(true, true, true);
-
-  // } );
-
+  // Create Kiosk model
   const kioskScale = 0.3;
   // TODO: Clean scaling 
-  var marker = null;
-  
+  var model = null;
+
   BABYLON.SceneLoader.ImportMeshAsync(null, "assets/models/", "SC_Kiosk.gltf").then((result) => {
     const kiosk = result.meshes[0]
     kiosk.scaling.x = kioskScale;
     kiosk.scaling.y = kioskScale;
     kiosk.scaling.z = -kioskScale;
-    // kiosk.position.z = 3;
     kiosk.id = "myKiosk"
-    console.log("Z is :" + kiosk.position.z);
-    // kiosk.setEnabled(false);
-    marker = kiosk
+    
+    //console.log("Z is :" + kiosk.position.z);
+    //kiosk.setEnabled(false);
+    model = kiosk
     kiosk.rotationQuaternion = new BABYLON.Quaternion();
   });
 
+  // Place objects in AR if plane detected/generated
   xrTest.onHitTestResultObservable.add((results) => {
     if (results.length) {
+
       const kiosk = scene.getMeshByID("myKiosk");
+
+      marker.isVisible = true;
       kiosk.setEnabled(true);
+
       hitTest = results[0];
-      // console.log(marker.position.x + " " + marker.position.y + " " + marker.position.z)
-      // console.log("Before Transformation :" + kiosk.position.z + " "+ kiosk.position.x + " " +  kiosk.position.y);
+
       kiosk.position.x = hitTest.position.x
-      kiosk.position.y = hitTest.position.y
+      kiosk.position.y = hitTest.position.y + 0.5;
       kiosk.position.z = hitTest.position.z
-      // hitTest.transformationMatrix.decompose(kiosk.scaling, kiosk.position, kiosk.rotationQuaternion);
-      // hitTest.transformationMatrix.decompose({position: kiosk.position, rotation: kiosk.rotationQuaternion});
-      hitTest.transformationMatrix.decompose({rotation: kiosk.rotationQuaternion, scaling: kiosk.scaling});
-      // console.log("After Transformation :" + kiosk.position.z + " "+ kiosk.position.x + " " +  kiosk.position.y);
+
+      // hitTest.transformationMatrix.decompose(marker.scaling, marker.rotationQuaternion, marker.position);
+      // hitTest.transformationMatrix.decompose(undefined, marker.rotationQuaternion, marker.position);
+
+      // kioskModel.isVisible = true;
+      // hitTestKiosk = results[0];
+      // hitTestKiosk.transformationMatrix.decompose(kioskModel.scaling, kioskModel.rotationQuaternion, kioskModel.position);
+
+      hitTest.transformationMatrix.decompose(marker.scaling, marker.rotationQuaternion, marker.position);
+      hitTest.transformationMatrix.decompose({rotation: kiosk.rotationQuaternion, scaling: kiosk.scaling, position: kiosk.position});
+
     } else {
-      marker.setEnabled(false);
+      marker.isVisible = false;
+      model.setEnabled(false);
     }
   });
 
