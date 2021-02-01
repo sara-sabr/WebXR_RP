@@ -1,8 +1,6 @@
 // Get the canvas element
 
 // TODO: Fix scalling
-// TODO: Position kiosk
-// TODO: Teleport/Place Kiosk 
 // TODO: Modular code 
 
 
@@ -51,53 +49,51 @@ const createScene = async function () {
 
   const xrTest = fm.enableFeature(BABYLON.WebXRHitTest, 'latest');
 
-  //  BABYLON.SceneLoader.Append("assets/models/", "SC_Kiosk.gltf", scene, function (scene) {
-  //       scene.createDefaultCameraOrLight(true, true, true);
-  //       scene.activeCamera.alpha += Math.PI;
-  //   } )
+  // Create donut - original hit test
+  const marker = BABYLON.MeshBuilder.CreateTorus('marker', { diameter: 0.15, thickness: 0.05 });
+  marker.isVisible = false;
+  marker.rotationQuaternion = new BABYLON.Quaternion();
 
-  // const marker = BABYLON.MeshBuilder.CreateTorus('marker', {diameter: 0.15, thickness: 0.05});
-
-  //   const marker = BABYLON.SceneLoader.Append("assets/models/", "SC_Kiosk.gltf", scene, function (scene) {
-  //     scene.createDefaultCameraOrLight(true, true, true);
-
-  // } );
-
+  // Create Kiosk model
   const kioskScale = 0.3;
-  // TODO: Clean scaling 
-  var marker = null;
   
+  // TODO: Clean scaling 
+  var model = null;
+
   BABYLON.SceneLoader.ImportMeshAsync(null, "assets/models/", "SC_Kiosk.gltf").then((result) => {
     const kiosk = result.meshes[0]
     kiosk.scaling.x = kioskScale;
     kiosk.scaling.y = kioskScale;
     kiosk.scaling.z = -kioskScale;
-    // kiosk.position.z = 3;
     kiosk.id = "myKiosk"
-    console.log("Z is :" + kiosk.position.z);
-    // kiosk.setEnabled(false);
-    marker = kiosk
+    kiosk.setEnabled(false);
+    model = kiosk
     kiosk.rotationQuaternion = new BABYLON.Quaternion();
   });
 
+  // Place objects in AR if plane detected/generated
   xrTest.onHitTestResultObservable.add((results) => {
     if (results.length) {
-      const kiosk = scene.getMeshByID("myKiosk");
-      kiosk.setEnabled(true);
+      // make donut visible in AR hit test and decompose the location matrix
+      marker.isVisible = true;
       hitTest = results[0];
-      // console.log(marker.position.x + " " + marker.position.y + " " + marker.position.z)
-      // console.log("Before Transformation :" + kiosk.position.z + " "+ kiosk.position.x + " " +  kiosk.position.y);
-      kiosk.position.x = hitTest.position.x
-      kiosk.position.y = hitTest.position.y
-      kiosk.position.z = hitTest.position.z
-      // hitTest.transformationMatrix.decompose(kiosk.scaling, kiosk.position, kiosk.rotationQuaternion);
-      // hitTest.transformationMatrix.decompose({position: kiosk.position, rotation: kiosk.rotationQuaternion});
-      hitTest.transformationMatrix.decompose({rotation: kiosk.rotationQuaternion, scaling: kiosk.scaling});
-      // console.log("After Transformation :" + kiosk.position.z + " "+ kiosk.position.x + " " +  kiosk.position.y);
+      hitTest.transformationMatrix.decompose(marker.scaling, marker.rotationQuaternion, marker.position);
     } else {
-      marker.setEnabled(false);
+      marker.isVisible = false;
+      //model.setEnabled(false);
     }
   });
+
+ // Touch screen pointer event to place kiosk in AR at donut location
+ scene.onPointerDown = (evt, pickInfo) => {
+  if (hitTest && xr.baseExperience.state === BABYLON.WebXRState.IN_XR) {
+      // make kiosk visible in AR hit test and decompose the location matrix
+      const kiosk = scene.getMeshByID("myKiosk");
+      kiosk.setEnabled(true);
+      kiosk.position.y = hitTest.position.y + 0.5;
+      hitTest.transformationMatrix.decompose(undefined, kiosk.rotationQuaternion, kiosk.position);      
+  }
+}
 
   return scene;
 };
