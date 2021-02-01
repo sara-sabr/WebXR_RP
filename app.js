@@ -50,15 +50,60 @@ const createScene = async function () {
   const xrTest = fm.enableFeature(BABYLON.WebXRHitTest, 'latest');
 
   // Create donut - original hit test
-  const marker = BABYLON.MeshBuilder.CreateTorus('marker', { diameter: 0.15, thickness: 0.05 });
+  const marker = BABYLON.MeshBuilder.CreateTorus('marker', {
+    diameter: 0.15,
+    thickness: 0.05
+  });
   marker.isVisible = false;
   marker.rotationQuaternion = new BABYLON.Quaternion();
 
   // Create Kiosk model
   const kioskScale = 0.3;
-  
+
   // TODO: Clean scaling 
   var model = null;
+
+  /** TASK: 
+   * 
+   * 1. Keep the modal hidden
+   * 2. once that AR session starts show the modal for 3 seconds
+   * 3. Hide the modal after 3 seconds
+   * 4. Alternatively add button to remove modal
+   *
+   *
+   **/
+
+  //GUI
+
+  var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+
+  var rect1 = new BABYLON.GUI.Rectangle();
+  rect1.width = 0.5;
+  rect1.height = "500px";
+  rect1.color = "white";
+  rect1.thickness = 1;
+  rect1.background = "silver";
+  advancedTexture.addControl(rect1);
+
+  var infoText = new BABYLON.GUI.TextBlock();
+  infoText.text = "Welcome to Service Canada AR \n\n Scan the floor to place your kiosk";
+  infoText.color = "white";
+  infoText.fontSize = 24;
+  rect1.addControl(infoText);
+
+  var btn = BABYLON.GUI.Button.CreateSimpleButton("but1", "OK");
+  btn.width = "150px";
+  btn.height = "40px";
+  btn.color = "white";
+  btn.top = 100;
+  btn.background = "blue";
+  btn.onPointerUpObservable.add(function () {
+     rect1.isVisible = false;
+  });
+  rect1.addControl(btn)
+
+ 
+
 
   BABYLON.SceneLoader.ImportMeshAsync(null, "assets/models/", "SC_Kiosk.gltf").then((result) => {
     const kiosk = result.meshes[0]
@@ -84,16 +129,16 @@ const createScene = async function () {
     }
   });
 
- // Touch screen pointer event to place kiosk in AR at donut location
- scene.onPointerDown = (evt, pickInfo) => {
-  if (hitTest && xr.baseExperience.state === BABYLON.WebXRState.IN_XR) {
+  // Touch screen pointer event to place kiosk in AR at donut location
+  scene.onPointerDown = (evt, pickInfo) => {
+    if (hitTest && xr.baseExperience.state === BABYLON.WebXRState.IN_XR) {
       // make kiosk visible in AR hit test and decompose the location matrix
       const kiosk = scene.getMeshByID("myKiosk");
       kiosk.setEnabled(true);
       kiosk.position.y = hitTest.position.y + 0.5;
-      hitTest.transformationMatrix.decompose(undefined, kiosk.rotationQuaternion, kiosk.position);      
+      hitTest.transformationMatrix.decompose(undefined, kiosk.rotationQuaternion, kiosk.position);
+    }
   }
-}
 
   return scene;
 };
