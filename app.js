@@ -95,12 +95,7 @@ const createScene = async function () {
   btn.onPointerUpObservable.add(function () {
      rect1.isVisible = false;
   });
-  rect1.addControl(btn)
-
- 
-
-
-
+  rect1.addControl(btn);
 
   BABYLON.SceneLoader.ImportMeshAsync(null, "assets/models/", "SC_Kiosk.gltf").then((result) => {
     const kiosk = result.meshes[0]
@@ -138,7 +133,7 @@ const createScene = async function () {
       hitTest.transformationMatrix.decompose(undefined, kiosk.rotationQuaternion, kiosk.position);     
 
   }
-
+  }
   return scene;
 };
 
