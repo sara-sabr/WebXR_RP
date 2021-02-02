@@ -63,16 +63,6 @@ const createScene = async function () {
   // TODO: Clean scaling 
   var model = null;
 
-  /** TASK: 
-   * 
-   * 1. Keep the modal hidden
-   * 2. once that AR session starts show the modal for 3 seconds
-   * 3. Hide the modal after 3 seconds
-   * 4. Alternatively add button to remove modal
-   *
-   *
-   **/
-
   //GUI
 
   var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
@@ -82,7 +72,7 @@ const createScene = async function () {
   rect1.height = "500px";
   rect1.color = "white";
   rect1.thickness = 1;
-  rect1.background = "silver";
+  rect1.background = "black";
   advancedTexture.addControl(rect1);
 
   var infoText = new BABYLON.GUI.TextBlock();
@@ -96,7 +86,7 @@ const createScene = async function () {
   btn.height = "40px";
   btn.color = "white";
   btn.top = 100;
-  btn.background = "blue";
+  btn.background = "green";
   btn.onPointerUpObservable.add(function () {
      rect1.isVisible = false;
   });
