@@ -74,7 +74,8 @@ const createScene = async function () {
 
   var rect1 = new BABYLON.GUI.Rectangle();
   rect1.width = 0.5;
-  rect1.height = "500px";
+  rect1.top = 200;
+  rect1.height = "100px";
   rect1.color = "white";
   rect1.thickness = 1;
   rect1.background = "black";
@@ -86,16 +87,6 @@ const createScene = async function () {
   infoText.fontSize = 24;
   rect1.addControl(infoText);
 
-  var btn = BABYLON.GUI.Button.CreateSimpleButton("but1", "OK");
-  btn.width = "150px";
-  btn.height = "40px";
-  btn.color = "white";
-  btn.top = 100;
-  btn.background = "green";
-  btn.onPointerUpObservable.add(function () {
-     rect1.isVisible = false;
-  });
-  rect1.addControl(btn);
 
   BABYLON.SceneLoader.ImportMeshAsync(null, "assets/models/", "SC_Kiosk.gltf").then((result) => {
     const kiosk = result.meshes[0]
@@ -110,7 +101,8 @@ const createScene = async function () {
   });
 
   // Place objects in AR if plane detected/generated
-  xrTest.onHitTestResultObservable.add((results) => {
+  
+  var hitTestCheck = xrTest.onHitTestResultObservable.add((results) => {
     if (results.length) {
       // make donut visible in AR hit test and decompose the location matrix
       marker.isVisible = true;
@@ -130,10 +122,12 @@ const createScene = async function () {
       kiosk.setEnabled(true);
 
       //kiosk.position.y = hitTest.position.y + 0.5;
-      hitTest.transformationMatrix.decompose(undefined, kiosk.rotationQuaternion, kiosk.position);     
-
+      hitTest.transformationMatrix.decompose(undefined, kiosk.rotationQuaternion, kiosk.position); 
+      xrTest.onHitTestResultObservable.remove(hitTestCheck);
+      marker.isVisible = false;    
+    } 
   }
-  }
+  
   return scene;
 };
 
