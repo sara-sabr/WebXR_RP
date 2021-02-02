@@ -136,7 +136,7 @@ const createScene = async function () {
 
       //kiosk.position.y = hitTest.position.y + 0.5;
       hitTest.transformationMatrix.decompose(undefined, kiosk.rotationQuaternion, kiosk.position);     
-
+    } 
   }
 
   return scene;
