@@ -38,6 +38,10 @@ const createScene = async function () {
   // Default intensity is 1. Let's dim the light a small amount
   light.intensity = 0.7;
 
+  // Added directional light
+  var dirLight = new BABYLON.DirectionalLight('light', new BABYLON.Vector3(0, 0, 1), scene);
+  dirLight.position = new BABYLON.Vector3(0, 5, -5);
+
   const xr = await scene.createDefaultXRExperienceAsync({
     uiOptions: {
       sessionMode: 'immersive-ar',
@@ -50,6 +54,7 @@ const createScene = async function () {
   const xrTest = fm.enableFeature(BABYLON.WebXRHitTest, 'latest');
 
   // Create donut - original hit test
+
   const marker = BABYLON.MeshBuilder.CreateTorus('marker', {
     diameter: 0.15,
     thickness: 0.05
@@ -95,15 +100,18 @@ const createScene = async function () {
  
 
 
+
+
   BABYLON.SceneLoader.ImportMeshAsync(null, "assets/models/", "SC_Kiosk.gltf").then((result) => {
     const kiosk = result.meshes[0]
     kiosk.scaling.x = kioskScale;
     kiosk.scaling.y = kioskScale;
     kiosk.scaling.z = -kioskScale;
-    kiosk.id = "myKiosk"
+    kiosk.id = "myKiosk";
     kiosk.setEnabled(false);
-    model = kiosk
+    model = kiosk;
     kiosk.rotationQuaternion = new BABYLON.Quaternion();
+    kiosk.rotation;
   });
 
   // Place objects in AR if plane detected/generated
@@ -125,9 +133,10 @@ const createScene = async function () {
       // make kiosk visible in AR hit test and decompose the location matrix
       const kiosk = scene.getMeshByID("myKiosk");
       kiosk.setEnabled(true);
-      kiosk.position.y = hitTest.position.y + 0.5;
-      hitTest.transformationMatrix.decompose(undefined, kiosk.rotationQuaternion, kiosk.position);
-    }
+
+      //kiosk.position.y = hitTest.position.y + 0.5;
+      hitTest.transformationMatrix.decompose(undefined, kiosk.rotationQuaternion, kiosk.position);     
+
   }
 
   return scene;
