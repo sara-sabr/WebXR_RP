@@ -1,20 +1,35 @@
 {
-  "name": "webxr_rp",
-  "version": "1.0.0",
-  "description": "webXR prototype",
-  "main": "app.js",
+  "name": "esdc-itrp-xr-prototype",
+  "version": "1.0.12",
+  "description": "ESDC IT RP XR Prototype",
+  "private": true,
   "dependencies": {
-    "babylonjs": "^4.2.0"
+    "babylonjs": "^5.0.0-alpha.9",
+    "babylonjs-gui": "^5.0.0-alpha.9",
+    "babylonjs-loaders": "^5.0.0-alpha.9"
   },
   "devDependencies": {
-    "@babylonjs/core": "^4.2.0",
-    "@babylonjs/inspector": "^4.2.0",
-    "eslint": "^7.18.0",
-    "eslint-config-google": "^0.14.0"
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^5.0.1",
+    "eslint": "^7.19.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "html-webpack-plugin": "^4.5.1",
+    "prettier": "^2.2.1",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.18.0",
+    "webpack-cli": "^4.4.0",
+    "webpack-dev-server": "^3.11.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint --fix ."
+    "test": "echo \"Error: no test specified\"",
+    "lint": "eslint --fix .",
+    "lint-build": "eslint .",
+    "watch": "webpack --watch",
+    "build": "webpack",
+    "start": "webpack serve --open  --env NODE_ENV=development --https",
+    "start-prod-debug": "webpack serve --open  --env debugMode=true --https"
   },
   "repository": {
     "type": "git",
