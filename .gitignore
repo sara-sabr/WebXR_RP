@@ -5,3 +5,5 @@ my.crt
 key.pem
 certificate.pem
 certificate.p12
+dist/**
+!dist/README.md
