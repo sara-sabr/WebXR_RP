@@ -45,6 +45,10 @@ const createScene = async function () {
   const xr = await scene.createDefaultXRExperienceAsync({
     uiOptions: {
       sessionMode: 'immersive-ar',
+      referenceSpaceType: "local-floor",
+            onError: (error) => {
+                alert(error);
+            }
     },
     optionalFeatures: true,
   });
@@ -124,7 +128,8 @@ const createScene = async function () {
       //kiosk.position.y = hitTest.position.y + 0.5;
       hitTest.transformationMatrix.decompose(undefined, kiosk.rotationQuaternion, kiosk.position); 
       xrTest.onHitTestResultObservable.remove(hitTestCheck);
-      marker.isVisible = false;    
+      marker.isVisible = false; 
+      rect1.isVisible = false;   
     } 
   }
   
@@ -162,4 +167,4 @@ initFunction().then(() => {
 // Resize
 window.addEventListener('resize', function () {
   engine.resize();
-});
+}); 
