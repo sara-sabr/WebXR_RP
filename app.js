@@ -82,7 +82,8 @@ const createScene = async function () {
   rect1.height = "100px";
   rect1.color = "white";
   rect1.thickness = 1;
-  rect1.background = "black";
+  rect1.alpha = 0.40
+  rect1.background = "green";
   advancedTexture.addControl(rect1);
 
   var infoText = new BABYLON.GUI.TextBlock();
