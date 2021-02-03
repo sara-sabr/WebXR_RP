@@ -101,18 +101,39 @@ const createScene = async function () {
 
 
 
-
-  BABYLON.SceneLoader.ImportMeshAsync(null, "assets/models/", "SC_Kiosk.gltf").then((result) => {
+  // Import Kiosk model
+  BABYLON.SceneLoader.ImportMeshAsync(null, "assets/models/", "SC_Kiosk_round.gltf").then((result) => {
     const kiosk = result.meshes[0]
-    kiosk.scaling.x = kioskScale;
-    kiosk.scaling.y = kioskScale;
-    kiosk.scaling.z = -kioskScale;
+    //Scale the model down        
+    kiosk.scaling.scaleInPlace(0.27);
+    // kiosk.scaling.x = kioskScale;
+    // kiosk.scaling.y = kioskScale;
+    // kiosk.scaling.z = -kioskScale;
     kiosk.id = "myKiosk";
     kiosk.setEnabled(false);
     model = kiosk;
     kiosk.rotationQuaternion = new BABYLON.Quaternion();
     kiosk.rotation;
   });
+
+  // Import Character model
+  BABYLON.SceneLoader.ImportMesh("", "assets/models/", "spiderman_anims-03.gltf", scene, function (newMeshes, particleSystems, skeletons, animationGroups) {
+    var hero = newMeshes[0];
+    //Scale the model down        
+    hero.scaling.scaleInPlace(1.5);
+
+    hero.id = "myHero";
+    hero.setEnabled(false);
+    //Lock camera on the character 
+    //camera1.target = hero;
+    //Get the Idle animation Group
+    const idleAnim = scene.getAnimationGroupByName("Talk");
+    //Play the Idle animation  
+    idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
+
+    hero.rotationQuaternion = new BABYLON.Quaternion();
+    hero.rotation;
+});
 
   // Place objects in AR if plane detected/generated
   xrTest.onHitTestResultObservable.add((results) => {
@@ -134,8 +155,12 @@ const createScene = async function () {
       const kiosk = scene.getMeshByID("myKiosk");
       kiosk.setEnabled(true);
 
+      const hero = scene.getMeshByID("myHero");
+      hero.setEnabled(true);
+
       //kiosk.position.y = hitTest.position.y + 0.5;
-      hitTest.transformationMatrix.decompose(undefined, kiosk.rotationQuaternion, kiosk.position);     
+      hitTest.transformationMatrix.decompose(undefined, kiosk.rotationQuaternion, kiosk.position); 
+      hitTest.transformationMatrix.decompose(undefined, hero.rotationQuaternion, hero.position);     
     } 
   }
 
