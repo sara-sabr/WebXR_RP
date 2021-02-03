@@ -276,7 +276,6 @@ function KioskARWorld() {
         );
       }
       if (placeKioskPointerObserve === null) {
-        xrGUI.isVisible = true;
         // Touch screen pointer event to place kiosk in AR at donut location
         placeKioskPointerObserve = scene.onPointerObservable.add(
           placeKioskPointerObserverCallback
@@ -290,7 +289,6 @@ function KioskARWorld() {
         xrHitTestObserve = null;
       }
       if (placeKioskPointerObserve !== null) {
-        xrGUI.isVisible = false;
         // Touch screen pointer event to place kiosk in AR at donut location
         scene.onPointerObservable.remove(placeKioskPointerObserve);
         placeKioskPointerObserve = null;
