@@ -3,7 +3,7 @@
 // TODO: Fix scalling
 // TODO: Modular code 
 
-
+// Character animations by Mixamo: https://www.mixamo.com/
 
 const canvas = document.getElementById('renderCanvas');
 
@@ -95,7 +95,7 @@ const createScene = async function () {
   btn.onPointerUpObservable.add(function () {
      rect1.isVisible = false;
   });
-  rect1.addControl(btn)
+  rect1.addControl(btn);
 
  
 
@@ -124,10 +124,12 @@ const createScene = async function () {
 
     hero.id = "myHero";
     hero.setEnabled(false);
+    
     //Lock camera on the character 
     //camera1.target = hero;
+
     //Get the Idle animation Group
-    const idleAnim = scene.getAnimationGroupByName("Talk");
+    const idleAnim = scene.getAnimationGroupByName("Idle");
     //Play the Idle animation  
     idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 
@@ -160,7 +162,11 @@ const createScene = async function () {
 
       //kiosk.position.y = hitTest.position.y + 0.5;
       hitTest.transformationMatrix.decompose(undefined, kiosk.rotationQuaternion, kiosk.position); 
-      hitTest.transformationMatrix.decompose(undefined, hero.rotationQuaternion, hero.position);     
+      hitTest.transformationMatrix.decompose(undefined, hero.rotationQuaternion, hero.position);
+      
+      // play wave animation 
+      const idleAnim = scene.getAnimationGroupByName("Wave");
+      idleAnim.start(false, 1.0, idleAnim.from, idleAnim.to, false);   
     } 
   }
 
