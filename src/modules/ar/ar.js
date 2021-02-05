@@ -216,7 +216,7 @@ function KioskARWorld() {
 
     kioskCopy.rotationQuaternion = new BABYLON.Quaternion();
 
-    kioskCopy.isVisible = true;
+    kioskCopy.setEnabled(true);
 
     await createGUI();
     await setEnableHitTest(true);
@@ -336,7 +336,7 @@ function KioskARWorld() {
   const hitTestObserverCallback = function (eventData) {
     if (eventData.length) {
       // Make donut visible in AR hit test and decompose the location matrix
-      kioskCopy.isVisible = true;
+      kioskCopy.setEnabled(true);
       kioskCoordinates = eventData[0];
       kioskCoordinates.transformationMatrix.decompose(
         undefined,
@@ -345,7 +345,7 @@ function KioskARWorld() {
       );
     } else {
       // Hide the marker.
-      kioskCopy.isVisible = false;
+      kioskCopy.setEnabled(false);
     }
   };
 
