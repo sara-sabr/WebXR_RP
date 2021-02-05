@@ -361,7 +361,7 @@ function KioskARWorld() {
     kiosk.scaling.y = kioskScale;
     kiosk.scaling.z = -kioskScale;
     kiosk.id = 'myKiosk';
-    kiosk.setEnabled(true);
+    kiosk.setEnabled(false);
     kiosk.rotationQuaternion = new Quaternion();
 
     return kiosk;
