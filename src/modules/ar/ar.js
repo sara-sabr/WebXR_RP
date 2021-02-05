@@ -346,6 +346,7 @@ function KioskARWorld() {
     } else {
       // Hide the marker.
       kioskCopy.setEnabled(false);
+      kioskCoordinates = undefined;
     }
   };
 
