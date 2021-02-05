@@ -5,7 +5,6 @@ import {
   Vector3,
   HemisphericLight,
   WebXRHitTest,
-  MeshBuilder,
   Quaternion,
   SceneLoader,
   WebXRState,
@@ -69,7 +68,7 @@ function KioskARWorld() {
    */
   let kiosk = null;
 
-   /**
+  /**
    * Kiosk object
    * @type {AbstractMesh}
    */
@@ -85,12 +84,6 @@ function KioskARWorld() {
    * @type {WebXRHitTest}
    */
   let xrHitTest = null;
-
-  /**
-   * THe hit test marker
-   * @type {Mesh}
-   */
-  let hitTestMarker = null;
 
   /**
    * The listener attached to hit test.
@@ -212,27 +205,19 @@ function KioskARWorld() {
   const setupHitTest = async function () {
     xrHitTest = featuresManager.enableFeature(WebXRHitTest, 'latest');
 
-    var baseKiosk = await setupAssetKiosk();
+    const baseKiosk = await setupAssetKiosk();
 
     kioskCopy = baseKiosk.clone('ghost');
     console.log(kioskCopy);
-    for (var child of kioskCopy.getChildMeshes()){
-      child.material = new BABYLON.StandardMaterial("mat");
+    for (const child of kioskCopy.getChildMeshes()) {
+      child.material = new BABYLON.StandardMaterial('mat');
       child.material.alpha = 0.25;
-  }
+    }
 
-  kioskCopy.rotationQuaternion = new BABYLON.Quaternion();
+    kioskCopy.rotationQuaternion = new BABYLON.Quaternion();
 
-  kioskCopy.isVisible = true;
+    kioskCopy.isVisible = true;
 
-    // Create donut - original hit test
-    // hitTestMarker = MeshBuilder.CreateTorus('marker', {
-    //   diameter: 0.15,
-    //   thickness: 0.05,
-    // });
-
-    // hitTestMarker.isVisible = false;
-    // hitTestMarker.rotationQuaternion = new Quaternion();
     await createGUI();
     await setEnableHitTest(true);
   };
