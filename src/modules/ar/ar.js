@@ -69,6 +69,12 @@ function KioskARWorld() {
    */
   let kiosk = null;
 
+   /**
+   * Kiosk object
+   * @type {AbstractMesh}
+   */
+  let kioskCopy = null;
+
   /**
    * @type {WebXRDefaultExperience}
    */
@@ -206,14 +212,27 @@ function KioskARWorld() {
   const setupHitTest = async function () {
     xrHitTest = featuresManager.enableFeature(WebXRHitTest, 'latest');
 
-    // Create donut - original hit test
-    hitTestMarker = MeshBuilder.CreateTorus('marker', {
-      diameter: 0.15,
-      thickness: 0.05,
-    });
+    var baseKiosk = await setupAssetKiosk();
 
-    hitTestMarker.isVisible = false;
-    hitTestMarker.rotationQuaternion = new Quaternion();
+    kioskCopy = baseKiosk.clone('ghost');
+    console.log(kioskCopy);
+    for (var child of kioskCopy.getChildMeshes()){
+      child.material = new BABYLON.StandardMaterial("mat");
+      child.material.alpha = 0.25;
+  }
+
+  kioskCopy.rotationQuaternion = new BABYLON.Quaternion();
+
+  kioskCopy.isVisible = true;
+
+    // Create donut - original hit test
+    // hitTestMarker = MeshBuilder.CreateTorus('marker', {
+    //   diameter: 0.15,
+    //   thickness: 0.05,
+    // });
+
+    // hitTestMarker.isVisible = false;
+    // hitTestMarker.rotationQuaternion = new Quaternion();
     await createGUI();
     await setEnableHitTest(true);
   };
@@ -332,16 +351,16 @@ function KioskARWorld() {
   const hitTestObserverCallback = function (eventData) {
     if (eventData.length) {
       // Make donut visible in AR hit test and decompose the location matrix
-      hitTestMarker.isVisible = true;
+      kioskCopy.isVisible = true;
       kioskCoordinates = eventData[0];
       kioskCoordinates.transformationMatrix.decompose(
-        hitTestMarker.scaling,
-        hitTestMarker.rotationQuaternion,
-        hitTestMarker.position
+        undefined,
+        kioskCopy.rotationQuaternion,
+        kioskCopy.position
       );
     } else {
       // Hide the marker.
-      hitTestMarker.isVisible = false;
+      kioskCopy.isVisible = false;
     }
   };
 
@@ -357,8 +376,10 @@ function KioskARWorld() {
     kiosk.scaling.y = kioskScale;
     kiosk.scaling.z = -kioskScale;
     kiosk.id = 'myKiosk';
-    kiosk.setEnabled(false);
+    kiosk.setEnabled(true);
     kiosk.rotationQuaternion = new Quaternion();
+
+    return kiosk;
   };
 
   // Execute the init function.
