@@ -1,6 +1,7 @@
 import {
   Engine,
   Scene,
+  Sound,
   FreeCamera,
   Vector3,
   HemisphericLight,
@@ -29,7 +30,7 @@ import {
 
 import 'babylonjs-loaders'; // Required to load GLFT files
 import KioskAsset from '../../assets/models/SC_Kiosk.gltf';
-
+import WelcomeMessage from '../../assets/audio/WelcomeMessage.wav';
 /**
  * AR world code.
  */
@@ -56,7 +57,6 @@ function KioskARWorld() {
    * @type {Camera}
    */
   let camera = null;
-
   /**
    * Feature manager.
    * @type {WebXRFeaturesManager}
@@ -115,6 +115,10 @@ function KioskARWorld() {
    */
   let xrDialogMessage = null;
 
+  /**
+   * Setup all audio messages.
+   */
+  let soundMap = new Map();
   /**
    * Initializer.
    */
@@ -215,6 +219,7 @@ function KioskARWorld() {
     hitTestMarker.isVisible = false;
     hitTestMarker.rotationQuaternion = new Quaternion();
     await createGUI();
+    await setupAudio();
     await setEnableHitTest(true);
   };
 
@@ -312,6 +317,7 @@ function KioskARWorld() {
       // Make kiosk visible in AR hit test and decompose the location matrix
       // If it already visible, don't make it visible again.
       kiosk.setEnabled(true);
+      soundMap.get("welcome").play();
       kioskCoordinates.transformationMatrix.decompose(
         undefined,
         kiosk.rotationQuaternion,
@@ -343,6 +349,19 @@ function KioskARWorld() {
       // Hide the marker.
       hitTestMarker.isVisible = false;
     }
+  };
+
+  /**
+   * Setup the welcome message.
+   * @type {Sound}
+   */
+  const setupAudio = async function () {
+    soundMap.set("welcome", new Sound(
+      'welcome',
+      WelcomeMessage,
+      scene
+    ));
+
   };
 
   /**
