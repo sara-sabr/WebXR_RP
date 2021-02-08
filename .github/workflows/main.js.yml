@@ -19,7 +19,6 @@ jobs:
         target-branch: 'main'
       with:
         skip-tag:  'true'
-        persist-credentials: 'false'
     - name: Use Node.js
       uses: actions/setup-node@v1
       with:
