@@ -129,7 +129,7 @@ const createScene = async function () {
     //camera1.target = hero;
 
     //Get the Idle animation Group
-    const idleAnim = scene.getAnimationGroupByName("Idle");
+    const idleAnim = scene.getAnimationGroupByName("Wave");
     //Play the Idle animation  
     idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 
