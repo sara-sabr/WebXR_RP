@@ -1,6 +1,7 @@
 import {
   Engine,
   Scene,
+  Sound,
   FreeCamera,
   Vector3,
   HemisphericLight,
@@ -29,7 +30,7 @@ import {
 
 import 'babylonjs-loaders'; // Required to load GLFT files
 import KioskAsset from '../../assets/models/SC_Kiosk.gltf';
-
+import HelloMessage from '../../assets/audio/Hello.mp3';
 /**
  * AR world code.
  */
@@ -114,6 +115,18 @@ function KioskARWorld() {
    * @type {TextBlock}
    */
   let xrDialogMessage = null;
+
+  /**
+   * Map of interactions used in the AR application
+   */
+  const interactionsMap = {
+    "welcome": {
+      "audioPath": HelloMessage,
+      "soundObj": null,
+      "animation": null
+    }
+  };
+
 
   /**
    * Initializer.
@@ -215,6 +228,7 @@ function KioskARWorld() {
     hitTestMarker.isVisible = false;
     hitTestMarker.rotationQuaternion = new Quaternion();
     await createGUI();
+    await setupAudio();
     await setEnableHitTest(true);
   };
 
@@ -312,6 +326,7 @@ function KioskARWorld() {
       // Make kiosk visible in AR hit test and decompose the location matrix
       // If it already visible, don't make it visible again.
       kiosk.setEnabled(true);
+      executeInteraction("welcome");
       kioskCoordinates.transformationMatrix.decompose(
         undefined,
         kiosk.rotationQuaternion,
@@ -345,6 +360,26 @@ function KioskARWorld() {
     }
   };
 
+  /**
+   * Initialize all audio within the interactions.
+   */
+  const setupAudio = async function () {
+
+    for(const interactionKey in interactionsMap){
+      interactionsMap[interactionKey].soundObj = new Sound(
+        interactionKey,
+        interactionsMap[interactionKey].audioPath,
+        scene
+      )
+    }
+  };
+  /** 
+   * Execute the defined interaction. 
+   * @param {string} interactionKey - The JSON key for the interaction that needs to be executed.
+  */
+  const executeInteraction = async function (interactionKey) {
+    interactionsMap[interactionKey].soundObj.play();
+  }
   /**
    * Setup the kiosk assets.
    */
