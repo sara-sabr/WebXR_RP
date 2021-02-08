@@ -203,21 +203,19 @@ function KioskARWorld() {
    * Activate hit test and add listener.
    */
   const setupHitTest = async function () {
+    // FIXME:Cannot display ghost kiosk - main kiosk needs to be enabled
     xrHitTest = featuresManager.enableFeature(WebXRHitTest, 'latest');
 
-    const baseKiosk = await setupAssetKiosk();
-
-    kioskCopy = baseKiosk.clone('ghost');
+    kioskCopy = kiosk.clone('ghost');
     console.log(kioskCopy);
     for (const child of kioskCopy.getChildMeshes()) {
       child.material = new BABYLON.StandardMaterial('mat');
       child.material.alpha = 0.25;
     }
 
-    kioskCopy.rotationQuaternion = new BABYLON.Quaternion();
+    kioskCopy.rotationQuaternion = new Quaternion();
 
-    kioskCopy.setEnabled(true);
-
+    kioskCopy.setEnabled(false);
     await createGUI();
     await setEnableHitTest(true);
   };
@@ -336,6 +334,7 @@ function KioskARWorld() {
   const hitTestObserverCallback = function (eventData) {
     if (eventData.length) {
       // Make donut visible in AR hit test and decompose the location matrix
+      kiosk.setEnabled(false);
       kioskCopy.setEnabled(true);
       kioskCoordinates = eventData[0];
       kioskCoordinates.transformationMatrix.decompose(
@@ -346,6 +345,7 @@ function KioskARWorld() {
     } else {
       // Hide the marker.
       kioskCopy.setEnabled(false);
+      kiosk.setEnabled(false);
       kioskCoordinates = undefined;
     }
   };
@@ -362,7 +362,7 @@ function KioskARWorld() {
     kiosk.scaling.y = kioskScale;
     kiosk.scaling.z = -kioskScale;
     kiosk.id = 'myKiosk';
-    kiosk.setEnabled(false);
+    kiosk.setEnabled(true);
     kiosk.rotationQuaternion = new Quaternion();
 
     return kiosk;
