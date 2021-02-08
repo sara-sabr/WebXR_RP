@@ -31,6 +31,8 @@ import {
 import 'babylonjs-loaders'; // Required to load GLFT files
 import KioskAsset from '../../assets/models/SC_Kiosk.gltf';
 import HelloMessage from '../../assets/audio/Hello.mp3';
+import AgentAsset from '../../assets/models/Malcolm.gltf';
+
 /**
  * AR world code.
  */
@@ -69,6 +71,12 @@ function KioskARWorld() {
    * @type {AbstractMesh}
    */
   let kiosk = null;
+
+  /**
+   * Agent object
+   * @type {AbstractMesh}
+   */
+  let agent = null;
 
   /**
    * @type {WebXRDefaultExperience}
@@ -123,7 +131,8 @@ function KioskARWorld() {
     "welcome": {
       "audioPath": HelloMessage,
       "soundObj": null,
-      "animation": null
+      "animation": "Hello"
+      
     }
   };
 
@@ -326,11 +335,18 @@ function KioskARWorld() {
       // Make kiosk visible in AR hit test and decompose the location matrix
       // If it already visible, don't make it visible again.
       kiosk.setEnabled(true);
+      agent.setEnabled(true);
       executeInteraction("welcome");
+      
       kioskCoordinates.transformationMatrix.decompose(
         undefined,
         kiosk.rotationQuaternion,
         kiosk.position
+      );
+      kioskCoordinates.transformationMatrix.decompose(
+        undefined,
+        agent.rotationQuaternion,
+        agent.position
       );
 
       // Hit Test is done, so toggle it off.
@@ -379,6 +395,9 @@ function KioskARWorld() {
   */
   const executeInteraction = async function (interactionKey) {
     interactionsMap[interactionKey].soundObj.play();
+
+    const agentAnimation = scene.getAnimationGroupByName(interactionsMap[interactionKey].animation);
+    agentAnimation.start(false, 1.0, agentAnimation.from, agentAnimation.to, false);
   }
   /**
    * Setup the kiosk assets.
@@ -394,6 +413,20 @@ function KioskARWorld() {
     kiosk.id = 'myKiosk';
     kiosk.setEnabled(false);
     kiosk.rotationQuaternion = new Quaternion();
+
+    const agentScale = 20;
+
+    agent = (await SceneLoader.ImportMeshAsync(null, AgentAsset, '')).meshes[0];
+    agent.scaling.x = agentScale;
+    agent.scaling.y = agentScale;
+    agent.scaling.z = -agentScale;
+    agent.id = "myHero";
+    agent.setEnabled(false);
+    agent.rotationQuaternion = new Quaternion();
+    agent.rotation;
+
+    const agentAnimation = scene.getAnimationGroupByName("Idle");
+    agentAnimation.start(true, 1.0, agentAnimation.from, agentAnimation.to, false);;
   };
 
   // Execute the init function.
