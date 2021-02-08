@@ -117,10 +117,10 @@ const createScene = async function () {
   });
 
   // Import Character model
-  BABYLON.SceneLoader.ImportMesh("", "assets/models/", "spiderman_anims-03.gltf", scene, function (newMeshes, particleSystems, skeletons, animationGroups) {
+  BABYLON.SceneLoader.ImportMesh("", "assets/models/", "Malcolm.gltf", scene, function (newMeshes, particleSystems, skeletons, animationGroups) {
     var hero = newMeshes[0];
     //Scale the model down        
-    hero.scaling.scaleInPlace(1.5);
+    hero.scaling.scaleInPlace(20);
 
     hero.id = "myHero";
     hero.setEnabled(false);
@@ -165,7 +165,7 @@ const createScene = async function () {
       hitTest.transformationMatrix.decompose(undefined, hero.rotationQuaternion, hero.position);
       
       // play wave animation 
-      const idleAnim = scene.getAnimationGroupByName("Wave");
+      const idleAnim = scene.getAnimationGroupByName("TalkLong");
       idleAnim.start(false, 1.0, idleAnim.from, idleAnim.to, false);   
     } 
   }
