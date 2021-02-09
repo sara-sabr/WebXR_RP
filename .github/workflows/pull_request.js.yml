@@ -22,6 +22,6 @@ jobs:
         echo "NPM: $(npm -v)"
         echo "::endgroup::"
     - run: npm ci
-    - run: npm run lint
+    - run: npm run lint-build
     - run: npm run build --if-present
     - run: npm test
