@@ -29,6 +29,8 @@ import {
 } from 'babylonjs-gui';
 
 import 'babylonjs-loaders'; // Required to load GLFT files
+import i18next from 'i18next';
+
 import KioskAsset from '../../assets/models/SC_Kiosk.gltf';
 import HelloMessage from '../../assets/audio/Hello.mp3';
 import AgentAsset from '../../assets/models/Malcolm.gltf';
@@ -448,7 +450,7 @@ function KioskARWorld() {
 
   // Execute the init function.
   (async () => {
-    console.log('Init');
+    console.log(i18next.t('agent.welcome.dialog'));
     initFunction();
   })();
 }

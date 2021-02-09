@@ -1,8 +1,9 @@
 // Actual imports
-import { EventBus } from './modules/eventbus/bus.js';
-import { KioskARWorld } from './modules/ar/ar.js';
 import i18next from 'i18next';
+import { KioskARWorld } from './modules/ar/ar.js';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import { en } from './assets/locale/en.js';
+import { fr } from './assets/locale/fr.js';
 
 import './assets/css/main.css';
 
@@ -21,21 +22,27 @@ const i18nextOptions = {
   lookupQuerystring: 'lang',
   lookupLocalStorage: 'i18nextLng',
   lookupSessionStorage: 'i18nextLng',
+  debug: true,
 
-  // cache user language on
+  // cache user language on (persisted during browser session)
   caches: ['localStorage'],
   excludeCacheFor: ['cimode'], // languages to not persist (localStorage)
 
   // optional htmlTag with lang attribute, the default is:
   htmlTag: document.documentElement,
+
+  resources: {
+    en: { en },
+    fr: { fr },
+  },
 };
 
-i18next.use(LanguageDetector).init(i18nextOptions);
+i18next
+  .use(LanguageDetector)
+  .init(i18nextOptions)
+  .then(function () {
+    console.log(i18nextOptions);
+    console.log(i18next.t('agent.welcome.dialog'));
 
-// Initialize the event bus.
-const eventBus = new EventBus(3);
-eventBus.subscribe('test', 1, function () {
-  console.log({ data });
-  console.log({ data });
-});
-new KioskARWorld();
+    new KioskARWorld();
+  });
