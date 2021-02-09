@@ -370,6 +370,7 @@ function KioskARWorld() {
         kiosk.position
       );
     } else {
+      kiosk.setEnabled(false);
       kioskCoordinates = undefined;
       toggleKioskGhosting(false);
     }
