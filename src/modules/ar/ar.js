@@ -6,7 +6,6 @@ import {
   Vector3,
   HemisphericLight,
   WebXRHitTest,
-  MeshBuilder,
   Quaternion,
   SceneLoader,
   WebXRState,
@@ -16,7 +15,6 @@ import {
   DirectionalLight,
   AbstractMesh, // eslint-disable-line
   Observer, // eslint-disable-line
-  Mesh, // eslint-disable-line
   PointerInfo, // eslint-disable-line
   EventState,// eslint-disable-line
 } from 'babylonjs';
@@ -90,12 +88,6 @@ function KioskARWorld() {
    * @type {WebXRHitTest}
    */
   let xrHitTest = null;
-
-  /**
-   * THe hit test marker
-   * @type {Mesh}
-   */
-  let hitTestMarker = null;
 
   /**
    * The listener attached to hit test.
@@ -228,18 +220,25 @@ function KioskARWorld() {
    */
   const setupHitTest = async function () {
     xrHitTest = featuresManager.enableFeature(WebXRHitTest, 'latest');
-
-    // Create donut - original hit test
-    hitTestMarker = MeshBuilder.CreateTorus('marker', {
-      diameter: 0.15,
-      thickness: 0.05,
-    });
-
-    hitTestMarker.isVisible = false;
-    hitTestMarker.rotationQuaternion = new Quaternion();
     await createGUI();
     await setupAudio();
     await setEnableHitTest(true);
+  };
+
+  /**
+   * Turn on or off the ghosting affect.
+   *
+   * @param {boolean} ghosting - true to enable ghosting, otherwise false.
+   */
+  const toggleKioskGhosting = async function (ghosting) {
+    let ghostValue = 1;
+    if (ghosting === true) {
+      ghostValue = 0.1;
+    }
+
+    for (const child of kiosk.getChildMeshes()) {
+      child.visibility = ghostValue;
+    }
   };
 
   /**
@@ -335,7 +334,7 @@ function KioskARWorld() {
     if (kioskCoordinates && xr.baseExperience.state === WebXRState.IN_XR) {
       // Make kiosk visible in AR hit test and decompose the location matrix
       // If it already visible, don't make it visible again.
-      kiosk.setEnabled(true);
+      toggleKioskGhosting(false);
       agent.setEnabled(true);
       executeInteraction('welcome');
 
@@ -363,17 +362,18 @@ function KioskARWorld() {
    */
   const hitTestObserverCallback = function (eventData) {
     if (eventData.length) {
-      // Make donut visible in AR hit test and decompose the location matrix
-      hitTestMarker.isVisible = true;
+      kiosk.setEnabled(true);
+      toggleKioskGhosting(true);
       kioskCoordinates = eventData[0];
       kioskCoordinates.transformationMatrix.decompose(
-        hitTestMarker.scaling,
-        hitTestMarker.rotationQuaternion,
-        hitTestMarker.position
+        undefined,
+        kiosk.rotationQuaternion,
+        kiosk.position
       );
     } else {
-      // Hide the marker.
-      hitTestMarker.isVisible = false;
+      kiosk.setEnabled(false);
+      kioskCoordinates = undefined;
+      toggleKioskGhosting(false);
     }
   };
 
@@ -399,6 +399,8 @@ function KioskARWorld() {
    * @param {string} interactionKey - The JSON key for the interaction that needs to be executed.
    */
   const executeInteraction = async function (interactionKey) {
+    // Address Chrome issue with Auto Play Security Policy.
+    Engine.audioEngine.unlock();
     interactionsMap[interactionKey].soundObj.play();
 
     const agentAnimation = scene.getAnimationGroupByName(
@@ -417,7 +419,7 @@ function KioskARWorld() {
    */
   const setupAssetKiosk = async function () {
     // Create Kiosk model
-    const kioskScale = 0.3;
+    const kioskScale = 0.27;
 
     kiosk = (await SceneLoader.ImportMeshAsync(null, KioskAsset, '')).meshes[0];
     kiosk.scaling.x = kioskScale;
@@ -425,6 +427,9 @@ function KioskARWorld() {
     kiosk.scaling.z = -kioskScale;
     kiosk.id = 'myKiosk';
     kiosk.setEnabled(false);
+
+    // Initially load the kiosk ghosted.
+    toggleKioskGhosting(true);
     kiosk.rotationQuaternion = new Quaternion();
 
     const agentScale = 20;

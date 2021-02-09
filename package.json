@@ -1,14 +1,12 @@
 {
   "name": "esdc-itrp-xr-prototype",
-  "version": "1.0.17",
+  "version": "1.0.24",
   "description": "ESDC IT RP XR Prototype",
   "private": true,
   "dependencies": {
     "babylonjs": "^5.0.0-alpha.9",
     "babylonjs-gui": "^5.0.0-alpha.9",
-    "babylonjs-loaders": "^5.0.0-alpha.9",
-    "i18next": "^19.8.7",
-    "i18next-browser-languagedetector": "^6.0.1"
+    "babylonjs-loaders": "^5.0.0-alpha.9"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
