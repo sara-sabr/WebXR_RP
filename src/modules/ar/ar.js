@@ -361,6 +361,7 @@ function KioskARWorld() {
    */
   const hitTestObserverCallback = function (eventData) {
     if (eventData.length) {
+      kiosk.setEnabled(true);
       toggleKioskGhosting(true);
       kioskCoordinates = eventData[0];
       kioskCoordinates.transformationMatrix.decompose(
@@ -416,14 +417,14 @@ function KioskARWorld() {
    */
   const setupAssetKiosk = async function () {
     // Create Kiosk model
-    const kioskScale = 0.3;
+    const kioskScale = 0.27;
 
     kiosk = (await SceneLoader.ImportMeshAsync(null, KioskAsset, '')).meshes[0];
     kiosk.scaling.x = kioskScale;
     kiosk.scaling.y = kioskScale;
     kiosk.scaling.z = -kioskScale;
     kiosk.id = 'myKiosk';
-    kiosk.setEnabled(true);
+    kiosk.setEnabled(false);
 
     // Initially load the kiosk ghosted.
     toggleKioskGhosting(true);
