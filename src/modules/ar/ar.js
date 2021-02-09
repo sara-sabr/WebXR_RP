@@ -6,7 +6,6 @@ import {
   Vector3,
   HemisphericLight,
   WebXRHitTest,
-  MeshBuilder,
   Quaternion,
   SceneLoader,
   WebXRState,
