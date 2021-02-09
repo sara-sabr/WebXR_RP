@@ -396,6 +396,8 @@ function KioskARWorld() {
    * @param {string} interactionKey - The JSON key for the interaction that needs to be executed.
    */
   const executeInteraction = async function (interactionKey) {
+    // Address Chrome issue with Auto Play Security Policy.
+    Engine.audioEngine.unlock();
     interactionsMap[interactionKey].soundObj.play();
 
     const agentAnimation = scene.getAnimationGroupByName(
