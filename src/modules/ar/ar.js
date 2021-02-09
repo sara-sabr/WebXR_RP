@@ -15,7 +15,6 @@ import {
   DirectionalLight,
   AbstractMesh, // eslint-disable-line
   Observer, // eslint-disable-line
-  Mesh, // eslint-disable-line
   PointerInfo, // eslint-disable-line
   EventState,// eslint-disable-line
 } from 'babylonjs';
@@ -70,12 +69,6 @@ function KioskARWorld() {
    * @type {AbstractMesh}
    */
   let kiosk = null;
-
-  /**
-   * Kiosk object
-   * @type {AbstractMesh}
-   */
-  let kioskCopy = null;
 
   /**
    * Agent object
@@ -224,20 +217,25 @@ function KioskARWorld() {
    */
   const setupHitTest = async function () {
     xrHitTest = featuresManager.enableFeature(WebXRHitTest, 'latest');
-
-    kioskCopy = kiosk.clone('ghost');
-    console.log(kioskCopy);
-    for (const child of kioskCopy.getChildMeshes()) {
-      child.material = new BABYLON.StandardMaterial('mat');
-      child.material.alpha = 0.25;
-    }
-
-    kioskCopy.rotationQuaternion = new Quaternion();
-
-    kioskCopy.setEnabled(false);
     await createGUI();
     await setupAudio();
     await setEnableHitTest(true);
+  };
+
+  /**
+   * Turn on or off the ghosting affect.
+   *
+   * @param {boolean} ghosting - true to enable ghosting, otherwise false.
+   */
+  const toggleKioskGhosting = async function (ghosting) {
+    let ghostValue = 1;
+    if (ghosting === true) {
+      ghostValue = 0.1;
+    }
+
+    for (const child of kiosk.getChildMeshes()) {
+      child.visibility = ghostValue;
+    }
   };
 
   /**
@@ -293,6 +291,7 @@ function KioskARWorld() {
         updateDialogMessage(
           'Welcome to Service Canada AR \n\n Scan the floor to place your kiosk'
         );
+        toggleKioskGhosting(true);
         xrHitTestObserve = xrHitTest.onHitTestResultObservable.add(
           hitTestObserverCallback
         );
@@ -307,6 +306,7 @@ function KioskARWorld() {
       // Force checking existance of 'enabled'.
       if (xrHitTestObserve !== null) {
         updateDialogMessage('');
+        toggleKioskGhosting(false);
         xrHitTest.onHitTestResultObservable.remove(xrHitTestObserve);
         xrHitTestObserve = null;
       }
@@ -361,20 +361,16 @@ function KioskARWorld() {
    */
   const hitTestObserverCallback = function (eventData) {
     if (eventData.length) {
-      // Make donut visible in AR hit test and decompose the location matrix
-      kiosk.setEnabled(false);
-      kioskCopy.setEnabled(true);
+      toggleKioskGhosting(true);
       kioskCoordinates = eventData[0];
       kioskCoordinates.transformationMatrix.decompose(
         undefined,
-        kioskCopy.rotationQuaternion,
-        kioskCopy.position
+        kiosk.rotationQuaternion,
+        kiosk.position
       );
     } else {
-      // Hide the marker.
-      kioskCopy.setEnabled(false);
-      kiosk.setEnabled(false);
       kioskCoordinates = undefined;
+      toggleKioskGhosting(false);
     }
   };
 
@@ -426,6 +422,9 @@ function KioskARWorld() {
     kiosk.scaling.z = -kioskScale;
     kiosk.id = 'myKiosk';
     kiosk.setEnabled(true);
+
+    // Initially load the kiosk ghosted.
+    toggleKioskGhosting(true);
     kiosk.rotationQuaternion = new Quaternion();
 
     const agentScale = 20;
