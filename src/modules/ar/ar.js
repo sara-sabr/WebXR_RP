@@ -291,7 +291,6 @@ function KioskARWorld() {
         updateDialogMessage(
           'Welcome to Service Canada AR \n\n Scan the floor to place your kiosk'
         );
-        toggleKioskGhosting(true);
         xrHitTestObserve = xrHitTest.onHitTestResultObservable.add(
           hitTestObserverCallback
         );
@@ -306,7 +305,6 @@ function KioskARWorld() {
       // Force checking existance of 'enabled'.
       if (xrHitTestObserve !== null) {
         updateDialogMessage('');
-        toggleKioskGhosting(false);
         xrHitTest.onHitTestResultObservable.remove(xrHitTestObserve);
         xrHitTestObserve = null;
       }
@@ -333,7 +331,7 @@ function KioskARWorld() {
     if (kioskCoordinates && xr.baseExperience.state === WebXRState.IN_XR) {
       // Make kiosk visible in AR hit test and decompose the location matrix
       // If it already visible, don't make it visible again.
-      kiosk.setEnabled(true);
+      toggleKioskGhosting(false);
       agent.setEnabled(true);
       executeInteraction('welcome');
 
