@@ -132,6 +132,7 @@ function KioskARWorld() {
       audioPath: HelloMessage,
       soundObj: null,
       animation: 'Hello',
+      dialog: '',
     },
   };
 
