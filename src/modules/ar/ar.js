@@ -127,14 +127,12 @@ function KioskARWorld() {
    * Map of interactions used in the AR application
    */
   const interactionsMap = {
-    "welcome": {
-      "audioPath": HelloMessage,
-      "soundObj": null,
-      "animation": "Hello"
-      
-    }
+    welcome: {
+      audioPath: HelloMessage,
+      soundObj: null,
+      animation: 'Hello',
+    },
   };
-
 
   /**
    * Initializer.
@@ -337,8 +335,8 @@ function KioskARWorld() {
       // If it already visible, don't make it visible again.
       kiosk.setEnabled(true);
       agent.setEnabled(true);
-      executeInteraction("welcome");
-      
+      executeInteraction('welcome');
+
       kioskCoordinates.transformationMatrix.decompose(
         undefined,
         kiosk.rotationQuaternion,
@@ -384,25 +382,37 @@ function KioskARWorld() {
    * Initialize all audio within the interactions.
    */
   const setupAudio = async function () {
-
-    for(const interactionKey in interactionsMap){
-      interactionsMap[interactionKey].soundObj = new Sound(
-        interactionKey,
-        interactionsMap[interactionKey].audioPath,
-        scene
-      )
+    for (const interactionKey in interactionsMap) {
+      if (
+        Object.prototype.hasOwnProperty.call(interactionsMap, interactionKey)
+      ) {
+        interactionsMap[interactionKey].soundObj = new Sound(
+          interactionKey,
+          interactionsMap[interactionKey].audioPath,
+          scene
+        );
+      }
     }
   };
-  /** 
-   * Execute the defined interaction. 
+
+  /**
+   * Execute the defined interaction.
    * @param {string} interactionKey - The JSON key for the interaction that needs to be executed.
-  */
+   */
   const executeInteraction = async function (interactionKey) {
     interactionsMap[interactionKey].soundObj.play();
 
-    const agentAnimation = scene.getAnimationGroupByName(interactionsMap[interactionKey].animation);
-    agentAnimation.start(false, 1.0, agentAnimation.from, agentAnimation.to, false);
-  }
+    const agentAnimation = scene.getAnimationGroupByName(
+      interactionsMap[interactionKey].animation
+    );
+    agentAnimation.start(
+      false,
+      1.0,
+      agentAnimation.from,
+      agentAnimation.to,
+      false
+    );
+  };
   /**
    * Setup the kiosk assets.
    */
@@ -424,14 +434,19 @@ function KioskARWorld() {
     agent.scaling.x = agentScale;
     agent.scaling.y = agentScale;
     agent.scaling.z = -agentScale;
-    agent.id = "myHero";
+    agent.id = 'myHero';
     agent.setEnabled(false);
     agent.rotationQuaternion = new Quaternion();
     agent.rotation;
 
-    const agentAnimation = scene.getAnimationGroupByName("Idle");
-    agentAnimation.start(true, 1.0, agentAnimation.from, agentAnimation.to, false);
-
+    const agentAnimation = scene.getAnimationGroupByName('Idle');
+    agentAnimation.start(
+      true,
+      1.0,
+      agentAnimation.from,
+      agentAnimation.to,
+      false
+    );
   };
 
   // Execute the init function.
