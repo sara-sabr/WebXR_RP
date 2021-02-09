@@ -203,7 +203,6 @@ function KioskARWorld() {
    * Activate hit test and add listener.
    */
   const setupHitTest = async function () {
-    // FIXME:Cannot display ghost kiosk - main kiosk needs to be enabled
     xrHitTest = featuresManager.enableFeature(WebXRHitTest, 'latest');
 
     kioskCopy = kiosk.clone('ghost');
@@ -364,8 +363,6 @@ function KioskARWorld() {
     kiosk.id = 'myKiosk';
     kiosk.setEnabled(true);
     kiosk.rotationQuaternion = new Quaternion();
-
-    return kiosk;
   };
 
   // Execute the init function.
