@@ -30,7 +30,6 @@ import 'babylonjs-loaders'; // Required to load GLFT files
 import i18next from 'i18next';
 
 import KioskAsset from '../../assets/models/SC_Kiosk.gltf';
-import HelloMessage from '../../assets/audio/Hello.mp3';
 import AgentAsset from '../../assets/models/Malcolm.gltf';
 
 /**
@@ -122,11 +121,14 @@ function KioskARWorld() {
    * Map of interactions used in the AR application
    */
   const interactionsMap = {
+    intro: {
+      dialog: 'intro.dialog',
+    },
     welcome: {
-      audioPath: HelloMessage,
+      audioPath: 'agent.welcome.audio',
       soundObj: null,
       animation: 'Hello',
-      dialog: '',
+      dialog: 'agent.welcome.dialog',
     },
   };
 
@@ -154,6 +156,9 @@ function KioskARWorld() {
     window.addEventListener('resize', function () {
       engine.resize();
     });
+
+    // Initial.
+    executeInteraction('intro');
   };
 
   /**
@@ -248,20 +253,31 @@ function KioskARWorld() {
     // Initialize the GUI
     xrGUI = AdvancedDynamicTexture.CreateFullscreenUI('UI');
 
+    // Transparent dialog window
+    const xrDialogTransparent = new Rectangle();
+    xrDialogTransparent.width = 1;
+    xrDialogTransparent.verticalAlignment = Control._VERTICAL_ALIGNMENT_BOTTOM;
+    xrDialogTransparent.height = '30%';
+    xrDialogTransparent.alpha = 0.4;
+    xrDialogTransparent.thickness = 1;
+    xrDialogTransparent.background = 'black';
+    xrDialogTransparent.zIndex = 121;
+    xrGUI.addControl(xrDialogTransparent);
+
+    // Text wrapper.
     const xrDialog = new Rectangle();
-    xrDialog.width = 1;
-    xrDialog.verticalAlignment = Control._VERTICAL_ALIGNMENT_BOTTOM;
-    xrDialog.height = '200px';
-    xrDialog.color = 'white';
-    xrDialog.alpha = 0.4;
-    xrDialog.thickness = 1;
-    xrDialog.background = 'black';
+    xrDialog.width = xrDialogTransparent.width;
+    xrDialog.verticalAlignment = xrDialogTransparent.verticalAlignment;
+    xrDialog.height = xrDialogTransparent.height;
+    xrDialogTransparent.zIndex = 100;
     xrGUI.addControl(xrDialog);
 
+    // Actual text
     xrDialogMessage = new TextBlock();
     xrDialogMessage.text = '';
     xrDialogMessage.color = 'white';
-    xrDialogMessage.fontSize = 24;
+    xrDialogMessage.fontSize = '20vw';
+    xrDialogMessage.zIndex = 100;
     xrDialog.addControl(xrDialogMessage);
   };
 
@@ -291,9 +307,6 @@ function KioskARWorld() {
       // Activate the observers only if they haven't been
       // activated.
       if (xrHitTestObserve === null) {
-        updateDialogMessage(
-          'Welcome to Service Canada AR \n\n Scan the floor to place your kiosk'
-        );
         xrHitTestObserve = xrHitTest.onHitTestResultObservable.add(
           hitTestObserverCallback
         );
@@ -307,7 +320,6 @@ function KioskARWorld() {
     } else if (enabled === false) {
       // Force checking existance of 'enabled'.
       if (xrHitTestObserve !== null) {
-        updateDialogMessage('');
         xrHitTest.onHitTestResultObservable.remove(xrHitTestObserve);
         xrHitTestObserve = null;
       }
@@ -385,11 +397,17 @@ function KioskARWorld() {
       if (
         Object.prototype.hasOwnProperty.call(interactionsMap, interactionKey)
       ) {
-        interactionsMap[interactionKey].soundObj = new Sound(
-          interactionKey,
-          interactionsMap[interactionKey].audioPath,
-          scene
-        );
+        if (interactionsMap[interactionKey].audioPath) {
+          if (interactionsMap[interactionKey].soundObj) {
+            interactionsMap[interactionKey].soundObj.dispose();
+          }
+
+          interactionsMap[interactionKey].soundObj = new Sound(
+            interactionKey,
+            i18next.t(interactionsMap[interactionKey].audioPath),
+            scene
+          );
+        }
       }
     }
   };
@@ -401,19 +419,32 @@ function KioskARWorld() {
   const executeInteraction = async function (interactionKey) {
     // Address Chrome issue with Auto Play Security Policy.
     Engine.audioEngine.unlock();
-    interactionsMap[interactionKey].soundObj.play();
+    const interaction = interactionsMap[interactionKey];
 
-    const agentAnimation = scene.getAnimationGroupByName(
-      interactionsMap[interactionKey].animation
-    );
-    agentAnimation.start(
-      false,
-      1.0,
-      agentAnimation.from,
-      agentAnimation.to,
-      false
-    );
+    if (interaction.soundObj) {
+      interaction.soundObj.play();
+    }
+
+    if (interaction.dialog) {
+      updateDialogMessage(i18next.t(interaction.dialog));
+    } else {
+      updateDialogMessage('');
+    }
+
+    if (interaction.animation) {
+      const agentAnimation = scene.getAnimationGroupByName(
+        interactionsMap[interactionKey].animation
+      );
+      agentAnimation.start(
+        false,
+        1.0,
+        agentAnimation.from,
+        agentAnimation.to,
+        false
+      );
+    }
   };
+
   /**
    * Setup the kiosk assets.
    */
@@ -453,9 +484,16 @@ function KioskARWorld() {
     );
   };
 
+  /**
+   * Fired to update any changes to languages.
+   */
+  this.updateLanguageCallback = function () {
+    // Load the new language audio
+    setupAudio();
+  };
+
   // Execute the init function.
   (async () => {
-    console.log(i18next.t('agent.welcome.dialog'));
     initFunction();
   })();
 }
