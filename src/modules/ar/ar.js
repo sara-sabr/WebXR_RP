@@ -6,7 +6,6 @@ import {
   Vector3,
   HemisphericLight,
   WebXRHitTest,
-  MeshBuilder,
   Quaternion,
   SceneLoader,
   WebXRState,
@@ -73,6 +72,12 @@ function KioskARWorld() {
   let kiosk = null;
 
   /**
+   * Kiosk object
+   * @type {AbstractMesh}
+   */
+  let kioskCopy = null;
+
+  /**
    * Agent object
    * @type {AbstractMesh}
    */
@@ -88,12 +93,6 @@ function KioskARWorld() {
    * @type {WebXRHitTest}
    */
   let xrHitTest = null;
-
-  /**
-   * THe hit test marker
-   * @type {Mesh}
-   */
-  let hitTestMarker = null;
 
   /**
    * The listener attached to hit test.
@@ -226,14 +225,16 @@ function KioskARWorld() {
   const setupHitTest = async function () {
     xrHitTest = featuresManager.enableFeature(WebXRHitTest, 'latest');
 
-    // Create donut - original hit test
-    hitTestMarker = MeshBuilder.CreateTorus('marker', {
-      diameter: 0.15,
-      thickness: 0.05,
-    });
+    kioskCopy = kiosk.clone('ghost');
+    console.log(kioskCopy);
+    for (const child of kioskCopy.getChildMeshes()) {
+      child.material = new BABYLON.StandardMaterial('mat');
+      child.material.alpha = 0.25;
+    }
 
-    hitTestMarker.isVisible = false;
-    hitTestMarker.rotationQuaternion = new Quaternion();
+    kioskCopy.rotationQuaternion = new Quaternion();
+
+    kioskCopy.setEnabled(false);
     await createGUI();
     await setupAudio();
     await setEnableHitTest(true);
@@ -361,16 +362,19 @@ function KioskARWorld() {
   const hitTestObserverCallback = function (eventData) {
     if (eventData.length) {
       // Make donut visible in AR hit test and decompose the location matrix
-      hitTestMarker.isVisible = true;
+      kiosk.setEnabled(false);
+      kioskCopy.setEnabled(true);
       kioskCoordinates = eventData[0];
       kioskCoordinates.transformationMatrix.decompose(
-        hitTestMarker.scaling,
-        hitTestMarker.rotationQuaternion,
-        hitTestMarker.position
+        undefined,
+        kioskCopy.rotationQuaternion,
+        kioskCopy.position
       );
     } else {
       // Hide the marker.
-      hitTestMarker.isVisible = false;
+      kioskCopy.setEnabled(false);
+      kiosk.setEnabled(false);
+      kioskCoordinates = undefined;
     }
   };
 
@@ -421,7 +425,7 @@ function KioskARWorld() {
     kiosk.scaling.y = kioskScale;
     kiosk.scaling.z = -kioskScale;
     kiosk.id = 'myKiosk';
-    kiosk.setEnabled(false);
+    kiosk.setEnabled(true);
     kiosk.rotationQuaternion = new Quaternion();
 
     const agentScale = 20;
