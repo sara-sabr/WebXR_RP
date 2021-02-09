@@ -1,6 +1,7 @@
 import {
   Engine,
   Scene,
+  Sound,
   FreeCamera,
   Vector3,
   HemisphericLight,
@@ -29,6 +30,8 @@ import {
 
 import 'babylonjs-loaders'; // Required to load GLFT files
 import KioskAsset from '../../assets/models/SC_Kiosk.gltf';
+import HelloMessage from '../../assets/audio/Hello.mp3';
+import AgentAsset from '../../assets/models/Malcolm.gltf';
 
 /**
  * AR world code.
@@ -68,6 +71,12 @@ function KioskARWorld() {
    * @type {AbstractMesh}
    */
   let kiosk = null;
+
+  /**
+   * Agent object
+   * @type {AbstractMesh}
+   */
+  let agent = null;
 
   /**
    * @type {WebXRDefaultExperience}
@@ -114,6 +123,19 @@ function KioskARWorld() {
    * @type {TextBlock}
    */
   let xrDialogMessage = null;
+
+  /**
+   * Map of interactions used in the AR application
+   */
+  const interactionsMap = {
+    "welcome": {
+      "audioPath": HelloMessage,
+      "soundObj": null,
+      "animation": "Hello"
+      
+    }
+  };
+
 
   /**
    * Initializer.
@@ -215,6 +237,7 @@ function KioskARWorld() {
     hitTestMarker.isVisible = false;
     hitTestMarker.rotationQuaternion = new Quaternion();
     await createGUI();
+    await setupAudio();
     await setEnableHitTest(true);
   };
 
@@ -312,10 +335,18 @@ function KioskARWorld() {
       // Make kiosk visible in AR hit test and decompose the location matrix
       // If it already visible, don't make it visible again.
       kiosk.setEnabled(true);
+      agent.setEnabled(true);
+      executeInteraction("welcome");
+      
       kioskCoordinates.transformationMatrix.decompose(
         undefined,
         kiosk.rotationQuaternion,
         kiosk.position
+      );
+      kioskCoordinates.transformationMatrix.decompose(
+        undefined,
+        agent.rotationQuaternion,
+        agent.position
       );
 
       // Hit Test is done, so toggle it off.
@@ -346,6 +377,29 @@ function KioskARWorld() {
   };
 
   /**
+   * Initialize all audio within the interactions.
+   */
+  const setupAudio = async function () {
+
+    for(const interactionKey in interactionsMap){
+      interactionsMap[interactionKey].soundObj = new Sound(
+        interactionKey,
+        interactionsMap[interactionKey].audioPath,
+        scene
+      )
+    }
+  };
+  /** 
+   * Execute the defined interaction. 
+   * @param {string} interactionKey - The JSON key for the interaction that needs to be executed.
+  */
+  const executeInteraction = async function (interactionKey) {
+    interactionsMap[interactionKey].soundObj.play();
+
+    const agentAnimation = scene.getAnimationGroupByName(interactionsMap[interactionKey].animation);
+    agentAnimation.start(false, 1.0, agentAnimation.from, agentAnimation.to, false);
+  }
+  /**
    * Setup the kiosk assets.
    */
   const setupAssetKiosk = async function () {
@@ -359,6 +413,20 @@ function KioskARWorld() {
     kiosk.id = 'myKiosk';
     kiosk.setEnabled(false);
     kiosk.rotationQuaternion = new Quaternion();
+
+    const agentScale = 20;
+
+    agent = (await SceneLoader.ImportMeshAsync(null, AgentAsset, '')).meshes[0];
+    agent.scaling.x = agentScale;
+    agent.scaling.y = agentScale;
+    agent.scaling.z = -agentScale;
+    agent.id = "myHero";
+    agent.setEnabled(false);
+    agent.rotationQuaternion = new Quaternion();
+    agent.rotation;
+
+    const agentAnimation = scene.getAnimationGroupByName("Idle");
+    agentAnimation.start(true, 1.0, agentAnimation.from, agentAnimation.to, false);;
   };
 
   // Execute the init function.
