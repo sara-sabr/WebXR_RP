@@ -27,9 +27,10 @@ import {
 } from 'babylonjs-gui';
 
 import 'babylonjs-loaders'; // Required to load GLFT files
-import KioskAsset from '../../assets/models/SC_Kiosk.gltf';
+import KioskAsset from '../../assets/models/RP_Kiosk.gltf';
 import HelloMessage from '../../assets/audio/Hello.mp3';
 import AgentAsset from '../../assets/models/Malcolm.gltf';
+import { doc } from 'prettier';
 
 /**
  * AR world code.
@@ -196,6 +197,9 @@ function KioskARWorld() {
     );
     dirLight.position = new Vector3(0, 5, -5);
 
+    // Custom XR launch button
+    //let XRbtn = new WebXREnterExitUIButton(document.getElementById("xr-button-overlay"));
+
     // Activate the AR experience.
     xr = await scene.createDefaultXRExperienceAsync({
       uiOptions: {
@@ -203,7 +207,9 @@ function KioskARWorld() {
         referenceSpaceType: 'local-floor',
         onError: (error) => {
           alert(error);
-        },
+        }//,
+        // Custom XR launch button
+        //customButtons:[XRbtn]
       },
       optionalFeatures: true,
     });
@@ -416,7 +422,7 @@ function KioskARWorld() {
    */
   const setupAssetKiosk = async function () {
     // Create Kiosk model
-    const kioskScale = 0.27;
+    const kioskScale = 0.30;
 
     kiosk = (await SceneLoader.ImportMeshAsync(null, KioskAsset, '')).meshes[0];
     kiosk.scaling.x = kioskScale;
