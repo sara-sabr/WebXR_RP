@@ -1,19 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head></head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700&display=swap" rel="stylesheet">
+
+    <title>R&P WebAR Prototype</title>
+</head>
 <body>
     <div id="versionBanner">
         <p id="versionText">Version: <%= htmlWebpackPlugin.options.packageVersion %> (<%= htmlWebpackPlugin.options.buildDate %>)</p>
     </div>
     <div class="wrapper">
         <img id="rp-logo" src="src/assets/images/RP_Logo_Wordmark-EN+FR.png" alt="Recherce & Prototypage / Research & Prototyping">
-        <h3>Bienvenue à / Welcome to</h3>
-        <h1>ServiceCanadaAR</h1>
-        <p>This prototype is a <strong>CONCEPT</strong> developped to demonstrate a possible use case for immersive technology at ESDC.</p>
-        <p>No user profiles ha</p>
+        <h1>ESDC WebAR Prototype</h1>
+        <p>This is a prototype and does not imply any possibility of a future ESDC service where augmented/mixed reality is
+            available/offered. The purpose of this prototype is to push the boundaries and see what a given technology could
+            do.
+        </p>
+        <!--<h3>Launch Prototype</h3>
+        <br>
+         <button id="XRbtn">Initiate AR</button>
+        <br> -->
+        <br>
+
+        <h2>Minimum device requirements</h2>
+
+        <div class="container">
+            <div class="section">
+                <div class="card">
+                    <div class="card-title">Android</div>
+                    <div class="card-container">
+                        <p><strong>Chrome 87+</strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="card">
+                    <div class="card-title">iOS</div>
+                    <div class="card-container">
+                        <p>Install <strong><a href="https://apps.apple.com/us/app/webxr-viewer/id1295998056">WebXR Viewer</a></strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="card">
+                    <div class="card-title">Desktop</div>
+                    <div class="card-container">
+                        <p><strong>Chrome 87+</strong> with <strong><a href="https://chrome.google.com/webstore/detail/webxr-api-emulator/mjddjgeghkdijejnciaefnkjmkafnnje?hl=en">WebXR API Emulator</a></strong> installed and configured.
+                    </div>
+                </div>
+            </div>
+          </div>
+
+        <br>
         <h3>Select the button below to launch the AR application!</h3>
+        
         <canvas id="renderCanvas"></canvas>
     </div>   
-    
+   
 </body>
 </html>
