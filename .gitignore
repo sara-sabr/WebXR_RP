@@ -7,3 +7,4 @@ certificate.pem
 certificate.p12
 dist/**
 !dist/README.md
+**/.DS_Store
