@@ -21,9 +21,10 @@ module.exports = (env) => {
     entry: {
       index: {
         import: './src/main.js',
-        dependOn: 'babylonjs',
+        dependOn: ['babylonjs', 'i18n'],
       },
       babylonjs: ['babylonjs', 'babylonjs-gui', 'babylonjs-loaders'],
+      i18n: ['i18next', 'i18next-browser-languagedetector'],
     },
     plugins: [
       new CleanWebpackPlugin({ cleanStaleWebpackAssets: !debugMode }),
