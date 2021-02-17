@@ -196,9 +196,6 @@ function KioskARWorld() {
     );
     dirLight.position = new Vector3(0, 5, -5);
 
-    // Custom XR launch button
-    //let XRbtn = new WebXREnterExitUIButton(document.getElementById("xr-button-overlay"));
-
     // Activate the AR experience.
     xr = await scene.createDefaultXRExperienceAsync({
       uiOptions: {
@@ -206,9 +203,7 @@ function KioskARWorld() {
         referenceSpaceType: 'local-floor',
         onError: (error) => {
           alert(error);
-        }//,
-        // Custom XR launch button
-        //customButtons:[XRbtn]
+        },
       },
       optionalFeatures: true,
     });
