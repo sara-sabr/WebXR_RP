@@ -30,7 +30,6 @@ import 'babylonjs-loaders'; // Required to load GLFT files
 import KioskAsset from '../../assets/models/RP_Kiosk.gltf';
 import HelloMessage from '../../assets/audio/Hello.mp3';
 import AgentAsset from '../../assets/models/Malcolm.gltf';
-import { doc } from 'prettier';
 
 /**
  * AR world code.
