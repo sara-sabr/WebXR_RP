@@ -30,7 +30,7 @@
     "lint-build": "eslint .",
     "watch": "webpack --watch",
     "build": "webpack",
-    "start": "webpack serve --open  --env NODE_ENV=development --https",
+    "start": "webpack serve --open  --env NODE_ENV=development --https --disable-host-check --host=0.0.0.0",
     "start-prod-debug": "webpack serve --open  --env debugMode=true --https"
   },
   "repository": {

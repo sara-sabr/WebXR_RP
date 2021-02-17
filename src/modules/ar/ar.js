@@ -27,10 +27,9 @@ import {
 } from 'babylonjs-gui';
 
 import 'babylonjs-loaders'; // Required to load GLFT files
-import i18next from 'i18next';
-
-import KioskAsset from '../../assets/models/SC_Kiosk.gltf';
+import KioskAsset from '../../assets/models/RP_Kiosk.gltf';
 import AgentAsset from '../../assets/models/Malcolm.gltf';
+import i18next from 'i18next';
 
 /**
  * AR world code.
@@ -450,7 +449,7 @@ function KioskARWorld() {
    */
   const setupAssetKiosk = async function () {
     // Create Kiosk model
-    const kioskScale = 0.27;
+    const kioskScale = 0.3;
 
     kiosk = (await SceneLoader.ImportMeshAsync(null, KioskAsset, '')).meshes[0];
     kiosk.scaling.x = kioskScale;
