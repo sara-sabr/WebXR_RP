@@ -416,7 +416,7 @@ function KioskARWorld() {
    */
   const setupAssetKiosk = async function () {
     // Create Kiosk model
-    const kioskScale = 0.30;
+    const kioskScale = 0.3;
 
     kiosk = (await SceneLoader.ImportMeshAsync(null, KioskAsset, '')).meshes[0];
     kiosk.scaling.x = kioskScale;
