@@ -8,7 +8,8 @@
     "babylonjs-gui": "^5.0.0-alpha.9",
     "babylonjs-loaders": "^5.0.0-alpha.9",
     "i18next": "^19.8.7",
-    "i18next-browser-languagedetector": "^6.0.1"
+    "i18next-browser-languagedetector": "^6.0.1",
+    "microsoft-cognitiveservices-speech-sdk": "^1.15.1"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
