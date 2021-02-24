@@ -3,13 +3,13 @@ import HelloMessage from '../../assets/audio/Hello.mp3';
 const fr = {
   translation: {
     // Intro
-    'intro.dialog': 'Scan the floor to place the kiosk-FR',
+    'intro.dialog': 'Visez le plancher pour faire apparaitre le kiosque.',
     // Welcome
     'agent.welcome.dialog':
-      "Welcome to Service Canada AR. \n\n I'm Simon, your virtual agent.\n\n How can I help you?-FR",
+      "Bienvenue au prototype RA de l’équipe recherche et prototypage. Je m'appelle Simon, vôtre agent virtuel. Comment puis-je vous aider?",
     'agent.welcome.audio': HelloMessage,
     // Service
-    'agent.service.ei.dialog': 'I see you need help with EI, ...-FR',
+    'agent.service.etms.dialog': 'Vous aviez sélectionné le service de surveillances des technologies émergentes.',
   },
 };
 
