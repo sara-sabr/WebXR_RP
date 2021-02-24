@@ -1,0 +1,9 @@
+{
+  "translation": {
+    "intro.dialog": "Visez le plancher pour faire apparaitre le kiosque.",
+    "agent.welcome.dialog":
+    "Bienvenue au prototype RA de l’équipe recherche et prototypage. Je m'appelle Simon, vôtre agent virtuel. Comment puis-je vous aider?",
+    "agent.service.etms.dialog": "Vous aviez sélectionné le service de surveillances des technologies émergentes."
+  }
+}
+
