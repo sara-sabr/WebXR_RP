@@ -9,7 +9,8 @@ const fr = {
       "Bienvenue au prototype RA de l’équipe recherche et prototypage. Je m'appelle Simon, vôtre agent virtuel. Comment puis-je vous aider?",
     'agent.welcome.audio': HelloMessage,
     // Service
-    'agent.service.etms.dialog': 'Vous aviez sélectionné le service de surveillances des technologies émergentes.',
+    'agent.service.etms.dialog':
+      'Vous aviez sélectionné le service de surveillances des technologies émergentes.',
   },
 };
 
