@@ -37,6 +37,7 @@ function generateAudio(translation, language){
             continue;
         }
     }
+    return;
 }
 /**
  * Function that converts text to audio.
