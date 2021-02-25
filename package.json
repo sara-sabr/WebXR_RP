@@ -26,6 +26,7 @@
     "webpack-dev-server": "^3.11.2"
   },
   "scripts": {
+    "audio": "node ./src/audio.js",
     "test": "echo \"Error: no test specified\"",
     "lint": "eslint --fix .",
     "lint-build": "eslint .",
