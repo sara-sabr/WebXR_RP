@@ -6,10 +6,11 @@ const en = {
     'intro.dialog': 'Scan the floor to place the kiosk',
     // Welcome
     'agent.welcome.dialog':
-      "Welcome to Service Canada AR. \n\n I'm Simon, your virtual agent.\n\n How can I help you?",
+      "Welcome to ITRP AR. \n\nI'm Simon, your virtual agent. \n\nHow can I help you?",
     'agent.welcome.audio': HelloMessage,
     // Service
-    'agent.service.ei.dialog': 'I see you need help with EI, ...',
+    'agent.service.etms.dialog':
+      'You have selected monitoring emerging technologies',
   },
 };
 
