@@ -38,6 +38,14 @@ let kioskARWorld = null;
 
 i18next.use(LanguageDetector).init(i18nextOptions, function () {
   kioskARWorld = new KioskARWorld();
+  // TODO: Create a loop for each key
+  document.getElementById('t-header').innerHTML = i18next.t('t-header');
+  document.getElementById('t-blurb').innerHTML = i18next.t('t-blurb');
+  document.getElementById('t-device').innerHTML = i18next.t('t-device');
+  document.getElementById('t-install').innerHTML = i18next.t('t-install');
+  document.getElementById('t-desktop').innerHTML = i18next.t('t-desktop');
+  document.getElementById('t-pcInstall').innerHTML = i18next.t('t-pcInstall');
+  document.getElementById('t-preBtn').innerHTML = i18next.t('t-preBtn');
 });
 i18next.on('languageChanged', function (lng) {
   kioskARWorld.updateLanguageCallback();
