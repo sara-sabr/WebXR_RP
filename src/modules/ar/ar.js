@@ -132,29 +132,27 @@ function KioskARWorld() {
       dialog: 'agent.welcome.dialog',
     },
     // TO DO:
-    // add audioPath for each service dialog
-    // add proper dialog text for each serice from locale (agent.service.x.dialog)
     // possibly add new animations to model for each service talking
     service_ETMS: {
-      //audioPath: 'agent.welcome.audio',
+      audioPath: 'agent.service.etms.audio',
       soundObj: null,
       animation: 'Talk',
       dialog: 'agent.service.etms.dialog',
     },
     service_Research: {
-      //audioPath: 'agent.welcome.audio',
+      //audioPath: 'agent.service.etms.audio',
       soundObj: null,
       animation: 'Talk',
       dialog: 'You have selected Research',
     },
     service_TP: {
-      //audioPath: 'agent.welcome.audio',
+      //audioPath: 'agent.service.etms.audio',
       soundObj: null,
       animation: 'Talk',
       dialog: 'You have selected Technology Prototyping',
     },
     service_SP: {
-      //audioPath: 'agent.welcome.audio',
+      //audioPath: 'agent.service.etms.audio',
       soundObj: null,
       animation: 'Talk',
       dialog: 'You have selected Solution Prototyping',
@@ -248,7 +246,7 @@ function KioskARWorld() {
       },
       optionalFeatures: true,
     });
-
+//
     // Set the feature manager up.
     featuresManager = xr.baseExperience.featuresManager;
   };
@@ -573,7 +571,7 @@ function KioskARWorld() {
    */
   const executeInteraction = async function (interactionKey) {
     // Address Chrome issue with Auto Play Security Policy.
-    Engine.audioEngine.unlock();
+    Engine.audioEngine.audioContext.resume();
     const interaction = interactionsMap[interactionKey];
 
     if (interaction.soundObj) {

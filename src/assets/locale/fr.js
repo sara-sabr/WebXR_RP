@@ -1,4 +1,5 @@
-import HelloMessage from '../../assets/audio/Hello.mp3';
+import agentWelcome from '../audio/fr/agent.welcome.mp3';
+import agentServiceETMS from '../audio/fr/agent.service.etms.mp3';
 
 const fr = {
   translation: {
@@ -7,10 +8,11 @@ const fr = {
     // Welcome
     'agent.welcome.dialog':
       "Bienvenue au prototype de RA de l’équipe de recherche et prototypage. Je m'appelle Simon, votre agent virtuel. Comment puis-je vous aider?",
-    'agent.welcome.audio': HelloMessage,
+      'agent.welcome.audio': agentWelcome,
     // Service
     'agent.service.etms.dialog':
       'Vous avez sélectionné le service de surveillances des technologies émergentes.',
+      'agent.service.etms.audio': agentServiceETMS,
     // Landing Page
     't-header': 'Recherche & prototypage - Prototype WebXR',
     't-blurb':

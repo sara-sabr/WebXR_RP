@@ -1,4 +1,5 @@
-import HelloMessage from '../audio/Hello.mp3';
+import agentWelcome from '../audio/en/agent.welcome.mp3';
+import agentServiceETMS from '../audio/en/agent.service.etms.mp3';
 
 const en = {
   translation: {
@@ -7,10 +8,11 @@ const en = {
     // Welcome
     'agent.welcome.dialog':
       "Welcome to ITRP AR. \n\nI'm Simon, your virtual agent. \n\nHow can I help you?",
-    'agent.welcome.audio': HelloMessage,
+    'agent.welcome.audio': agentWelcome,
     // Service
     'agent.service.etms.dialog':
       'You have selected monitoring emerging technologies',
+      'agent.service.etms.audio': agentServiceETMS,
     // Landing Page
     't-header': 'R&P WebAR Prototype',
     't-blurb':
