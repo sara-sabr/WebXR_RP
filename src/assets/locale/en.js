@@ -12,7 +12,7 @@ const en = {
     // Service
     'agent.service.etms.dialog':
       'You have selected monitoring emerging technologies',
-      'agent.service.etms.audio': agentServiceETMS,
+    'agent.service.etms.audio': agentServiceETMS,
     // Landing Page
     't-header': 'R&P WebAR Prototype',
     't-blurb':

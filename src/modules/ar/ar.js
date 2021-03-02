@@ -140,19 +140,19 @@ function KioskARWorld() {
       dialog: 'agent.service.etms.dialog',
     },
     service_Research: {
-      //audioPath: 'agent.service.etms.audio',
+      // audioPath: 'agent.service.etms.audio',
       soundObj: null,
       animation: 'Talk',
       dialog: 'You have selected Research',
     },
     service_TP: {
-      //audioPath: 'agent.service.etms.audio',
+      // audioPath: 'agent.service.etms.audio',
       soundObj: null,
       animation: 'Talk',
       dialog: 'You have selected Technology Prototyping',
     },
     service_SP: {
-      //audioPath: 'agent.service.etms.audio',
+      // audioPath: 'agent.service.etms.audio',
       soundObj: null,
       animation: 'Talk',
       dialog: 'You have selected Solution Prototyping',
@@ -160,7 +160,7 @@ function KioskARWorld() {
     wave: {
       animation: 'Hello',
       dialog: 'Select a different service.',
-    }
+    },
   };
 
   /**
@@ -246,7 +246,7 @@ function KioskARWorld() {
       },
       optionalFeatures: true,
     });
-//
+    //
     // Set the feature manager up.
     featuresManager = xr.baseExperience.featuresManager;
   };
@@ -271,9 +271,8 @@ function KioskARWorld() {
     if (ghosting === true) {
       ghostValue = 0.1;
       // Remove scanARicon when ghosting begins
-      xrGUI.removeControl(scanARicon); 
-    }
-    else{
+      xrGUI.removeControl(scanARicon);
+    } else {
       // Added 'else' to bring back scanARicon when not ghosting
       xrGUI.addControl(scanARicon);
     }
@@ -313,13 +312,16 @@ function KioskARWorld() {
     xrGUI.addControl(xrDialogMessage);
 
     // Add scanARicon on GUI load
-    xrGUI.addControl(scanARicon);   
+    xrGUI.addControl(scanARicon);
   };
 
   /**
    * Create the GUI - AR Scan Floor Icon
    */
-  const scanARicon = new Image("icon1", "/src/assets/images/AR_ScanFloor_Icon.png");
+  const scanARicon = new Image(
+    'icon1',
+    '/src/assets/images/AR_ScanFloor_Icon.png'
+  );
   scanARicon.width = 0.65;
   scanARicon.height = 0.15;
 
@@ -327,18 +329,18 @@ function KioskARWorld() {
    * Create the GUI - Buttons
    */
   // ETMS Button
-  const xrButton1 = Button.CreateSimpleButton("but1", "ETMS");
-  xrButton1.top = "16%";
-  xrButton1.left = "18%";
+  const xrButton1 = Button.CreateSimpleButton('but1', 'ETMS');
+  xrButton1.top = '16%';
+  xrButton1.left = '18%';
   xrButton1.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
   xrButton1.width = 0.3;
   xrButton1.height = 0.06;
   xrButton1.cornerRadius = 30;
-  xrButton1.color = "white";
-  xrButton1.fontSize = "2%";
-  xrButton1.fontWeight = "bold";
-  xrButton1.background = "#0072c1";
-  xrButton1.onPointerDownObservable.add(()=> {
+  xrButton1.color = 'white';
+  xrButton1.fontSize = '2%';
+  xrButton1.fontWeight = 'bold';
+  xrButton1.background = '#0072c1';
+  xrButton1.onPointerDownObservable.add(() => {
     executeInteraction('service_ETMS');
     xrGUI.removeControl(xrButton1);
     xrGUI.removeControl(xrButton2);
@@ -347,18 +349,18 @@ function KioskARWorld() {
     xrGUI.addControl(xrButton5);
   });
   // Research Button
-  const xrButton2 = Button.CreateSimpleButton("but2", "Research");
-  xrButton2.top = "16%";
-  xrButton2.left = "-18%";
+  const xrButton2 = Button.CreateSimpleButton('but2', 'Research');
+  xrButton2.top = '16%';
+  xrButton2.left = '-18%';
   xrButton2.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
   xrButton2.width = 0.3;
   xrButton2.height = 0.06;
   xrButton2.cornerRadius = 30;
-  xrButton2.color = "white";
-  xrButton2.fontSize = "2%";
-  xrButton2.fontWeight = "bold";
-  xrButton2.background = "#0072c1";
-  xrButton2.onPointerDownObservable.add(()=> {
+  xrButton2.color = 'white';
+  xrButton2.fontSize = '2%';
+  xrButton2.fontWeight = 'bold';
+  xrButton2.background = '#0072c1';
+  xrButton2.onPointerDownObservable.add(() => {
     executeInteraction('service_Research');
     xrGUI.removeControl(xrButton1);
     xrGUI.removeControl(xrButton2);
@@ -367,18 +369,18 @@ function KioskARWorld() {
     xrGUI.addControl(xrButton5);
   });
   // Technology Prototype Button
-  const xrButton3 = Button.CreateSimpleButton("but3", "Technology Prototype");
-  xrButton3.top = "24%";
-  xrButton3.left = "18%";
+  const xrButton3 = Button.CreateSimpleButton('but3', 'Technology Prototype');
+  xrButton3.top = '24%';
+  xrButton3.left = '18%';
   xrButton3.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
   xrButton3.width = 0.3;
   xrButton3.height = 0.06;
   xrButton3.cornerRadius = 30;
-  xrButton3.color = "white";
-  xrButton3.fontSize = "2%";
-  xrButton3.fontWeight = "bold";
-  xrButton3.background = "#0072c1";
-  xrButton3.onPointerDownObservable.add(()=> {
+  xrButton3.color = 'white';
+  xrButton3.fontSize = '2%';
+  xrButton3.fontWeight = 'bold';
+  xrButton3.background = '#0072c1';
+  xrButton3.onPointerDownObservable.add(() => {
     executeInteraction('service_TP');
     xrGUI.removeControl(xrButton1);
     xrGUI.removeControl(xrButton2);
@@ -387,18 +389,18 @@ function KioskARWorld() {
     xrGUI.addControl(xrButton5);
   });
   // Solution Prototype Button
-  const xrButton4 = Button.CreateSimpleButton("but4", "Solution Prototype");
-  xrButton4.top = "24%";
-  xrButton4.left = "-18%";
+  const xrButton4 = Button.CreateSimpleButton('but4', 'Solution Prototype');
+  xrButton4.top = '24%';
+  xrButton4.left = '-18%';
   xrButton4.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
   xrButton4.width = 0.3;
   xrButton4.height = 0.06;
   xrButton4.cornerRadius = 30;
-  xrButton4.color = "white";
-  xrButton4.fontSize = "2%";
-  xrButton4.fontWeight = "bold";
-  xrButton4.background = "#0072c1";
-  xrButton4.onPointerDownObservable.add(()=> {
+  xrButton4.color = 'white';
+  xrButton4.fontSize = '2%';
+  xrButton4.fontWeight = 'bold';
+  xrButton4.background = '#0072c1';
+  xrButton4.onPointerDownObservable.add(() => {
     executeInteraction('service_SP');
     xrGUI.removeControl(xrButton1);
     xrGUI.removeControl(xrButton2);
@@ -407,16 +409,16 @@ function KioskARWorld() {
     xrGUI.addControl(xrButton5);
   });
   // Return to Services Button
-  const xrButton5 = Button.CreateSimpleButton("but5", "Go back");
-  xrButton5.top = "24%";
+  const xrButton5 = Button.CreateSimpleButton('but5', 'Go back');
+  xrButton5.top = '24%';
   xrButton5.width = 0.3;
   xrButton5.height = 0.06;
   xrButton5.cornerRadius = 30;
-  xrButton5.color = "white";
-  xrButton5.fontSize = "2%";
-  xrButton5.fontWeight = "bold";
-  xrButton5.background = "#0072c1";
-  xrButton5.onPointerDownObservable.add(()=> {
+  xrButton5.color = 'white';
+  xrButton5.fontSize = '2%';
+  xrButton5.fontWeight = 'bold';
+  xrButton5.background = '#0072c1';
+  xrButton5.onPointerDownObservable.add(() => {
     executeInteraction('wave');
     xrGUI.addControl(xrButton1);
     xrGUI.addControl(xrButton2);
@@ -448,7 +450,6 @@ function KioskARWorld() {
    */
   const setEnableHitTest = async function (enabled) {
     if (enabled === true) {
-
       // Activate the observers only if they haven't been
       // activated.
       if (xrHitTestObserve === null) {
@@ -496,7 +497,7 @@ function KioskARWorld() {
       // Play welcome interaction when kiosk is placed
       executeInteraction('welcome');
       // Remove scanARicon when kiosk placed
-      xrGUI.removeControl(scanARicon); 
+      xrGUI.removeControl(scanARicon);
       // Add GUI Buttons
       xrGUI.addControl(xrButton1);
       xrGUI.addControl(xrButton2);
@@ -635,7 +636,6 @@ function KioskARWorld() {
       agentAnimation.to,
       false
     );
-    
   };
 
   /**
