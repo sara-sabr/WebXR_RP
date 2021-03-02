@@ -3,7 +3,11 @@
     "intro.dialog": "Scan the floor to place the kiosk",
     "agent.welcome.dialog":
       "Welcome to ITRP AR. \n\nI'm Simon, your virtual agent. \n\nHow can I help you?",
-    "agent.service.etms.dialog": "You have selected monitoring emerging technologies"
+    "agent.service.etms.dialog": "You have selected monitoring emerging technologies",
+    "agent.service.research.dialog": "You have selected research",
+    "agent.service.tp.dialog": "You have selected technology prototyping",
+    "agent.service.sp.dialog": "You have selected solution prototyping",
+    "agent.service.return.dialog": "What other service would you like to get help with?"
   }
 }
 
