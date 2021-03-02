@@ -140,26 +140,28 @@ function KioskARWorld() {
       dialog: 'agent.service.etms.dialog',
     },
     service_Research: {
-      // audioPath: 'agent.service.etms.audio',
+      audioPath: 'agent.service.research.audio',
       soundObj: null,
       animation: 'Talk',
-      dialog: 'You have selected Research',
+      dialog: 'agent.service.research.dialog',
     },
     service_TP: {
-      // audioPath: 'agent.service.etms.audio',
+      audioPath: 'agent.service.tp.audio',
       soundObj: null,
       animation: 'Talk',
-      dialog: 'You have selected Technology Prototyping',
+      dialog: 'agent.service.tp.dialog',
     },
     service_SP: {
-      // audioPath: 'agent.service.etms.audio',
+      audioPath: 'agent.service.sp.audio',
       soundObj: null,
       animation: 'Talk',
-      dialog: 'You have selected Solution Prototyping',
+      dialog: 'agent.service.sp.dialog',
     },
     wave: {
+      audioPath: 'agent.service.return.audio',
+      soundObj: null,
       animation: 'Hello',
-      dialog: 'Select a different service.',
+      dialog: 'agent.service.return.dialog',
     },
   };
 
