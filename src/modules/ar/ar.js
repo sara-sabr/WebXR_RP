@@ -24,6 +24,8 @@ import {
   Rectangle,
   TextBlock,
   Control,
+  Button,
+  Image,
 } from 'babylonjs-gui';
 
 import 'babylonjs-loaders'; // Required to load GLFT files
@@ -129,6 +131,36 @@ function KioskARWorld() {
       animation: 'Hello',
       dialog: 'agent.welcome.dialog',
     },
+    // TO DO:
+    // possibly add new animations to model for each service talking
+    service_ETMS: {
+      audioPath: 'agent.service.etms.audio',
+      soundObj: null,
+      animation: 'Talk',
+      dialog: 'agent.service.etms.dialog',
+    },
+    service_Research: {
+      // audioPath: 'agent.service.etms.audio',
+      soundObj: null,
+      animation: 'Talk',
+      dialog: 'You have selected Research',
+    },
+    service_TP: {
+      // audioPath: 'agent.service.etms.audio',
+      soundObj: null,
+      animation: 'Talk',
+      dialog: 'You have selected Technology Prototyping',
+    },
+    service_SP: {
+      // audioPath: 'agent.service.etms.audio',
+      soundObj: null,
+      animation: 'Talk',
+      dialog: 'You have selected Solution Prototyping',
+    },
+    wave: {
+      animation: 'Hello',
+      dialog: 'Select a different service.',
+    },
   };
 
   /**
@@ -214,7 +246,7 @@ function KioskARWorld() {
       },
       optionalFeatures: true,
     });
-
+    //
     // Set the feature manager up.
     featuresManager = xr.baseExperience.featuresManager;
   };
@@ -238,6 +270,11 @@ function KioskARWorld() {
     let ghostValue = 1;
     if (ghosting === true) {
       ghostValue = 0.1;
+      // Remove scanARicon when ghosting begins
+      xrGUI.removeControl(scanARicon);
+    } else {
+      // Added 'else' to bring back scanARicon when not ghosting
+      xrGUI.addControl(scanARicon);
     }
 
     for (const child of kiosk.getChildMeshes()) {
@@ -256,29 +293,139 @@ function KioskARWorld() {
     const xrDialogTransparent = new Rectangle();
     xrDialogTransparent.width = 1;
     xrDialogTransparent.verticalAlignment = Control._VERTICAL_ALIGNMENT_BOTTOM;
-    xrDialogTransparent.height = '30%';
-    xrDialogTransparent.alpha = 0.4;
+    xrDialogTransparent.height = '20%';
+    xrDialogTransparent.alpha = 0.65;
     xrDialogTransparent.thickness = 1;
     xrDialogTransparent.background = 'black';
-    xrDialogTransparent.zIndex = 121;
+    xrDialogTransparent.zIndex = 21;
     xrGUI.addControl(xrDialogTransparent);
-
-    // Text wrapper.
-    const xrDialog = new Rectangle();
-    xrDialog.width = xrDialogTransparent.width;
-    xrDialog.verticalAlignment = xrDialogTransparent.verticalAlignment;
-    xrDialog.height = xrDialogTransparent.height;
-    xrDialogTransparent.zIndex = 100;
-    xrGUI.addControl(xrDialog);
 
     // Actual text
     xrDialogMessage = new TextBlock();
+    xrDialogMessage.width = xrDialogTransparent.width;
+    xrDialogMessage.verticalAlignment = xrDialogTransparent.verticalAlignment;
+    xrDialogMessage.height = xrDialogTransparent.height;
+    xrDialogMessage.zIndex = 100;
     xrDialogMessage.text = '';
     xrDialogMessage.color = 'white';
-    xrDialogMessage.fontSize = '20vw';
-    xrDialogMessage.zIndex = 100;
-    xrDialog.addControl(xrDialogMessage);
+    xrDialogMessage.fontSize = '2%';
+    xrGUI.addControl(xrDialogMessage);
+
+    // Add scanARicon on GUI load
+    xrGUI.addControl(scanARicon);
   };
+
+  /**
+   * Create the GUI - AR Scan Floor Icon
+   */
+  const scanARicon = new Image(
+    'icon1',
+    '/src/assets/images/AR_ScanFloor_Icon.png'
+  );
+  scanARicon.width = 0.65;
+  scanARicon.height = 0.15;
+
+  /**
+   * Create the GUI - Buttons
+   */
+  // ETMS Button
+  const xrButton1 = Button.CreateSimpleButton('but1', 'ETMS');
+  xrButton1.top = '16%';
+  xrButton1.left = '18%';
+  xrButton1.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+  xrButton1.width = 0.3;
+  xrButton1.height = 0.06;
+  xrButton1.cornerRadius = 30;
+  xrButton1.color = 'white';
+  xrButton1.fontSize = '2%';
+  xrButton1.fontWeight = 'bold';
+  xrButton1.background = '#0072c1';
+  xrButton1.onPointerDownObservable.add(() => {
+    executeInteraction('service_ETMS');
+    xrGUI.removeControl(xrButton1);
+    xrGUI.removeControl(xrButton2);
+    xrGUI.removeControl(xrButton3);
+    xrGUI.removeControl(xrButton4);
+    xrGUI.addControl(xrButton5);
+  });
+  // Research Button
+  const xrButton2 = Button.CreateSimpleButton('but2', 'Research');
+  xrButton2.top = '16%';
+  xrButton2.left = '-18%';
+  xrButton2.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
+  xrButton2.width = 0.3;
+  xrButton2.height = 0.06;
+  xrButton2.cornerRadius = 30;
+  xrButton2.color = 'white';
+  xrButton2.fontSize = '2%';
+  xrButton2.fontWeight = 'bold';
+  xrButton2.background = '#0072c1';
+  xrButton2.onPointerDownObservable.add(() => {
+    executeInteraction('service_Research');
+    xrGUI.removeControl(xrButton1);
+    xrGUI.removeControl(xrButton2);
+    xrGUI.removeControl(xrButton3);
+    xrGUI.removeControl(xrButton4);
+    xrGUI.addControl(xrButton5);
+  });
+  // Technology Prototype Button
+  const xrButton3 = Button.CreateSimpleButton('but3', 'Technology Prototype');
+  xrButton3.top = '24%';
+  xrButton3.left = '18%';
+  xrButton3.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+  xrButton3.width = 0.3;
+  xrButton3.height = 0.06;
+  xrButton3.cornerRadius = 30;
+  xrButton3.color = 'white';
+  xrButton3.fontSize = '2%';
+  xrButton3.fontWeight = 'bold';
+  xrButton3.background = '#0072c1';
+  xrButton3.onPointerDownObservable.add(() => {
+    executeInteraction('service_TP');
+    xrGUI.removeControl(xrButton1);
+    xrGUI.removeControl(xrButton2);
+    xrGUI.removeControl(xrButton3);
+    xrGUI.removeControl(xrButton4);
+    xrGUI.addControl(xrButton5);
+  });
+  // Solution Prototype Button
+  const xrButton4 = Button.CreateSimpleButton('but4', 'Solution Prototype');
+  xrButton4.top = '24%';
+  xrButton4.left = '-18%';
+  xrButton4.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
+  xrButton4.width = 0.3;
+  xrButton4.height = 0.06;
+  xrButton4.cornerRadius = 30;
+  xrButton4.color = 'white';
+  xrButton4.fontSize = '2%';
+  xrButton4.fontWeight = 'bold';
+  xrButton4.background = '#0072c1';
+  xrButton4.onPointerDownObservable.add(() => {
+    executeInteraction('service_SP');
+    xrGUI.removeControl(xrButton1);
+    xrGUI.removeControl(xrButton2);
+    xrGUI.removeControl(xrButton3);
+    xrGUI.removeControl(xrButton4);
+    xrGUI.addControl(xrButton5);
+  });
+  // Return to Services Button
+  const xrButton5 = Button.CreateSimpleButton('but5', 'Go back');
+  xrButton5.top = '24%';
+  xrButton5.width = 0.3;
+  xrButton5.height = 0.06;
+  xrButton5.cornerRadius = 30;
+  xrButton5.color = 'white';
+  xrButton5.fontSize = '2%';
+  xrButton5.fontWeight = 'bold';
+  xrButton5.background = '#0072c1';
+  xrButton5.onPointerDownObservable.add(() => {
+    executeInteraction('wave');
+    xrGUI.addControl(xrButton1);
+    xrGUI.addControl(xrButton2);
+    xrGUI.addControl(xrButton3);
+    xrGUI.addControl(xrButton4);
+    xrGUI.removeControl(xrButton5);
+  });
 
   /**
    * Update the dialog message and if present show the message.
@@ -347,7 +494,15 @@ function KioskARWorld() {
       // If it already visible, don't make it visible again.
       toggleKioskGhosting(false);
       agent.setEnabled(true);
+      // Play welcome interaction when kiosk is placed
       executeInteraction('welcome');
+      // Remove scanARicon when kiosk placed
+      xrGUI.removeControl(scanARicon);
+      // Add GUI Buttons
+      xrGUI.addControl(xrButton1);
+      xrGUI.addControl(xrButton2);
+      xrGUI.addControl(xrButton3);
+      xrGUI.addControl(xrButton4);
 
       kioskCoordinates.transformationMatrix.decompose(
         undefined,
@@ -417,7 +572,7 @@ function KioskARWorld() {
    */
   const executeInteraction = async function (interactionKey) {
     // Address Chrome issue with Auto Play Security Policy.
-    Engine.audioEngine.unlock();
+    Engine.audioEngine.audioContext.resume();
     const interaction = interactionsMap[interactionKey];
 
     if (interaction.soundObj) {
