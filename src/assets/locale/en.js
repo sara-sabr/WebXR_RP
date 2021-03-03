@@ -4,34 +4,29 @@ import agentServiceResearch from '../audio/en/agent.service.research.mp3';
 import agentServiceTP from '../audio/en/agent.service.tp.mp3';
 import agentServiceSP from '../audio/en/agent.service.sp.mp3';
 import agentServiceReturn from '../audio/en/agent.service.return.mp3';
+import * as data from "./en.json"; 
 
 const en = {
   translation: {
     // Intro
-    'intro.dialog': 'Scan the floor to place the kiosk',
+    'intro.dialog': data.default.translation["intro.dialog"],
     // Welcome
-    'agent.welcome.dialog':
-      "Welcome to ITRP AR. \n\nI'm Simon, your virtual agent. \n\nHow can I help you?",
+    'agent.welcome.dialog': data.default.translation["agent.welcome.dialog"],
     'agent.welcome.audio': agentWelcome,
     // Service - ETMS
-    'agent.service.etms.dialog':
-      'You have selected monitoring emerging technologies',
+    'agent.service.etms.dialog': data.default.translation["agent.service.etms.dialog"],
     'agent.service.etms.audio': agentServiceETMS,
     // Service - Research
-    'agent.service.research.dialog':
-      'You have selected Research',
+    'agent.service.research.dialog': data.default.translation["agent.service.research..dialog"],
     'agent.service.research.audio': agentServiceResearch,
     // Service - Technology Prototyping
-    'agent.service.tp.dialog':
-      'You have selected Technology Prototyping',
+    'agent.service.tp.dialog': data.default.translation["agent.service.tp..dialog"],
     'agent.service.tp.audio': agentServiceTP,
     // Service - Solution Prototyping
-    'agent.service.sp.dialog':
-      'You have selected Solution Prototyping',
+    'agent.service.sp.dialog': data.default.translation["agent.service.sp.dialog"],
     'agent.service.sp.audio': agentServiceSP,
     // Service - Return
-    'agent.service.return.dialog':
-      'What other service would you like to get help with?',
+    'agent.service.return.dialog': data.default.translation["agent.service.return.dialog"],
     'agent.service.return.audio': agentServiceReturn,
     // Landing Page
     't-header': 'R&P WebAR Prototype',

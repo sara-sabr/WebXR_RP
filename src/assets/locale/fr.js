@@ -4,34 +4,29 @@ import agentServiceResearch from '../audio/fr/agent.service.research.mp3';
 import agentServiceTP from '../audio/fr/agent.service.tp.mp3';
 import agentServiceSP from '../audio/fr/agent.service.sp.mp3';
 import agentServiceReturn from '../audio/fr/agent.service.return.mp3';
+import * as data from "./fr.json"; 
 
 const fr = {
   translation: {
     // Intro
-    'intro.dialog': 'Visez le plancher pour faire apparaître le kiosque.',
+    'intro.dialog': data.default.translation["intro.dialog"],
     // Welcome
-    'agent.welcome.dialog':
-      "Bienvenue au prototype de RA de l’équipe de recherche et prototypage. Je m'appelle Simon, votre agent virtuel. Comment puis-je vous aider?",
+    'agent.welcome.dialog': data.default.translation["agent.welcome.dialog"],
     'agent.welcome.audio': agentWelcome,
     // Service - ETMS
-    'agent.service.etms.dialog':
-      'Vous avez sélectionné le service de surveillances des technologies émergentes.',
+    'agent.service.etms.dialog': data.default.translation["agent.service.etms.dialog"],
     'agent.service.etms.audio': agentServiceETMS,
     // Service - Research
-    'agent.service.research.dialog':
-      'Vous avez sélectionné le service de recherche',
+    'agent.service.research.dialog': data.default.translation["agent.service.research..dialog"],
     'agent.service.research.audio': agentServiceResearch,
     // Service - Technology Prototyping
-    'agent.service.tp.dialog':
-      'Vous avez sélectionné le service de prototypage technologique',
+    'agent.service.tp.dialog': data.default.translation["agent.service.tp..dialog"],
     'agent.service.tp.audio': agentServiceTP,
     // Service - Solution Prototyping
-    'agent.service.sp.dialog':
-      'Vous avez sélectionné le service de prototypage de solutions',
+    'agent.service.sp.dialog': data.default.translation["agent.service.sp.dialog"],
     'agent.service.sp.audio': agentServiceSP,
     // Service - Return
-    'agent.service.return.dialog':
-      "Pour quel autre service aimerez-vous obtenir de l'aide?",
+    'agent.service.return.dialog': data.default.translation["agent.service.return.dialog"],
     'agent.service.return.audio': agentServiceReturn,
     // Landing Page
     't-header': 'Recherche & prototypage - Prototype WebXR',
