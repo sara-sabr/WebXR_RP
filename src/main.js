@@ -6,6 +6,8 @@ import { en } from './assets/locale/en.js';
 import { fr } from './assets/locale/fr.js';
 
 import './assets/css/main.css';
+import './assets/images/AR_ScanFloor_Icon.png';
+import './assets/images/RP_Logo_Wordmark-EN+FR.png';
 
 // Init the i!8n.
 const i18nextDetectorOptions = {
