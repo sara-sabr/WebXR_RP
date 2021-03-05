@@ -17,10 +17,10 @@ const en = {
     'agent.service.etms.dialog': data.default.translation["agent.service.etms.dialog"],
     'agent.service.etms.audio': agentServiceETMS,
     // Service - Research
-    'agent.service.research.dialog': data.default.translation["agent.service.research..dialog"],
+    'agent.service.research.dialog': data.default.translation["agent.service.research.dialog"],
     'agent.service.research.audio': agentServiceResearch,
     // Service - Technology Prototyping
-    'agent.service.tp.dialog': data.default.translation["agent.service.tp..dialog"],
+    'agent.service.tp.dialog': data.default.translation["agent.service.tp.dialog"],
     'agent.service.tp.audio': agentServiceTP,
     // Service - Solution Prototyping
     'agent.service.sp.dialog': data.default.translation["agent.service.sp.dialog"],
@@ -28,6 +28,17 @@ const en = {
     // Service - Return
     'agent.service.return.dialog': data.default.translation["agent.service.return.dialog"],
     'agent.service.return.audio': agentServiceReturn,
+    // GUI Buttons
+    // Button - ETMS
+    'gui.button.etms.dialog': data.default.translation["gui.button.etms.dialog"],
+    // Button - Research
+    'gui.button.research.dialog': data.default.translation["gui.button.research.dialog"],
+    // Button - Technology Prototype
+    'gui.button.tp.dialog': data.default.translation["gui.button.tp.dialog"],
+    // Button - Solution Prototype
+    'gui.button.sp.dialog': data.default.translation["gui.button.sp.dialog"],
+    // Button - Return
+    'gui.button.return.dialog': data.default.translation["gui.button.return.dialog"],
     // Landing Page
     't-header': 'R&P WebAR Prototype',
     't-blurb':

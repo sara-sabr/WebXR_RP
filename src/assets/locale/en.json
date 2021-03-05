@@ -7,7 +7,12 @@
     "agent.service.research.dialog": "You have selected research",
     "agent.service.tp.dialog": "You have selected technology prototyping",
     "agent.service.sp.dialog": "You have selected solution prototyping",
-    "agent.service.return.dialog": "What other service would you like to get help with?"
+    "agent.service.return.dialog": "What other service would you like to get help with?",
+    "gui.button.etms.dialog": "ETMS",
+    "gui.button.research.dialog": "Research",
+    "gui.button.tp.dialog": "Technology Prototype",
+    "gui.button.sp.dialog": "Solution Prototype",
+    "gui.button.return.dialog": "Return"
   }
 }
 

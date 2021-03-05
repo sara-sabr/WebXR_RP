@@ -7,6 +7,11 @@
     "agent.service.research.dialog": "Vous aviez sélectionné le service de recherche.",
     "agent.service.tp.dialog": "Vous avez sélectionné le service de prototypage technologique.",
     "agent.service.sp.dialog": "Vous avez sélectionné le service de prototypage de solutions.",
-    "agent.service.return.dialog": "Pour quel autre service aimerez-vous obtenir de l'aide?"
+    "agent.service.return.dialog": "Pour quel autre service aimerez-vous obtenir de l'aide?",
+    "gui.button.etms.dialog": "SSTE",
+    "gui.button.research.dialog": "Recherche",
+    "gui.button.tp.dialog": "Prototypage technologique",
+    "gui.button.sp.dialog": "Prototypage de solutions",
+    "gui.button.return.dialog": "Retour"
   }
 }
