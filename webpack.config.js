@@ -21,9 +21,10 @@ module.exports = (env) => {
     entry: {
       index: {
         import: './src/main.js',
-        dependOn: 'babylonjs',
+        dependOn: ['babylonjs', 'i18n'],
       },
       babylonjs: ['babylonjs', 'babylonjs-gui', 'babylonjs-loaders'],
+      i18n: ['i18next', 'i18next-browser-languagedetector'],
     },
     plugins: [
       new CleanWebpackPlugin({ cleanStaleWebpackAssets: !debugMode }),
@@ -41,7 +42,7 @@ module.exports = (env) => {
     module: {
       rules: [
         {
-          test: /\.(png|svg|jpg|jpeg|gif|gltf)$/i,
+          test: /\.(png|svg|jpg|jpeg|gif|gltf|mp3)$/i,
           type: 'asset/resource',
         },
         {

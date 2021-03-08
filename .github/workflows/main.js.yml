@@ -29,10 +29,14 @@ jobs:
         echo "NPM: $(npm -v)"
         echo "::endgroup::"
     - run: npm ci
+    - run: npm run audio
+      env:
+        APIKEY: ${{ secrets.SPEECH_KEY }}
+        REGION: ${{ secrets.SPEECH_REGION }}
     - run: npm run build --if-present
     - run: npm test
     - name: Deploy - GitHub Pages action
       uses: peaceiris/actions-gh-pages@v3.7.3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.GD_TOKEN }}
         publish_dir: ./dist

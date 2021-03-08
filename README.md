@@ -1,5 +1,6 @@
 # ESDC WebAR Prototype
 
+![Release to Prod](https://github.com/sara-sabr/WebXR_RP/workflows/Release%20to%20Prod/badge.svg)
 
 ## Disclaimer
 This is a prototype and does not imply any possibility of a future ESDC service where augmented/mixed reality is
@@ -20,7 +21,11 @@ The following are the minimum requirements depending on the device.
 ## How to Run
 
 The following commands are available after running ```npm install```:
-
+- ```npm run audio```
+Gets the dialog lines from ```locale/en.json``` and ```locale/fr.json``` and converts them from text to MP3 files. This requires having a Microsoft Cognitive Services subscription.
+In order to use this command, two environment variables must be set: 
+    1. ```APIKEY``` : the key of the Cognitive Service
+    2. ```REGION``` : the location of the Cognitive Service
 - ```npm run build```
 Builds the source code and packages it into the ```dist``` folder which then can be served by any server.
 - ```npm run lint```

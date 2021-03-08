@@ -1,12 +1,15 @@
 {
   "name": "esdc-itrp-xr-prototype",
-  "version": "1.0.19",
+  "version": "1.0.35",
   "description": "ESDC IT RP XR Prototype",
   "private": true,
   "dependencies": {
     "babylonjs": "^5.0.0-alpha.9",
     "babylonjs-gui": "^5.0.0-alpha.9",
-    "babylonjs-loaders": "^5.0.0-alpha.9"
+    "babylonjs-loaders": "^5.0.0-alpha.9",
+    "i18next": "^19.8.7",
+    "i18next-browser-languagedetector": "^6.0.1",
+    "microsoft-cognitiveservices-speech-sdk": "^1.15.1"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
@@ -23,12 +26,13 @@
     "webpack-dev-server": "^3.11.2"
   },
   "scripts": {
+    "audio": "node ./src/audio.js",
     "test": "echo \"Error: no test specified\"",
     "lint": "eslint --fix .",
     "lint-build": "eslint .",
     "watch": "webpack --watch",
     "build": "webpack",
-    "start": "webpack serve --open  --env NODE_ENV=development --https",
+    "start": "webpack serve --open  --env NODE_ENV=development --https --disable-host-check --host=0.0.0.0",
     "start-prod-debug": "webpack serve --open  --env debugMode=true --https"
   },
   "repository": {

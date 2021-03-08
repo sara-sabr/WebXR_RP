@@ -1,0 +1,18 @@
+{
+  "translation": {
+    "intro.dialog": "Scan the floor to place the kiosk",
+    "agent.welcome.dialog":
+      "Welcome to ITRP AR. \n\nI'm Simon, your virtual agent. \n\nHow can I help you?",
+    "agent.service.etms.dialog": "You have selected monitoring emerging technologies",
+    "agent.service.research.dialog": "You have selected research",
+    "agent.service.tp.dialog": "You have selected technology prototyping",
+    "agent.service.sp.dialog": "You have selected solution prototyping",
+    "agent.service.return.dialog": "What other service would you like to get help with?",
+    "gui.button.etms.dialog": "ETMS",
+    "gui.button.research.dialog": "Research",
+    "gui.button.tp.dialog": "Technology Prototype",
+    "gui.button.sp.dialog": "Solution Prototype",
+    "gui.button.return.dialog": "Return"
+  }
+}
+

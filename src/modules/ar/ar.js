@@ -1,6 +1,7 @@
 import {
   Engine,
   Scene,
+  Sound,
   FreeCamera,
   Vector3,
   HemisphericLight,
@@ -14,7 +15,6 @@ import {
   DirectionalLight,
   AbstractMesh, // eslint-disable-line
   Observer, // eslint-disable-line
-  Mesh, // eslint-disable-line
   PointerInfo, // eslint-disable-line
   EventState,// eslint-disable-line
 } from 'babylonjs';
@@ -24,10 +24,14 @@ import {
   Rectangle,
   TextBlock,
   Control,
+  Button,
+  Image,
 } from 'babylonjs-gui';
 
 import 'babylonjs-loaders'; // Required to load GLFT files
-import KioskAsset from '../../assets/models/SC_Kiosk.gltf';
+import KioskAsset from '../../assets/models/RP_Kiosk.gltf';
+import AgentAsset from '../../assets/models/Malcolm.gltf';
+import i18next from 'i18next';
 
 /**
  * AR world code.
@@ -69,10 +73,10 @@ function KioskARWorld() {
   let kiosk = null;
 
   /**
-   * Kiosk object
+   * Agent object
    * @type {AbstractMesh}
    */
-  let kioskCopy = null;
+  let agent = null;
 
   /**
    * @type {WebXRDefaultExperience}
@@ -115,6 +119,74 @@ function KioskARWorld() {
   let xrDialogMessage = null;
 
   /**
+   * Map of interactions used in the AR application
+   */
+  const interactionsMap = {
+    intro: {
+      dialog: 'intro.dialog',
+    },
+    welcome: {
+      audioPath: 'agent.welcome.audio',
+      soundObj: null,
+      animation: 'Hello',
+      dialog: 'agent.welcome.dialog',
+    },
+    // TO DO:
+    // possibly add new animations to model for each service talking
+    service_ETMS: {
+      audioPath: 'agent.service.etms.audio',
+      soundObj: null,
+      animation: 'Talk',
+      dialog: 'agent.service.etms.dialog',
+    },
+    service_Research: {
+      audioPath: 'agent.service.research.audio',
+      soundObj: null,
+      animation: 'Talk',
+      dialog: 'agent.service.research.dialog',
+    },
+    service_TP: {
+      audioPath: 'agent.service.tp.audio',
+      soundObj: null,
+      animation: 'Talk',
+      dialog: 'agent.service.tp.dialog',
+    },
+    service_SP: {
+      audioPath: 'agent.service.sp.audio',
+      soundObj: null,
+      animation: 'Talk',
+      dialog: 'agent.service.sp.dialog',
+    },
+    wave: {
+      audioPath: 'agent.service.return.audio',
+      soundObj: null,
+      animation: 'Hello',
+      dialog: 'agent.service.return.dialog',
+    },
+  };
+
+  /**
+   * Map of interactions used in the AR application
+   */
+  const buttonNamesMap = {
+    btn_etms: {
+      dialog: 'gui.button.etms.dialog',
+    },
+    btn_research: {
+      dialog: 'gui.button.research.dialog',
+    },
+    btn_tp: {
+      dialog: 'gui.button.tp.dialog',
+    },
+    btn_sp: {
+      dialog: 'gui.button.sp.dialog',
+    },
+    btn_return: {
+      dialog: 'gui.button.return.dialog',
+    },
+  };
+
+  /**
    * Initializer.
    */
   const initFunction = async function () {
@@ -138,6 +210,9 @@ function KioskARWorld() {
     window.addEventListener('resize', function () {
       engine.resize();
     });
+
+    // Initial.
+    executeInteraction('intro');
   };
 
   /**
@@ -194,7 +269,7 @@ function KioskARWorld() {
       },
       optionalFeatures: true,
     });
-
+    //
     // Set the feature manager up.
     featuresManager = xr.baseExperience.featuresManager;
   };
@@ -204,19 +279,30 @@ function KioskARWorld() {
    */
   const setupHitTest = async function () {
     xrHitTest = featuresManager.enableFeature(WebXRHitTest, 'latest');
+    await createGUI();
+    await setupAudio();
+    await setEnableHitTest(true);
+  };
 
-    kioskCopy = kiosk.clone('ghost');
-    console.log(kioskCopy);
-    for (const child of kioskCopy.getChildMeshes()) {
-      child.material = new BABYLON.StandardMaterial('mat');
-      child.material.alpha = 0.25;
+  /**
+   * Turn on or off the ghosting affect.
+   *
+   * @param {boolean} ghosting - true to enable ghosting, otherwise false.
+   */
+  const toggleKioskGhosting = async function (ghosting) {
+    let ghostValue = 1;
+    if (ghosting === true) {
+      ghostValue = 0.1;
+      // Remove scanARicon when ghosting begins
+      xrGUI.removeControl(scanARicon);
+    } else {
+      // Added 'else' to bring back scanARicon when not ghosting
+      xrGUI.addControl(scanARicon);
     }
 
-    kioskCopy.rotationQuaternion = new Quaternion();
-
-    kioskCopy.setEnabled(false);
-    await createGUI();
-    await setEnableHitTest(true);
+    for (const child of kiosk.getChildMeshes()) {
+      child.visibility = ghostValue;
+    }
   };
 
   /**
@@ -226,22 +312,158 @@ function KioskARWorld() {
     // Initialize the GUI
     xrGUI = AdvancedDynamicTexture.CreateFullscreenUI('UI');
 
-    const xrDialog = new Rectangle();
-    xrDialog.width = 1;
-    xrDialog.verticalAlignment = Control._VERTICAL_ALIGNMENT_BOTTOM;
-    xrDialog.height = '200px';
-    xrDialog.color = 'white';
-    xrDialog.alpha = 0.4;
-    xrDialog.thickness = 1;
-    xrDialog.background = 'black';
-    xrGUI.addControl(xrDialog);
+    // Transparent dialog window
+    const xrDialogTransparent = new Rectangle();
+    xrDialogTransparent.width = 1;
+    xrDialogTransparent.verticalAlignment = Control._VERTICAL_ALIGNMENT_BOTTOM;
+    xrDialogTransparent.height = '20%';
+    xrDialogTransparent.alpha = 0.65;
+    xrDialogTransparent.thickness = 1;
+    xrDialogTransparent.background = 'black';
+    xrDialogTransparent.zIndex = 21;
+    xrGUI.addControl(xrDialogTransparent);
 
+    // Actual text
     xrDialogMessage = new TextBlock();
+    xrDialogMessage.width = xrDialogTransparent.width;
+    xrDialogMessage.verticalAlignment = xrDialogTransparent.verticalAlignment;
+    xrDialogMessage.height = xrDialogTransparent.height;
+    xrDialogMessage.zIndex = 100;
     xrDialogMessage.text = '';
     xrDialogMessage.color = 'white';
-    xrDialogMessage.fontSize = 24;
-    xrDialog.addControl(xrDialogMessage);
+    xrDialogMessage.fontSize = '2%';
+    xrGUI.addControl(xrDialogMessage);
+
+    // Add scanARicon on GUI load
+    xrGUI.addControl(scanARicon);
   };
+
+  /**
+   * Create the GUI - AR Scan Floor Icon
+   */
+  const scanARicon = new Image(
+    'icon1',
+    '/src/assets/images/AR_ScanFloor_Icon.png'
+  );
+  scanARicon.width = 0.65;
+  scanARicon.height = 0.15;
+
+  /**
+   * Create the GUI - Buttons
+   */
+  // ETMS Button
+  const xrButton1 = Button.CreateSimpleButton(
+    'but1',
+    i18next.t(buttonNamesMap.btn_etms.dialog)
+  );
+  xrButton1.top = '16%';
+  xrButton1.left = '18%';
+  xrButton1.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+  xrButton1.width = 0.3;
+  xrButton1.height = 0.06;
+  xrButton1.cornerRadius = 30;
+  xrButton1.color = 'white';
+  xrButton1.fontSize = '2%';
+  xrButton1.fontWeight = 'bold';
+  xrButton1.background = '#0072c1';
+  xrButton1.onPointerDownObservable.add(() => {
+    executeInteraction('service_ETMS');
+    xrGUI.removeControl(xrButton1);
+    xrGUI.removeControl(xrButton2);
+    xrGUI.removeControl(xrButton3);
+    xrGUI.removeControl(xrButton4);
+    xrGUI.addControl(xrButton5);
+  });
+  // Research Button
+  const xrButton2 = Button.CreateSimpleButton(
+    'but2',
+    i18next.t(buttonNamesMap.btn_research.dialog)
+  );
+  xrButton2.top = '16%';
+  xrButton2.left = '-18%';
+  xrButton2.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
+  xrButton2.width = 0.3;
+  xrButton2.height = 0.06;
+  xrButton2.cornerRadius = 30;
+  xrButton2.color = 'white';
+  xrButton2.fontSize = '2%';
+  xrButton2.fontWeight = 'bold';
+  xrButton2.background = '#0072c1';
+  xrButton2.onPointerDownObservable.add(() => {
+    executeInteraction('service_Research');
+    xrGUI.removeControl(xrButton1);
+    xrGUI.removeControl(xrButton2);
+    xrGUI.removeControl(xrButton3);
+    xrGUI.removeControl(xrButton4);
+    xrGUI.addControl(xrButton5);
+  });
+  // Technology Prototype Button
+  const xrButton3 = Button.CreateSimpleButton(
+    'but3',
+    i18next.t(buttonNamesMap.btn_tp.dialog)
+  );
+  xrButton3.top = '24%';
+  xrButton3.left = '18%';
+  xrButton3.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+  xrButton3.width = 0.3;
+  xrButton3.height = 0.06;
+  xrButton3.cornerRadius = 30;
+  xrButton3.color = 'white';
+  xrButton3.fontSize = '2%';
+  xrButton3.fontWeight = 'bold';
+  xrButton3.background = '#0072c1';
+  xrButton3.onPointerDownObservable.add(() => {
+    executeInteraction('service_TP');
+    xrGUI.removeControl(xrButton1);
+    xrGUI.removeControl(xrButton2);
+    xrGUI.removeControl(xrButton3);
+    xrGUI.removeControl(xrButton4);
+    xrGUI.addControl(xrButton5);
+  });
+  // Solution Prototype Button
+  const xrButton4 = Button.CreateSimpleButton(
+    'but4',
+    i18next.t(buttonNamesMap.btn_sp.dialog)
+  );
+  xrButton4.top = '24%';
+  xrButton4.left = '-18%';
+  xrButton4.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
+  xrButton4.width = 0.3;
+  xrButton4.height = 0.06;
+  xrButton4.cornerRadius = 30;
+  xrButton4.color = 'white';
+  xrButton4.fontSize = '2%';
+  xrButton4.fontWeight = 'bold';
+  xrButton4.background = '#0072c1';
+  xrButton4.onPointerDownObservable.add(() => {
+    executeInteraction('service_SP');
+    xrGUI.removeControl(xrButton1);
+    xrGUI.removeControl(xrButton2);
+    xrGUI.removeControl(xrButton3);
+    xrGUI.removeControl(xrButton4);
+    xrGUI.addControl(xrButton5);
+  });
+  // Return to Services Button
+  const xrButton5 = Button.CreateSimpleButton(
+    'but5',
+    i18next.t(buttonNamesMap.btn_return.dialog)
+  );
+  xrButton5.top = '24%';
+  xrButton5.width = 0.3;
+  xrButton5.height = 0.06;
+  xrButton5.cornerRadius = 30;
+  xrButton5.color = 'white';
+  xrButton5.fontSize = '2%';
+  xrButton5.fontWeight = 'bold';
+  xrButton5.background = '#0072c1';
+  xrButton5.onPointerDownObservable.add(() => {
+    executeInteraction('wave');
+    xrGUI.addControl(xrButton1);
+    xrGUI.addControl(xrButton2);
+    xrGUI.addControl(xrButton3);
+    xrGUI.addControl(xrButton4);
+    xrGUI.removeControl(xrButton5);
+  });
 
   /**
    * Update the dialog message and if present show the message.
@@ -269,9 +491,6 @@ function KioskARWorld() {
       // Activate the observers only if they haven't been
       // activated.
       if (xrHitTestObserve === null) {
-        updateDialogMessage(
-          'Welcome to Service Canada AR \n\n Scan the floor to place your kiosk'
-        );
         xrHitTestObserve = xrHitTest.onHitTestResultObservable.add(
           hitTestObserverCallback
         );
@@ -285,7 +504,6 @@ function KioskARWorld() {
     } else if (enabled === false) {
       // Force checking existance of 'enabled'.
       if (xrHitTestObserve !== null) {
-        updateDialogMessage('');
         xrHitTest.onHitTestResultObservable.remove(xrHitTestObserve);
         xrHitTestObserve = null;
       }
@@ -312,11 +530,27 @@ function KioskARWorld() {
     if (kioskCoordinates && xr.baseExperience.state === WebXRState.IN_XR) {
       // Make kiosk visible in AR hit test and decompose the location matrix
       // If it already visible, don't make it visible again.
-      kiosk.setEnabled(true);
+      toggleKioskGhosting(false);
+      agent.setEnabled(true);
+      // Play welcome interaction when kiosk is placed
+      executeInteraction('welcome');
+      // Remove scanARicon when kiosk placed
+      xrGUI.removeControl(scanARicon);
+      // Add GUI Buttons
+      xrGUI.addControl(xrButton1);
+      xrGUI.addControl(xrButton2);
+      xrGUI.addControl(xrButton3);
+      xrGUI.addControl(xrButton4);
+
       kioskCoordinates.transformationMatrix.decompose(
         undefined,
         kiosk.rotationQuaternion,
         kiosk.position
+      );
+      kioskCoordinates.transformationMatrix.decompose(
+        undefined,
+        agent.rotationQuaternion,
+        agent.position
       );
 
       // Hit Test is done, so toggle it off.
@@ -332,20 +566,74 @@ function KioskARWorld() {
    */
   const hitTestObserverCallback = function (eventData) {
     if (eventData.length) {
-      // Make donut visible in AR hit test and decompose the location matrix
-      kiosk.setEnabled(false);
-      kioskCopy.setEnabled(true);
+      kiosk.setEnabled(true);
+      toggleKioskGhosting(true);
       kioskCoordinates = eventData[0];
       kioskCoordinates.transformationMatrix.decompose(
         undefined,
-        kioskCopy.rotationQuaternion,
-        kioskCopy.position
+        kiosk.rotationQuaternion,
+        kiosk.position
       );
     } else {
-      // Hide the marker.
-      kioskCopy.setEnabled(false);
       kiosk.setEnabled(false);
       kioskCoordinates = undefined;
+      toggleKioskGhosting(false);
+    }
+  };
+
+  /**
+   * Initialize all audio within the interactions.
+   */
+  const setupAudio = async function () {
+    for (const interactionKey in interactionsMap) {
+      if (
+        Object.prototype.hasOwnProperty.call(interactionsMap, interactionKey)
+      ) {
+        if (interactionsMap[interactionKey].audioPath) {
+          if (interactionsMap[interactionKey].soundObj) {
+            interactionsMap[interactionKey].soundObj.dispose();
+          }
+
+          interactionsMap[interactionKey].soundObj = new Sound(
+            interactionKey,
+            i18next.t(interactionsMap[interactionKey].audioPath),
+            scene
+          );
+        }
+      }
+    }
+  };
+
+  /**
+   * Execute the defined interaction.
+   * @param {string} interactionKey - The JSON key for the interaction that needs to be executed.
+   */
+  const executeInteraction = async function (interactionKey) {
+    // Address Chrome issue with Auto Play Security Policy.
+    Engine.audioEngine.audioContext.resume();
+    const interaction = interactionsMap[interactionKey];
+
+    if (interaction.soundObj) {
+      interaction.soundObj.play();
+    }
+
+    if (interaction.dialog) {
+      updateDialogMessage(i18next.t(interaction.dialog));
+    } else {
+      updateDialogMessage('');
+    }
+
+    if (interaction.animation) {
+      const agentAnimation = scene.getAnimationGroupByName(
+        interactionsMap[interactionKey].animation
+      );
+      agentAnimation.start(
+        false,
+        1.0,
+        agentAnimation.from,
+        agentAnimation.to,
+        false
+      );
     }
   };
 
@@ -361,13 +649,43 @@ function KioskARWorld() {
     kiosk.scaling.y = kioskScale;
     kiosk.scaling.z = -kioskScale;
     kiosk.id = 'myKiosk';
-    kiosk.setEnabled(true);
+    kiosk.setEnabled(false);
+
+    // Initially load the kiosk ghosted.
+    toggleKioskGhosting(true);
     kiosk.rotationQuaternion = new Quaternion();
+
+    const agentScale = 20;
+
+    agent = (await SceneLoader.ImportMeshAsync(null, AgentAsset, '')).meshes[0];
+    agent.scaling.x = agentScale;
+    agent.scaling.y = agentScale;
+    agent.scaling.z = -agentScale;
+    agent.id = 'myHero';
+    agent.setEnabled(false);
+    agent.rotationQuaternion = new Quaternion();
+    agent.rotation;
+
+    const agentAnimation = scene.getAnimationGroupByName('Idle');
+    agentAnimation.start(
+      true,
+      1.0,
+      agentAnimation.from,
+      agentAnimation.to,
+      false
+    );
+  };
+
+  /**
+   * Fired to update any changes to languages.
+   */
+  this.updateLanguageCallback = function () {
+    // Load the new language audio
+    setupAudio();
   };
 
   // Execute the init function.
   (async () => {
-    console.log('Init');
     initFunction();
   })();
 }
