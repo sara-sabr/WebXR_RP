@@ -33,6 +33,10 @@ import KioskAsset from '../../assets/models/RP_Kiosk.gltf';
 import AgentAsset from '../../assets/models/Malcolm.gltf';
 import i18next from 'i18next';
 
+// TODO: 1. Create Mic Toggle Button
+// TODO: 2. Create Active Microphone Screen
+// TODO: 3. Hide service buttons when mic is on
+
 /**
  * AR world code.
  */
