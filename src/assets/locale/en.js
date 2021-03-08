@@ -1,18 +1,52 @@
 import agentWelcome from '../audio/en/agent.welcome.mp3';
 import agentServiceETMS from '../audio/en/agent.service.etms.mp3';
+import agentServiceResearch from '../audio/en/agent.service.research.mp3';
+import agentServiceTP from '../audio/en/agent.service.tp.mp3';
+import agentServiceSP from '../audio/en/agent.service.sp.mp3';
+import agentServiceReturn from '../audio/en/agent.service.return.mp3';
+import * as data from './en.json';
 
 const en = {
   translation: {
     // Intro
-    'intro.dialog': 'Scan the floor to place the kiosk',
+    'intro.dialog': data.default.translation['intro.dialog'],
     // Welcome
-    'agent.welcome.dialog':
-      "Welcome to ITRP AR. \n\nI'm Simon, your virtual agent. \n\nHow can I help you?",
+    'agent.welcome.dialog': data.default.translation['agent.welcome.dialog'],
     'agent.welcome.audio': agentWelcome,
-    // Service
+    // Service - ETMS
     'agent.service.etms.dialog':
-      'You have selected monitoring emerging technologies',
+      data.default.translation['agent.service.etms.dialog'],
     'agent.service.etms.audio': agentServiceETMS,
+    // Service - Research
+    'agent.service.research.dialog':
+      data.default.translation['agent.service.research.dialog'],
+    'agent.service.research.audio': agentServiceResearch,
+    // Service - Technology Prototyping
+    'agent.service.tp.dialog':
+      data.default.translation['agent.service.tp.dialog'],
+    'agent.service.tp.audio': agentServiceTP,
+    // Service - Solution Prototyping
+    'agent.service.sp.dialog':
+      data.default.translation['agent.service.sp.dialog'],
+    'agent.service.sp.audio': agentServiceSP,
+    // Service - Return
+    'agent.service.return.dialog':
+      data.default.translation['agent.service.return.dialog'],
+    'agent.service.return.audio': agentServiceReturn,
+    // GUI Buttons
+    // Button - ETMS
+    'gui.button.etms.dialog':
+      data.default.translation['gui.button.etms.dialog'],
+    // Button - Research
+    'gui.button.research.dialog':
+      data.default.translation['gui.button.research.dialog'],
+    // Button - Technology Prototype
+    'gui.button.tp.dialog': data.default.translation['gui.button.tp.dialog'],
+    // Button - Solution Prototype
+    'gui.button.sp.dialog': data.default.translation['gui.button.sp.dialog'],
+    // Button - Return
+    'gui.button.return.dialog':
+      data.default.translation['gui.button.return.dialog'],
     // Landing Page
     't-header': 'R&P WebAR Prototype',
     't-blurb':

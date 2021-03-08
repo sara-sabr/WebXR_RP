@@ -140,26 +140,49 @@ function KioskARWorld() {
       dialog: 'agent.service.etms.dialog',
     },
     service_Research: {
-      // audioPath: 'agent.service.etms.audio',
+      audioPath: 'agent.service.research.audio',
       soundObj: null,
       animation: 'Talk',
-      dialog: 'You have selected Research',
+      dialog: 'agent.service.research.dialog',
     },
     service_TP: {
-      // audioPath: 'agent.service.etms.audio',
+      audioPath: 'agent.service.tp.audio',
       soundObj: null,
       animation: 'Talk',
-      dialog: 'You have selected Technology Prototyping',
+      dialog: 'agent.service.tp.dialog',
     },
     service_SP: {
-      // audioPath: 'agent.service.etms.audio',
+      audioPath: 'agent.service.sp.audio',
       soundObj: null,
       animation: 'Talk',
-      dialog: 'You have selected Solution Prototyping',
+      dialog: 'agent.service.sp.dialog',
     },
     wave: {
+      audioPath: 'agent.service.return.audio',
+      soundObj: null,
       animation: 'Hello',
-      dialog: 'Select a different service.',
+      dialog: 'agent.service.return.dialog',
+    },
+  };
+
+  /**
+   * Map of interactions used in the AR application
+   */
+  const buttonNamesMap = {
+    btn_etms: {
+      dialog: 'gui.button.etms.dialog',
+    },
+    btn_research: {
+      dialog: 'gui.button.research.dialog',
+    },
+    btn_tp: {
+      dialog: 'gui.button.tp.dialog',
+    },
+    btn_sp: {
+      dialog: 'gui.button.sp.dialog',
+    },
+    btn_return: {
+      dialog: 'gui.button.return.dialog',
     },
   };
 
@@ -329,7 +352,10 @@ function KioskARWorld() {
    * Create the GUI - Buttons
    */
   // ETMS Button
-  const xrButton1 = Button.CreateSimpleButton('but1', 'ETMS');
+  const xrButton1 = Button.CreateSimpleButton(
+    'but1',
+    i18next.t(buttonNamesMap.btn_etms.dialog)
+  );
   xrButton1.top = '16%';
   xrButton1.left = '18%';
   xrButton1.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
@@ -349,7 +375,10 @@ function KioskARWorld() {
     xrGUI.addControl(xrButton5);
   });
   // Research Button
-  const xrButton2 = Button.CreateSimpleButton('but2', 'Research');
+  const xrButton2 = Button.CreateSimpleButton(
+    'but2',
+    i18next.t(buttonNamesMap.btn_research.dialog)
+  );
   xrButton2.top = '16%';
   xrButton2.left = '-18%';
   xrButton2.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
@@ -369,7 +398,10 @@ function KioskARWorld() {
     xrGUI.addControl(xrButton5);
   });
   // Technology Prototype Button
-  const xrButton3 = Button.CreateSimpleButton('but3', 'Technology Prototype');
+  const xrButton3 = Button.CreateSimpleButton(
+    'but3',
+    i18next.t(buttonNamesMap.btn_tp.dialog)
+  );
   xrButton3.top = '24%';
   xrButton3.left = '18%';
   xrButton3.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
@@ -389,7 +421,10 @@ function KioskARWorld() {
     xrGUI.addControl(xrButton5);
   });
   // Solution Prototype Button
-  const xrButton4 = Button.CreateSimpleButton('but4', 'Solution Prototype');
+  const xrButton4 = Button.CreateSimpleButton(
+    'but4',
+    i18next.t(buttonNamesMap.btn_sp.dialog)
+  );
   xrButton4.top = '24%';
   xrButton4.left = '-18%';
   xrButton4.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
@@ -409,7 +444,10 @@ function KioskARWorld() {
     xrGUI.addControl(xrButton5);
   });
   // Return to Services Button
-  const xrButton5 = Button.CreateSimpleButton('but5', 'Go back');
+  const xrButton5 = Button.CreateSimpleButton(
+    'but5',
+    i18next.t(buttonNamesMap.btn_return.dialog)
+  );
   xrButton5.top = '24%';
   xrButton5.width = 0.3;
   xrButton5.height = 0.06;

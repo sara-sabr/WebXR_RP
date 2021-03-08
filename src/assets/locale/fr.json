@@ -3,7 +3,15 @@
     "intro.dialog": "Visez le plancher pour faire apparaitre le kiosque.",
     "agent.welcome.dialog":
     "Bienvenue au prototype RA de l’équipe recherche et prototypage. Je m'appelle Simon, vôtre agent virtuel. Comment puis-je vous aider?",
-    "agent.service.etms.dialog": "Vous aviez sélectionné le service de surveillances des technologies émergentes."
+    "agent.service.etms.dialog": "Vous aviez sélectionné le service de surveillances des technologies émergentes.",
+    "agent.service.research.dialog": "Vous aviez sélectionné le service de recherche.",
+    "agent.service.tp.dialog": "Vous avez sélectionné le service de prototypage technologique.",
+    "agent.service.sp.dialog": "Vous avez sélectionné le service de prototypage de solutions.",
+    "agent.service.return.dialog": "Pour quel autre service aimerez-vous obtenir de l'aide?",
+    "gui.button.etms.dialog": "SSTE",
+    "gui.button.research.dialog": "Recherche",
+    "gui.button.tp.dialog": "Prototypage technologique",
+    "gui.button.sp.dialog": "Prototypage de solutions",
+    "gui.button.return.dialog": "Retour"
   }
 }
-
