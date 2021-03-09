@@ -26,6 +26,7 @@ import {
   Control,
   Button,
   Image,
+  ToggleButton,
 } from 'babylonjs-gui';
 
 import 'babylonjs-loaders'; // Required to load GLFT files
@@ -33,7 +34,6 @@ import KioskAsset from '../../assets/models/RP_Kiosk.gltf';
 import AgentAsset from '../../assets/models/Malcolm.gltf';
 import i18next from 'i18next';
 
-// TODO: 1. Create Mic Toggle Button
 // TODO: 2. Create Active Microphone Screen
 // TODO: 3. Hide service buttons when mic is on
 
@@ -469,6 +469,17 @@ function KioskARWorld() {
     xrGUI.removeControl(xrButton5);
   });
 
+  // TODO: 1. Create Mic Toggle Button
+  const toggleMic = new ToggleButton('Mic');
+  toggleMic.color = 'white';
+  toggleMic.top = '0%';
+  toggleMic.right = '0%';
+  toggleMic.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
+  toggleMic.onPointerDownObservable.add(() => {
+    xrGUI.addControl(toggleMic);
+    console.log('toggle button');
+  });
+
   /**
    * Update the dialog message and if present show the message.
    *
@@ -545,6 +556,7 @@ function KioskARWorld() {
       xrGUI.addControl(xrButton2);
       xrGUI.addControl(xrButton3);
       xrGUI.addControl(xrButton4);
+      xrGUI.addControl(toggleMic);
 
       kioskCoordinates.transformationMatrix.decompose(
         undefined,
