@@ -471,9 +471,14 @@ function KioskARWorld() {
 
   // TODO: 1. Create Mic Toggle Button
   const toggleMic = new ToggleButton('Mic');
-  toggleMic.color = 'white';
-  toggleMic.top = '0%';
-  toggleMic.right = '0%';
+  const toggleText = new TextBlock();
+  toggleText.text = 'Activate Mic';
+  toggleText.color = 'white';
+  toggleText.fontSize = '24';
+  toggleMic.addControl(toggleText);
+  toggleMic.width = 0.3;
+  toggleMic.height = 0.06;
+  toggleMic.background = 'blue';
   toggleMic.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
   toggleMic.onPointerDownObservable.add(() => {
     xrGUI.addControl(toggleMic);
