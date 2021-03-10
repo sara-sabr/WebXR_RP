@@ -1,6 +1,6 @@
 {
   "name": "esdc-itrp-xr-prototype",
-  "version": "1.0.45",
+  "version": "1.0.46",
   "description": "ESDC IT RP XR Prototype",
   "private": true,
   "dependencies": {
