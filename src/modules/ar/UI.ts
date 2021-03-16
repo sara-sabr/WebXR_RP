@@ -7,6 +7,7 @@ import {
   Container,
   Vector2WithInfo,
   Button,
+  Image,
   StackPanel,
 } from 'babylonjs-gui';
 import { EventState } from 'babylonjs/Misc/observable';
@@ -17,6 +18,8 @@ import { Interaction } from './interaction/Interaction';
 import { UIPanel } from './UIPanel';
 import { ToggleSwitch } from './ToggleSwitch';
 import { ARController } from './Controller';
+
+import ScanARIconLocation from '../../assets/images/AR_ScanFloor_Icon.png';
 
 /**
  * UI Singleton.
@@ -60,6 +63,11 @@ export class ARUI {
    * The app.
    */
   private arController: ARController;
+
+  /**
+   * The scan icon for Kiosk mode.
+   */
+  private scanARIcon:Image;
 
   /**
    * The Singleton's constructor should always be private to prevent direct
@@ -279,27 +287,6 @@ export class ARUI {
   }
 
   /**
-   * Create the place kiosk.
-   *
-   * @returns a configured place kiosk panel
-   */
-  private placeKioskPanel(): StackPanel {
-    const placeKioskPanel: StackPanel = this.createStackedPanel('placeKiosk');
-
-    /**
-     * Create the GUI - AR Scan Floor Icon
-     */
-    // const scanARicon = new Image('icon1', '/src/assets/images/AR_ScanFloor_Icon.png');
-    // scanARicon.width = 0.65;
-    // scanARicon.height = 0.15;
-
-    // Add scanARicon on GUI load
-    // this.xrGUI.addControl(scanARicon);
-
-    return placeKioskPanel;
-  }
-
-  /**
    * Setup the GUI.
    */
   async setup(arController: ARController): Promise<void> {
@@ -313,11 +300,39 @@ export class ARUI {
     this.uiPanels.set(UIPanel.CHOICE, this.createChoicePanel());
     this.uiPanels.set(UIPanel.MAIN_MENU, this.createMainMenuPanel());
     this.uiPanels.set(UIPanel.MICROPHONE, this.createMicrophonePanel());
-    this.uiPanels.set(UIPanel.PLACE_KIOSK, this.createMicrophonePanel());
 
     //    this.createMicSwitch();
   }
 
+  /**
+   * Scan AR Icon.
+   *
+   * @param show - show the icon or hide
+   */
+  public toggleKioskMode(show: boolean):void {
+    if (!this.scanARIcon) {
+      this.scanARIcon = new Image('scanARIcon', ScanARIconLocation);
+      this.scanARIcon.width = 0.65;
+      this.scanARIcon.height = 0.15;
+    }
+
+    if (show) {
+      // Make sure we aren't already showing it.
+      if (this.scanARIcon.metadata && this.scanARIcon.metadata.state) {
+        return;
+      }
+
+      this.xrGUI.addControl(this.scanARIcon);
+    } else {
+      this.xrGUI.removeControl(this.scanARIcon);
+    }
+
+    this.scanARIcon.metadata = {state: show};
+  }
+
+  /**
+   * Create the mic switch.
+   */
   private createMicSwitch(): void {
     this.micToggle = new ToggleSwitch('micMode', 'common.mic');
     this.micToggle.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
