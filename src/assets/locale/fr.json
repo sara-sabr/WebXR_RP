@@ -1,17 +1,31 @@
 {
   "translation": {
-    "intro.dialog": "Visez le plancher pour faire apparaitre le kiosque.",
-    "agent.welcome.dialog":
+    "homepage.toggleLanguage": "Switch to English",
+    "intro.message": "Visez le plancher pour faire apparaitre le kiosque.",
+    "welcome.message":
     "Bienvenue au prototype RA de l’équipe recherche et prototypage. Je m'appelle Simon, vôtre agent virtuel. Comment puis-je vous aider?",
-    "agent.service.etms.dialog": "Vous aviez sélectionné le service de surveillances des technologies émergentes.",
-    "agent.service.research.dialog": "Vous aviez sélectionné le service de recherche.",
-    "agent.service.tp.dialog": "Vous avez sélectionné le service de prototypage technologique.",
-    "agent.service.sp.dialog": "Vous avez sélectionné le service de prototypage de solutions.",
-    "agent.service.return.dialog": "Pour quel autre service aimerez-vous obtenir de l'aide?",
-    "gui.button.etms.dialog": "SSTE",
-    "gui.button.research.dialog": "Recherche",
-    "gui.button.tp.dialog": "Prototypage technologique",
-    "gui.button.sp.dialog": "Prototypage de solutions",
-    "gui.button.return.dialog": "Retour"
+    "service.choice.etms": "SSTE",
+    "service.choice.research": "Recherche",
+    "service.choice.tp": "Prototypage technologique",
+    "service.choice.sp": "Prototypage de solutions",
+    "service.select.etms.message": "Vous aviez sélectionné le service de surveillances des technologies émergentes.",
+    "service.select.research.message": "Vous aviez sélectionné le service de recherche.",
+    "service.select.tp.message": "Vous avez sélectionné le service de prototypage technologique.",
+    "service.select.sp.message": "Vous avez sélectionné le service de prototypage de solutions.",
+    "service.select.return.message": "Pour quel autre service aimerez-vous obtenir de l'aide?",
+    "homepage.header": "Recherche & prototypage - Prototype WebXR",
+    "homepage.blurb":
+      "Il s'agit d'un prototype et n'implique en aucune façon qu'un tel service à EDSC sera offert où la réalité augmentée est disponible.\n\n L'objectif de ce prototype est de faire évoluer les limites et de voir ce qu'une technologie donnée pourrait faire.",
+    "homepage.device": "Exigences minimales de l'appareil",
+    "homepage.install":
+      "Installer <strong><a href=\"https://apps.apple.com/us/app/webxr-viewer/id1295998056\">WebXR Viewer</a></strong>",
+    "homepage.desktop": "Ordinateur de bureau",
+    "homepage.pcInstall":
+      "<strong>Chrome 87+</strong> avec <strong><a href=\"https://chrome.google.com/webstore/detail/webxr-api-emulator/mjddjgeghkdijejnciaefnkjmkafnnje?hl=fr\">WebXR API Emulator</a></strong> installé et configuré.",
+    "homepage.preBtn": "Sélectionnez le bouton ci-dessous pour lancer l'application de RA!",
+    "common.switch.on" :"Marche",
+    "common.switch.off" :"Arrêt",
+    "common.mic": "Microphone",
+    "common.choice.return": "Retour"
   }
 }
