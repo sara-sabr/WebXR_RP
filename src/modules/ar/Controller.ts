@@ -242,12 +242,9 @@ export class ARController implements ITranslate {
     let ghostValue = 1;
     if (ghosting === true) {
       ghostValue = 0.1;
-      // TODO: This needs to be fixed as undefined and really shouldn't be here.
-      // this.xrGUI.removeControl(this.scanARicon);
-    } else {
-      // TODO: This needs to be fixed as undefined and really shouldn't be here.
-      // this.xrGUI.addControl(this.scanARicon);
     }
+
+    this.arUI.toggleKioskMode(ghosting);
 
     for (const child of this.kiosk.getChildMeshes()) {
       child.visibility = ghostValue;
