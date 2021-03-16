@@ -318,9 +318,7 @@ export class ARUI {
     menuPanel.paddingRight = '5px';
 
     // Record icon
-
-
-
+    // https://playground.babylonjs.com/#56KEZA#6
     this.xrGUI.addControl(menuPanel);
   }
 
