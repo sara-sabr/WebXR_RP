@@ -67,7 +67,7 @@ export class ARUI {
   /**
    * The scan icon for Kiosk mode.
    */
-  private scanARIcon:Image;
+  private scanARIcon: Image;
 
   /**
    * The Singleton's constructor should always be private to prevent direct
@@ -309,7 +309,7 @@ export class ARUI {
    *
    * @param show - show the icon or hide
    */
-  public toggleKioskMode(show: boolean):void {
+  public toggleKioskMode(show: boolean): void {
     if (!this.scanARIcon) {
       this.scanARIcon = new Image('scanARIcon', ScanARIconLocation);
       this.scanARIcon.width = 0.65;
@@ -327,7 +327,7 @@ export class ARUI {
       this.xrGUI.removeControl(this.scanARIcon);
     }
 
-    this.scanARIcon.metadata = {state: show};
+    this.scanARIcon.metadata = { state: show };
   }
 
   /**
