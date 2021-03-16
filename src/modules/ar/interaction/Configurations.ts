@@ -123,7 +123,6 @@ export class InteractionConfigurations {
     };
   }
 
-
   /**
    * Return technology prototyping interaction.
    *
@@ -144,7 +143,6 @@ export class InteractionConfigurations {
     };
   }
 
-
   /**
    * Return solution protoyting interaction.
    *
@@ -164,7 +162,6 @@ export class InteractionConfigurations {
       },
     };
   }
-
 
   /**
    * Return interaction.

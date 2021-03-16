@@ -15,7 +15,6 @@ import { ARConstants } from '../Constants';
 import { Choice } from './interaction/Choice';
 import { Interaction } from './interaction/Interaction';
 import { UIPanel } from './UIPanel';
-import ScanARIcon from '../../assets/images/AR_ScanFloor_Icon.png';
 import { ToggleSwitch } from './ToggleSwitch';
 import { ARController } from './Controller';
 
@@ -119,7 +118,7 @@ export class ARUI {
     this.message = new TextBlock();
     this.message.width = messageTransparentLayer.width;
     this.message.textWrapping = true;
-    this.message.setPadding(5,5,5,5);
+    this.message.setPadding(5, 5, 5, 5);
     this.message.verticalAlignment = messageTransparentLayer.verticalAlignment;
     this.message.height = messageTransparentLayer.height;
     this.message.zIndex = 200;
@@ -163,7 +162,7 @@ export class ARUI {
    */
   private createChoicePanel(): Rectangle {
     const choicePanel: Rectangle = new Rectangle();
-    choicePanel.thickness=0;
+    choicePanel.thickness = 0;
     choicePanel.name = 'choicePanel';
 
     const choiceStack: StackPanel = this.createStackedPanel('choice');
@@ -316,7 +315,7 @@ export class ARUI {
     this.uiPanels.set(UIPanel.MICROPHONE, this.createMicrophonePanel());
     this.uiPanels.set(UIPanel.PLACE_KIOSK, this.createMicrophonePanel());
 
-//    this.createMicSwitch();
+    //    this.createMicSwitch();
   }
 
   private createMicSwitch(): void {
