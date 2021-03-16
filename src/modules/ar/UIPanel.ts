@@ -5,30 +5,30 @@ export enum UIPanel {
   /**
    * Key for message UI.
    */
-  MESSAGE,
+  MESSAGE = 'message',
 
   /**
    * Key for microphone UI.
    */
-  MICROPHONE,
+  MICROPHONE = 'microphone',
 
   /**
    * Key for choice UI.
    */
-  CHOICE,
+  CHOICE = 'choice',
 
   /**
    * Key for camera UI.
    */
-  CAMERA,
+  CAMERA = 'camera',
 
   /**
    * Key for menu UI.
    */
-  MAIN_MENU,
+  MAIN_MENU = 'main menu',
 
   /**
    * Place Kiosk.
    */
-  PLACE_KIOSK,
+  PLACE_KIOSK = 'place kiosk',
 }
