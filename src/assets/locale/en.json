@@ -1,18 +1,31 @@
 {
   "translation": {
-    "intro.dialog": "Scan the floor to place the kiosk",
-    "agent.welcome.dialog":
-      "Welcome to ITRP AR. \n\nI'm Simon, your virtual agent. \n\nHow can I help you?",
-    "agent.service.etms.dialog": "You have selected monitoring emerging technologies",
-    "agent.service.research.dialog": "You have selected research",
-    "agent.service.tp.dialog": "You have selected technology prototyping",
-    "agent.service.sp.dialog": "You have selected solution prototyping",
-    "agent.service.return.dialog": "What other service would you like to get help with?",
-    "gui.button.etms.dialog": "ETMS",
-    "gui.button.research.dialog": "Research",
-    "gui.button.tp.dialog": "Technology Prototype",
-    "gui.button.sp.dialog": "Solution Prototype",
-    "gui.button.return.dialog": "Return"
+    "homepage.toggleLanguage": "Switch to Français",
+    "intro.message": "Scan the floor to place the kiosk",
+    "welcome.message":
+      "Welcome to ITRP AR. I'm Simon, your virtual agent. How can I help you?",
+    "service.choice.etms": "ETMS",
+    "service.choice.research": "Research",
+    "service.choice.tp": "Technology Prototype",
+    "service.choice.sp": "Solution Prototype",
+    "service.select.etms.message": "You have selected monitoring emerging technologies",
+    "service.select.research.message": "You have selected research",
+    "service.select.tp.message": "You have selected technology prototyping",
+    "service.select.sp.message": "You have selected solution prototyping",
+    "service.select.return.message": "What other service would you like to get help with?",
+    "homepage.header": "R&P WebAR Prototype",
+    "homepage.blurb":
+      "This is a prototype and does not imply any possibility of a future ESDC service where augmented/mixed reality is available/offered. The purpose of this prototype is to push the boundaries and see what a given technology could do.",
+    "homepage.device": "Minimum device requirements",
+    "homepage.install":
+      "Install <strong><a href=\"https://apps.apple.com/us/app/webxr-viewer/id1295998056\">WebXR Viewer</a></strong>",
+    "homepage.desktop": "Desktop",
+    "homepage.pcInstall":
+      "<strong>Chrome 87+</strong> with <strong><a href=\"https://chrome.google.com/webstore/detail/webxr-api-emulator/mjddjgeghkdijejnciaefnkjmkafnnje?hl=en\">WebXR API Emulator</a></strong> installed and configured.",
+    "homepage.preBtn": "Select the button below to launch the AR application!",
+    "common.switch.on" :"On",
+    "common.switch.off" :"Off",
+    "common.mic": "Microphone",
+    "common.choice.return": "Return"
   }
 }
-

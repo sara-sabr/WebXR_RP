@@ -20,11 +20,8 @@ module.exports = (env) => {
     devtool: debugMode == true ? 'inline-source-map' : undefined,
     entry: {
       index: {
-        import: './src/main.js',
-        dependOn: ['babylonjs', 'i18n'],
+        import: './src/main.ts',
       },
-      babylonjs: ['babylonjs', 'babylonjs-gui', 'babylonjs-loaders'],
-      i18n: ['i18next', 'i18next-browser-languagedetector'],
     },
     plugins: [
       new CleanWebpackPlugin({ cleanStaleWebpackAssets: !debugMode }),
@@ -39,8 +36,16 @@ module.exports = (env) => {
       path: path.resolve(__dirname, 'dist'),
       publicPath: '',
     },
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js'],
+    },
     module: {
       rules: [
+        {
+          test: /\.tsx?$/,
+          use: 'ts-loader',
+          exclude: /node_modules/,
+        },
         {
           test: /\.(png|svg|jpg|jpeg|gif|gltf|mp3)$/i,
           type: 'asset/resource',

@@ -6,7 +6,7 @@
 This is a prototype and does not imply any possibility of a future ESDC service where augmented/mixed reality is
 available/offered. The purpose of this prototype is to push the boundaries and see what a given technology could
 do.
-
+ 
 ## Requirements to run prototype hosted
 The following are the minimum requirements depending on the device.
 - Android: Chrome 87+
