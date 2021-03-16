@@ -301,7 +301,27 @@ export class ARUI {
     this.uiPanels.set(UIPanel.MAIN_MENU, this.createMainMenuPanel());
     this.uiPanels.set(UIPanel.MICROPHONE, this.createMicrophonePanel());
 
-    //    this.createMicSwitch();
+    this.createAppMenu();
+  }
+
+  /**
+   * Create the application menu buttons.
+   */
+  private createAppMenu(): void {
+    const menuPanel = new StackPanel('appMenu');
+    menuPanel.width = '150px';
+    menuPanel.height = '25%';
+    menuPanel.background = 'black';
+    menuPanel.horizontalAlignment = StackPanel.HORIZONTAL_ALIGNMENT_RIGHT;
+    menuPanel.verticalAlignment = StackPanel.VERTICAL_ALIGNMENT_TOP;
+    menuPanel.paddingTop = '5px';
+    menuPanel.paddingRight = '5px';
+
+    // Record icon
+
+
+
+    this.xrGUI.addControl(menuPanel);
   }
 
   /**
@@ -328,16 +348,6 @@ export class ARUI {
     }
 
     this.scanARIcon.metadata = { state: show };
-  }
-
-  /**
-   * Create the mic switch.
-   */
-  private createMicSwitch(): void {
-    this.micToggle = new ToggleSwitch('micMode', 'common.mic');
-    this.micToggle.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
-    this.micToggle.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
-    this.xrGUI.addControl(this.micToggle);
   }
 
   /**
