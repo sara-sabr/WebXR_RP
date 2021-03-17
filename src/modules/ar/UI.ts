@@ -7,6 +7,7 @@ import {
   Container,
   Vector2WithInfo,
   Button,
+  Ellipse,
   Image,
   StackPanel,
 } from 'babylonjs-gui';
@@ -308,18 +309,66 @@ export class ARUI {
    * Create the application menu buttons.
    */
   private createAppMenu(): void {
+    const maxWidthInPixel = 150;
+
     const menuPanel = new StackPanel('appMenu');
-    menuPanel.width = '150px';
+    menuPanel.width = maxWidthInPixel + 'px';
     menuPanel.height = '25%';
-    menuPanel.background = 'black';
     menuPanel.horizontalAlignment = StackPanel.HORIZONTAL_ALIGNMENT_RIGHT;
     menuPanel.verticalAlignment = StackPanel.VERTICAL_ALIGNMENT_TOP;
     menuPanel.paddingTop = '5px';
     menuPanel.paddingRight = '5px';
 
+    const exitButton = Button.CreateSimpleButton('exit', '\uf08b');
+    this.configureMenuButton(exitButton, maxWidthInPixel);
+    exitButton.onPointerClickObservable.add(this.exitEventHandler);
+    menuPanel.addControl(exitButton);
+
     // Record icon
-    // https://playground.babylonjs.com/#56KEZA#6
+    const micButton = Button.CreateSimpleButton('mic', '\uf130');
+    this.configureMenuButton(micButton, maxWidthInPixel);
+    menuPanel.addControl(micButton);
+
     this.xrGUI.addControl(menuPanel);
+  }
+
+  /**
+   * Exit event handler;
+   */
+  private exitEventHandler(): void {
+    ARUI.getInstance().arController.exit();
+  }
+
+  /**
+   * Configure a menu button
+   * @param button the button
+   * @param maxWidthInPixel the maximum width
+   */
+  private configureMenuButton(button: Button, maxWidthInPixel: number): void {
+    button.width = maxWidthInPixel - 20 + 'px';
+    button.height = button.width;
+    button.color = 'white';
+    button.thickness = 0;
+
+    const buttonText = button.textBlock;
+    buttonText.fontFamily = 'FontAwesome';
+    buttonText.color = 'black';
+    buttonText.fontSize = 38;
+    buttonText.paddingTop = 8;
+    buttonText.fontWeight = 'bold';
+    buttonText.zIndex = 100;
+
+    const circle = new Ellipse();
+    circle.width = 0.85;
+    circle.height = 0.85;
+    circle.color = 'white';
+    circle.thickness = 0;
+    circle.background = 'white';
+    circle.shadowColor = 'black';
+    circle.shadowBlur = 6;
+    circle.zIndex = 1;
+    circle.shadowOffsetY = 3;
+    button.addControl(circle);
   }
 
   /**
@@ -327,25 +376,34 @@ export class ARUI {
    *
    * @param show - show the icon or hide
    */
-  public toggleKioskMode(show: boolean): void {
-    if (!this.scanARIcon) {
-      this.scanARIcon = new Image('scanARIcon', ScanARIconLocation);
-      this.scanARIcon.width = 0.65;
-      this.scanARIcon.height = 0.15;
+  public async toggleKioskMode(show: boolean): Promise<void> {
+    const that = ARUI.getInstance();
+
+    if (!that.xrGUI) {
+      // Handle the case where event fires before GUI is fully
+      // initialized. As this method pretty much called every time, it
+      // is safe to skip the ones that are too early.
+      return;
+    }
+
+    if (!that.scanARIcon) {
+      that.scanARIcon = new Image('scanARIcon', ScanARIconLocation);
+      that.scanARIcon.width = 0.65;
+      that.scanARIcon.height = 0.15;
     }
 
     if (show) {
       // Make sure we aren't already showing it.
-      if (this.scanARIcon.metadata && this.scanARIcon.metadata.state) {
+      if (that.scanARIcon.metadata && that.scanARIcon.metadata.state) {
         return;
       }
 
-      this.xrGUI.addControl(this.scanARIcon);
+      that.xrGUI.addControl(that.scanARIcon);
     } else {
-      this.xrGUI.removeControl(this.scanARIcon);
+      that.xrGUI.removeControl(that.scanARIcon);
     }
 
-    this.scanARIcon.metadata = { state: show };
+    that.scanARIcon.metadata = { state: show };
   }
 
   /**

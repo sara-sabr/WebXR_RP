@@ -23,6 +23,8 @@
         "new-cap": "off",
         "max-len": "off",
         "indent": ["error", 2],
-        "@typescript-eslint/no-var-requires": 0
+        "@typescript-eslint/no-var-requires": 0,
+        "eol-last": ["error", "always"],
+        "linebreak-style": ["error", "unix"]
     }
 }

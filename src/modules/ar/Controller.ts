@@ -244,7 +244,7 @@ export class ARController implements ITranslate {
       ghostValue = 0.1;
     }
 
-    this.arUI.toggleKioskMode(ghosting);
+    await ARUI.getInstance().toggleKioskMode(ghosting);
 
     for (const child of this.kiosk.getChildMeshes()) {
       child.visibility = ghostValue;
@@ -436,9 +436,7 @@ export class ARController implements ITranslate {
     const kioskScale = 0.3;
 
     this.kiosk = (await SceneLoader.ImportMeshAsync(null, KioskAsset, '')).meshes[0];
-    this.kiosk.scaling.x = kioskScale;
-    this.kiosk.scaling.y = kioskScale;
-    this.kiosk.scaling.z = -kioskScale;
+    this.kiosk.scaling = new Vector3(kioskScale, kioskScale, kioskScale);
     this.kiosk.setEnabled(false);
 
     // Initially load the kiosk ghosted.
@@ -448,9 +446,7 @@ export class ARController implements ITranslate {
     const agentScale = 20;
 
     this.agent = (await SceneLoader.ImportMeshAsync(null, AgentAsset, '')).meshes[0];
-    this.agent.scaling.x = agentScale;
-    this.agent.scaling.y = agentScale;
-    this.agent.scaling.z = -agentScale;
+    this.agent.scaling = new Vector3(agentScale, agentScale, agentScale);
     this.agent.setEnabled(false);
     this.agent.rotationQuaternion = new Quaternion();
     this.agent.rotation;
@@ -459,10 +455,19 @@ export class ARController implements ITranslate {
     agentAnimation.start(true, 1.0, agentAnimation.from, agentAnimation.to, false);
   }
 
-  translate(): void {
+  public translate(): void {
     this.setupAudio();
     if (this.arUI) {
       this.arUI.updateDialogMessage(this.currentInteraction);
     }
+  }
+
+  /**
+   * Exit full screen.
+   */
+  public exit(): void {
+    alert('Fired');
+    const button = document.getElementsByClassName('babylonVRicon')[0] as HTMLInputElement;
+    button.click();
   }
 }
