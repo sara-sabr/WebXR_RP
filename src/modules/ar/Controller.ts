@@ -466,7 +466,6 @@ export class ARController implements ITranslate {
    * Exit full screen.
    */
   public exit(): void {
-    alert('Fired');
     const button = document.getElementsByClassName('babylonVRicon')[0] as HTMLInputElement;
     button.click();
   }
