@@ -76,14 +76,18 @@ html, body {
 .container {
     display: flex;
     flex-flow: row wrap;
+    justify-content: center; /* new */
   }
 .section {
     flex: 1; /*grow*/
 padding: 5px;
+max-width: 400px; /* new */
 }
 @media (max-width: 768px) { /*breakpoint*/
     .container {
-        flex-direction: column;
+        /*flex-direction: column;*/
+        flex-flow: row wrap;
+        justify-content: center; /* new */
     }
 }   
 
