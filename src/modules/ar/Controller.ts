@@ -436,7 +436,7 @@ export class ARController implements ITranslate {
     const kioskScale = 0.3;
 
     this.kiosk = (await SceneLoader.ImportMeshAsync(null, KioskAsset, '')).meshes[0];
-    this.kiosk.scaling = new Vector3(kioskScale, kioskScale, kioskScale);
+    this.kiosk.scaling = new Vector3(kioskScale, kioskScale, -kioskScale);
     this.kiosk.setEnabled(false);
 
     // Initially load the kiosk ghosted.
@@ -446,7 +446,7 @@ export class ARController implements ITranslate {
     const agentScale = 20;
 
     this.agent = (await SceneLoader.ImportMeshAsync(null, AgentAsset, '')).meshes[0];
-    this.agent.scaling = new Vector3(agentScale, agentScale, agentScale);
+    this.agent.scaling = new Vector3(agentScale, agentScale, -agentScale);
     this.agent.setEnabled(false);
     this.agent.rotationQuaternion = new Quaternion();
     this.agent.rotation;
