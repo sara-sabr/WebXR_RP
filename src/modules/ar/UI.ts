@@ -9,11 +9,12 @@ import {
   Button,
   Image,
   StackPanel,
+  Grid,
 } from 'babylonjs-gui';
 import { EventState } from 'babylonjs/Misc/observable';
 import i18next from 'i18next';
 import { ARConstants } from '../Constants';
-import { Choice } from './interaction/Choice';
+import { ARButton } from './interaction/ARButton';
 import { Interaction } from './interaction/Interaction';
 import { UIPanel } from './UIPanel';
 import { ToggleSwitch } from './ToggleSwitch';
@@ -238,9 +239,9 @@ export class ARUI {
     }
 
     // Add the new options.
-    const choices = currentInteraction.metaData.choices as Choice[];
-    if (choices === undefined) {
-      throw new Error('Interaction does not have defined metaData.choices or check your spelling.');
+    const arButtons = currentInteraction.metaData.arButtons as ARButton[];
+    if (arButtons === undefined) {
+      throw new Error('Interaction does not have defined metaData.arButtons or check your spelling.');
     }
 
     let button: Button;
@@ -248,12 +249,12 @@ export class ARUI {
     let messageKey: string;
     let paddingRect: Rectangle;
 
-    for (let idx = 0; idx < choices.length; idx++) {
-      messageKey = currentInteraction.name + ARConstants.CHOICE_I18N_PATTTERN + choices[idx].key;
+    for (let idx = 0; idx < arButtons.length; idx++) {
+      messageKey = currentInteraction.name + ARConstants.CHOICE_I18N_PATTTERN + arButtons[idx].key;
 
       if (!i18next.exists(messageKey)) {
         // Use key as is.
-        messageKey = choices[idx].key;
+        messageKey = arButtons[idx].key;
       }
 
       button = Button.CreateSimpleButton(key, i18next.t(messageKey));
@@ -266,7 +267,7 @@ export class ARUI {
       button.fontWeight = 'bold';
       button.background = '#0072c1';
       button.name = messageKey;
-      button.metadata = { interaction: choices[idx].interaction };
+      button.metadata = { interaction: arButtons[idx].interaction };
       choicesPanel.addControl(button);
       button.onPointerClickObservable.add(this.choiceSelectedEvent);
       paddingRect = new Rectangle();
@@ -276,13 +277,80 @@ export class ARUI {
     }
   }
 
+    /**
+    * updateCameraButtons
+    * @param cameraOverlayInteraction expects the cameraOverlay Interaction
+    */
+    private updateCameraButtons(cameraOverlayInteraction: Interaction): void {
+      let arButtons = cameraOverlayInteraction.metaData.arButtons as ARButton[];
+      let grid: Grid = this.activePanel.getChildByName("cameraGrid") as Grid;
+
+      let cancelButton: Button = Button.CreateSimpleButton("return", i18next.t(arButtons[0].key));
+      cancelButton.width = "150px";
+      cancelButton.height = "40px";
+      cancelButton.thickness = 0;
+      cancelButton.top = 35;
+      cancelButton.color = "white";
+      cancelButton.metadata = {interaction: arButtons[0].interaction};
+      cancelButton.onPointerClickObservable.add(this.choiceSelectedEvent);
+      grid.addControl(cancelButton, 2, 1);
+
+      let takePhoto: Button = Button.CreateSimpleButton("but1", "Take Photo");
+      takePhoto.width = "150px"
+      takePhoto.height = "40px";
+      takePhoto.color = "white";
+      takePhoto.background = "#0072c1";
+      takePhoto.top = -25;
+      takePhoto.cornerRadius = 10;
+      takePhoto.fontWeight = "bold";
+      takePhoto.shadowBlur = 3;
+      takePhoto.shadowColor = "black";
+      takePhoto.shadowOffsetY = 3;
+      takePhoto.thickness = 0;
+      takePhoto.metadata = {interaction: arButtons[1].interaction};
+      takePhoto.onPointerClickObservable.add(this.choiceSelectedEvent);
+
+      grid.addControl(takePhoto, 2 , 1);
+      
+    }
   /**
    * Create the camera panel.
    *
    * @returns a configured camera panel
    */
-  private createCameraPanel(): StackPanel {
-    const cameraPanel: StackPanel = this.createStackedPanel('camera');
+  private createCameraPanel(): Container {
+    const cameraPanel: Rectangle = new Rectangle("cameraPanel");
+    let grid: Grid = new Grid("cameraGrid");
+    grid.addColumnDefinition(0.20);
+    grid.addColumnDefinition(0.6);
+    grid.addColumnDefinition(0.2);
+    grid.addRowDefinition(0.2);
+    grid.addRowDefinition(0.6);
+    grid.addRowDefinition(0.2);
+    cameraPanel.addControl(grid);
+
+    for (let i = 0; i <3 ; i++){
+        for (let j = 0; j<3; j++){
+            if (i==1 && j==1){
+                let rectangleButton: Rectangle = new Rectangle();
+                rectangleButton.thickness = 4;
+                grid.addControl(rectangleButton, 1, 1);
+            }
+            else {
+                let rect: Rectangle = new Rectangle();
+                rect.background = "black";
+                rect.thickness = 0;
+                rect.alpha = 0.5;
+                grid.addControl(rect, i, j)
+            }
+            
+        }
+
+    }
+    let textAbove: TextBlock = new TextBlock("aboveDialog", "Place the document in the scanning area.");
+    textAbove.color = "white";
+    grid.addControl(textAbove, 0,1);
+
     return cameraPanel;
   }
 
@@ -374,6 +442,10 @@ export class ARUI {
 
     if (currentInteraction.uiPanel === UIPanel.CHOICE) {
       this.updateChoicePanelOptions(currentInteraction);
+    }
+
+    if (currentInteraction.uiPanel === UIPanel.CAMERA){
+      this.updateCameraButtons(currentInteraction);
     }
 
     this.xrGUI.addControl(this.activePanel);

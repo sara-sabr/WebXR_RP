@@ -1,6 +1,6 @@
 import { ARConstants } from '../../Constants';
 import { UIPanel } from '../UIPanel';
-import { Choice } from './Choice';
+import { ARButton } from './ARButton';
 import { Interaction } from './Interaction';
 
 /**
@@ -38,6 +38,29 @@ export class InteractionConfigurations {
     };
   }
 
+  /**
+   * Camera overlay interaction
+   * @returns configured interaction
+   */
+  private static cameraOverlayInteraction(): Interaction {
+    return {
+      name: ARConstants.INTERACTION_CAMERA_OVERLAY,
+      uiPanel: UIPanel.CAMERA,
+      metaData: {
+        arButtons: [
+          {
+            key: 'common.choice.return',
+            interaction: ARConstants.INTERACTION_SERVICE_RETURN,
+          },
+          {
+            key: 'welcome',
+            interaction: ARConstants.INTERACTION_WELCOME,
+          },
+        ] as ARButton[],
+      },
+
+    }
+  }
   /**
    * Service Return interaction.
    *
@@ -113,12 +136,12 @@ export class InteractionConfigurations {
       name: ARConstants.INTERACTION_ETMS_CHOICE,
       uiPanel: UIPanel.CHOICE,
       metaData: {
-        choices: [
+        arButtons: [
           {
             key: 'common.choice.return',
             interaction: ARConstants.INTERACTION_SERVICE_RETURN,
           },
-        ] as Choice[],
+        ] as ARButton[],
       },
     };
   }
@@ -133,12 +156,12 @@ export class InteractionConfigurations {
       name: ARConstants.INTERACTION_TP_CHOICE,
       uiPanel: UIPanel.CHOICE,
       metaData: {
-        choices: [
+        arButtons: [
           {
             key: 'common.choice.return',
             interaction: ARConstants.INTERACTION_SERVICE_RETURN,
           },
-        ] as Choice[],
+        ] as ARButton[],
       },
     };
   }
@@ -153,12 +176,12 @@ export class InteractionConfigurations {
       name: ARConstants.INTERACTION_SP_CHOICE,
       uiPanel: UIPanel.CHOICE,
       metaData: {
-        choices: [
+        arButtons: [
           {
             key: 'common.choice.return',
             interaction: ARConstants.INTERACTION_SERVICE_RETURN,
           },
-        ] as Choice[],
+        ] as ARButton[],
       },
     };
   }
@@ -174,12 +197,12 @@ export class InteractionConfigurations {
       animationKey: 'Wave',
       uiPanel: UIPanel.CHOICE,
       metaData: {
-        choices: [
+        arButtons: [
           {
             key: 'common.choice.return',
             interaction: ARConstants.INTERACTION_SERVICE_RETURN,
           },
-        ] as Choice[],
+        ] as ARButton[],
       },
     };
   }
@@ -195,7 +218,7 @@ export class InteractionConfigurations {
       animationKey: 'Talk',
       uiPanel: UIPanel.CHOICE,
       metaData: {
-        choices: [
+        arButtons: [
           {
             key: 'etms',
             interaction: 'service.select.etms',
@@ -212,7 +235,7 @@ export class InteractionConfigurations {
             key: 'sp',
             interaction: 'service.select.sp',
           },
-        ] as Choice[],
+        ] as ARButton[],
       },
     };
   }
@@ -227,7 +250,7 @@ export class InteractionConfigurations {
       name: ARConstants.INTERACTION_MAIN_MENU,
       uiPanel: UIPanel.MAIN_MENU,
       metaData: {
-        choices: [
+        arButtons: [
           {
             key: 'resume',
             interaction: 'resume',
@@ -240,7 +263,7 @@ export class InteractionConfigurations {
             key: 'exit',
             interaction: 'exit',
           },
-        ] as Choice[],
+        ] as ARButton[],
       },
     };
   }
@@ -266,6 +289,7 @@ export class InteractionConfigurations {
       InteractionConfigurations.addInteraction(this.selectSPInteraction());
       InteractionConfigurations.addInteraction(this.spServiceInteraction());
       InteractionConfigurations.addInteraction(this.mainMenuInteraction());
+      InteractionConfigurations.addInteraction(this.cameraOverlayInteraction());
     }
 
     return InteractionConfigurations.CONFIGURATION;
