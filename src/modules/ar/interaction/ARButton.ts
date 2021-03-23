@@ -1,7 +1,7 @@
 /**
  * Menu choice
  */
-export class Choice {
+export class ARButton {
   /**
    * Key for choice. Used for suffix / actual i18n key.
    */

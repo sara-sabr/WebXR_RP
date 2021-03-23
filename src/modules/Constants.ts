@@ -78,4 +78,9 @@ export class ARConstants {
    * Main Menu interaction.
    */
   static readonly INTERACTION_MAIN_MENU = 'mainMenu';
+
+  /**
+   * Camera Overlay Interaction
+   */
+  static readonly INTERACTION_CAMERA_OVERLAY = 'camera';
 }
