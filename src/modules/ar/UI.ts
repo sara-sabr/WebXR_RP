@@ -392,6 +392,8 @@ export class ARUI {
     menuPanel.verticalAlignment = StackPanel.VERTICAL_ALIGNMENT_TOP;
     menuPanel.paddingTop = '5px';
     menuPanel.paddingRight = '5px';
+    menuPanel.top = 50;
+    menuPanel.left = -25;
 
     const exitButton = Button.CreateSimpleButton('exit', '\uf08b');
     this.configureMenuButton(exitButton, maxWidthInPixel);
@@ -472,9 +474,9 @@ export class ARUI {
         return;
       }
 
-      that.xrGUI.addControl(that.scanARIcon);
-    } else {
       that.xrGUI.removeControl(that.scanARIcon);
+    } else {
+      that.xrGUI.addControl(that.scanARIcon);
     }
 
     that.scanARIcon.metadata = { state: show };
