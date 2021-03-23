@@ -26,6 +26,7 @@
     "common.switch.on" :"On",
     "common.switch.off" :"Off",
     "common.mic": "Microphone",
-    "common.choice.return": "Return"
+    "common.choice.return": "Return",
+    "verification.message": "Thank you for submitting your identification. Your identity has been successfully verified and we can now continue with your request."
   }
 }

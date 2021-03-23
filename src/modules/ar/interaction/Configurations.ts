@@ -53,8 +53,8 @@ export class InteractionConfigurations {
             interaction: ARConstants.INTERACTION_SERVICE_RETURN,
           },
           {
-            key: 'welcome',
-            interaction: ARConstants.INTERACTION_WELCOME,
+            key: 'verification',
+            interaction: ARConstants.INTERACTION_VERIFICATION,
           },
         ] as ARButton[],
       },
@@ -267,6 +267,12 @@ export class InteractionConfigurations {
     };
   }
 
+  private static verifyIDInteraction(): Interaction {
+    return {
+      name: ARConstants.INTERACTION_VERIFICATION,
+      uiPanel: UIPanel.MESSAGE
+    };
+  }
   /**
    * Get the configurations.
    */
@@ -289,6 +295,7 @@ export class InteractionConfigurations {
       InteractionConfigurations.addInteraction(this.spServiceInteraction());
       InteractionConfigurations.addInteraction(this.mainMenuInteraction());
       InteractionConfigurations.addInteraction(this.cameraOverlayInteraction());
+      InteractionConfigurations.addInteraction(this.verifyIDInteraction());
     }
 
     return InteractionConfigurations.CONFIGURATION;
