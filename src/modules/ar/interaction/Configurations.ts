@@ -58,8 +58,7 @@ export class InteractionConfigurations {
           },
         ] as ARButton[],
       },
-
-    }
+    };
   }
   /**
    * Service Return interaction.
