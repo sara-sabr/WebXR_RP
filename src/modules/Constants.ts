@@ -87,4 +87,8 @@ export class ARConstants {
    * Verification Overlay Interaction
    */
   static readonly INTERACTION_VERIFICATION = 'verification';
+  /**
+   * Request Submitted Interaction
+   */
+  static readonly INTERACTION_REQUEST_SUBMITTED = 'request.submitted';
 }
