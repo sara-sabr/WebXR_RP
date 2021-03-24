@@ -270,7 +270,7 @@ export class InteractionConfigurations {
   private static verifyIDInteraction(): Interaction {
     return {
       name: ARConstants.INTERACTION_VERIFICATION,
-      uiPanel: UIPanel.MESSAGE
+      uiPanel: UIPanel.MESSAGE,
     };
   }
   /**

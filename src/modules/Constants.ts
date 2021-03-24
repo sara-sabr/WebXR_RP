@@ -84,7 +84,7 @@ export class ARConstants {
    */
   static readonly INTERACTION_CAMERA_OVERLAY = 'camera';
   /**
-  * Verification Overlay Interaction
-  */
+   * Verification Overlay Interaction
+   */
   static readonly INTERACTION_VERIFICATION = 'verification';
 }
