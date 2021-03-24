@@ -266,10 +266,23 @@ export class InteractionConfigurations {
       },
     };
   }
-
+  /**
+   * Definition of the verification interaction
+   * @returns verification of identity interaction
+   */
   private static verifyIDInteraction(): Interaction {
     return {
       name: ARConstants.INTERACTION_VERIFICATION,
+      uiPanel: UIPanel.MESSAGE,
+    };
+  }
+  /**
+   * Definition of the Request Submitted Interaction
+   * @returns Configured Request Submitted Interaction
+   */
+  private static requestSubmittedInteraction(): Interaction {
+    return {
+      name: ARConstants.INTERACTION_REQUEST_SUBMITTED,
       uiPanel: UIPanel.MESSAGE,
     };
   }
@@ -296,6 +309,7 @@ export class InteractionConfigurations {
       InteractionConfigurations.addInteraction(this.mainMenuInteraction());
       InteractionConfigurations.addInteraction(this.cameraOverlayInteraction());
       InteractionConfigurations.addInteraction(this.verifyIDInteraction());
+      InteractionConfigurations.addInteraction(this.requestSubmittedInteraction());
     }
 
     return InteractionConfigurations.CONFIGURATION;
