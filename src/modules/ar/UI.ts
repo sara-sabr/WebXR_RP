@@ -560,15 +560,15 @@ export class ARUI {
     this.activePanel = this.uiPanels.get(currentInteraction.uiPanel);
 
     switch (currentInteraction.uiPanel) {
-    case UIPanel.CHOICE:
-      this.updateChoicePanelOptions(currentInteraction);
-      break;
-    case UIPanel.CAMERA:
-      this.updateCameraButtons(currentInteraction);
-      break;
-    case UIPanel.USER_INPUT:
-      this.updateUserInputPanel(currentInteraction);
-      break;
+      case UIPanel.CHOICE:
+        this.updateChoicePanelOptions(currentInteraction);
+        break;
+      case UIPanel.CAMERA:
+        this.updateCameraButtons(currentInteraction);
+        break;
+      case UIPanel.USER_INPUT:
+        this.updateUserInputPanel(currentInteraction);
+        break;
     }
 
     this.xrGUI.addControl(this.activePanel);
