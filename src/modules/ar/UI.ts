@@ -144,7 +144,7 @@ export class ARUI {
     input.text = 'Enter request here.';
     input.color = '#333333';
     input.background = '#f8f8ff';
-    input.fontSize = "32px";
+    input.fontSize = '32px';
     panel.addControl(input);
 
     return panel;
