@@ -111,13 +111,15 @@ export class ARUI {
     const panel = this.activePanel;
 
     const submit: Button = Button.CreateSimpleButton('submit', 'Submit');
-    submit.width = 0.6;
+    submit.width = 0.8;
     submit.background = '#0072c1';
     submit.color = 'white';
-    submit.height = '50px';
+    submit.height = '100px';
     submit.fontWeight = 'bold';
-    submit.cornerRadius = 10;
-    submit.top = '100px';
+    submit.cornerRadius = 30;
+    submit.thickness = 0.05;
+    submit.fontSize = '32pt';
+    submit.top = '200px';
     submit.metadata = { interaction: arButtons[0].interaction };
     submit.onPointerClickObservable.add(this.choiceSelectedEvent);
     panel.addControl(submit);
@@ -125,19 +127,20 @@ export class ARUI {
   private createUserInputPanel(): Container {
     const panel: Rectangle = new Rectangle();
     panel.background = 'white';
-    panel.width = 0.5;
-    panel.height = 0.4;
-    panel.top = '100px';
+    panel.width = 0.8;
+    panel.height = 0.3;
+    panel.top = '300px';
     panel.cornerRadius = 15;
     panel.color = 'grey';
 
     const input: InputText = new InputText();
     input.width = 0.85;
     input.height = 0.5;
-    input.top = -40;
+    input.top = -90;
     input.text = 'Enter request here.';
     input.color = '#333333';
     input.background = '#f8f8ff';
+    input.fontSize = "32px";
     panel.addControl(input);
 
     return panel;
