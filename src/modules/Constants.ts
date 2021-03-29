@@ -83,12 +83,19 @@ export class ARConstants {
    * Camera Overlay Interaction
    */
   static readonly INTERACTION_CAMERA_OVERLAY = 'camera';
+
   /**
    * Verification Overlay Interaction
    */
   static readonly INTERACTION_VERIFICATION = 'verification';
+
   /**
    * Request Submitted Interaction
    */
   static readonly INTERACTION_REQUEST_SUBMITTED = 'request.submitted';
+
+  /**
+   * User Input Interaction
+   */
+  static readonly INTERACTION_USER_INPUT = 'user.input';
 }

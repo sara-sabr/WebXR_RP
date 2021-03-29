@@ -11,6 +11,7 @@ import {
   Image,
   StackPanel,
   Grid,
+  InputText,
 } from 'babylonjs-gui';
 import { EventState } from 'babylonjs/Misc/observable';
 import i18next from 'i18next';
@@ -101,7 +102,46 @@ export class ARUI {
     panel.name = name;
     return panel;
   }
+  /**
+   * Updates the user input panel to have a submit button linked to the interaction
+   * @param userInputInteraction The interaction for the user input panel
+   */
+  private updateUserInputPanel(userInputInteraction: Interaction): void {
+    const arButtons = userInputInteraction.metaData.arButtons as ARButton[];
+    const panel = this.activePanel;
 
+    const submit: Button = Button.CreateSimpleButton('submit', 'Submit');
+    submit.width = 0.6;
+    submit.background = '#0072c1';
+    submit.color = 'white';
+    submit.height = '50px';
+    submit.fontWeight = 'bold';
+    submit.cornerRadius = 10;
+    submit.top = '100px';
+    submit.metadata = { interaction: arButtons[0].interaction };
+    submit.onPointerClickObservable.add(this.choiceSelectedEvent);
+    panel.addControl(submit);
+  }
+  private createUserInputPanel(): Container {
+    const panel: Rectangle = new Rectangle();
+    panel.background = 'white';
+    panel.width = 0.5;
+    panel.height = 0.4;
+    panel.top = '100px';
+    panel.cornerRadius = 15;
+    panel.color = 'grey';
+
+    const input: InputText = new InputText();
+    input.width = 0.85;
+    input.height = 0.5;
+    input.top = -40;
+    input.text = 'Enter request here.';
+    input.color = '#333333';
+    input.background = '#f8f8ff';
+    panel.addControl(input);
+
+    return panel;
+  }
   /**
    * Setup the message panel.
    *
@@ -375,6 +415,7 @@ export class ARUI {
     this.uiPanels.set(UIPanel.CHOICE, this.createChoicePanel());
     this.uiPanels.set(UIPanel.MAIN_MENU, this.createMainMenuPanel());
     this.uiPanels.set(UIPanel.MICROPHONE, this.createMicrophonePanel());
+    this.uiPanels.set(UIPanel.USER_INPUT, this.createUserInputPanel());
 
     this.createAppMenu();
   }
@@ -514,12 +555,16 @@ export class ARUI {
 
     this.activePanel = this.uiPanels.get(currentInteraction.uiPanel);
 
-    if (currentInteraction.uiPanel === UIPanel.CHOICE) {
+    switch (currentInteraction.uiPanel) {
+    case UIPanel.CHOICE:
       this.updateChoicePanelOptions(currentInteraction);
-    }
-
-    if (currentInteraction.uiPanel === UIPanel.CAMERA) {
+      break;
+    case UIPanel.CAMERA:
       this.updateCameraButtons(currentInteraction);
+      break;
+    case UIPanel.USER_INPUT:
+      this.updateUserInputPanel(currentInteraction);
+      break;
     }
 
     this.xrGUI.addControl(this.activePanel);
