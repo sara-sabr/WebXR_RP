@@ -124,6 +124,10 @@ export class ARUI {
     submit.onPointerClickObservable.add(this.choiceSelectedEvent);
     panel.addControl(submit);
   }
+  /**
+   * Setup the user input panel
+   * @returns The configured user input panel
+   */
   private createUserInputPanel(): Container {
     const panel: Rectangle = new Rectangle();
     panel.background = 'white';
