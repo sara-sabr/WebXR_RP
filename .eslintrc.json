@@ -22,7 +22,7 @@
         "semi": ["error", "always"],
         "new-cap": "off",
         "max-len": "off",
-        "indent": ["error", 2],
+        "indent": ["error", 2, { "SwitchCase": 1 }],
         "@typescript-eslint/no-var-requires": 0,
         "eol-last": ["error", "always"],
         "linebreak-style": ["error", "unix"]

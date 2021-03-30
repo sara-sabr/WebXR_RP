@@ -26,4 +26,9 @@ export enum UIPanel {
    * Key for menu UI.
    */
   MAIN_MENU = 'main menu',
+
+  /**
+   * Key for user input
+   */
+  USER_INPUT = 'user input',
 }

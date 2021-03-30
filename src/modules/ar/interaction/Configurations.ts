@@ -266,6 +266,21 @@ export class InteractionConfigurations {
       },
     };
   }
+
+  private static userInputInteraction(): Interaction {
+    return {
+      name: ARConstants.INTERACTION_USER_INPUT,
+      uiPanel: UIPanel.USER_INPUT,
+      metaData: {
+        arButtons: [
+          {
+            key: 'submit',
+            interaction: ARConstants.INTERACTION_REQUEST_SUBMITTED,
+          },
+        ] as ARButton[],
+      },
+    };
+  }
   /**
    * Definition of the verification interaction
    * @returns verification of identity interaction
@@ -310,6 +325,7 @@ export class InteractionConfigurations {
       InteractionConfigurations.addInteraction(this.cameraOverlayInteraction());
       InteractionConfigurations.addInteraction(this.verifyIDInteraction());
       InteractionConfigurations.addInteraction(this.requestSubmittedInteraction());
+      InteractionConfigurations.addInteraction(this.userInputInteraction());
     }
 
     return InteractionConfigurations.CONFIGURATION;
