@@ -78,7 +78,7 @@ export class InteractionConfigurations {
    *
    * @returns configured interaction
    */
-  private static selectReserachInteraction(): Interaction {
+  private static selectResearchInteraction(): Interaction {
     return {
       name: ARConstants.INTERACTION_SELECT_RESEARCH,
       uiPanel: UIPanel.MESSAGE,
@@ -201,6 +201,10 @@ export class InteractionConfigurations {
             key: 'common.choice.return',
             interaction: ARConstants.INTERACTION_SERVICE_RETURN,
           },
+          {
+            key: 'common.choice.research.request',
+            interaction: ARConstants.INTERACTION_REQUEST_SUBMITTED,
+          }
         ] as ARButton[],
       },
     };
@@ -314,9 +318,9 @@ export class InteractionConfigurations {
       InteractionConfigurations.addInteraction(this.serviceChoiceInteraction());
       InteractionConfigurations.addInteraction(this.selectETMSInteraction());
       InteractionConfigurations.addInteraction(this.etmsServiceInteraction());
-      InteractionConfigurations.addInteraction(this.selectReserachInteraction());
+      InteractionConfigurations.addInteraction(this.selectResearchInteraction());
       InteractionConfigurations.addInteraction(this.researchServiceInteraction());
-      InteractionConfigurations.addInteraction(this.serviceReturnInteraction());
+      //InteractionConfigurations.addInteraction(this.serviceReturnInteraction());
       InteractionConfigurations.addInteraction(this.selectTPInteraction());
       InteractionConfigurations.addInteraction(this.tpServiceInteraction());
       InteractionConfigurations.addInteraction(this.selectSPInteraction());
