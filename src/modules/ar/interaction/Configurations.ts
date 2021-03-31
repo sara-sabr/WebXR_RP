@@ -203,7 +203,7 @@ export class InteractionConfigurations {
           },
           {
             key: 'submit.request',
-            interaction: ARConstants.INTERACTION_REQUEST_SUBMITTED,
+            interaction: ARConstants.INTERACTION_REQUEST_SENT,
           }
         ] as ARButton[],
       },
@@ -279,7 +279,7 @@ export class InteractionConfigurations {
         arButtons: [
           {
             key: 'submit',
-            interaction: ARConstants.INTERACTION_REQUEST_SUBMITTED,
+            interaction: ARConstants.INTERACTION_REQUEST_SENT,
           },
         ] as ARButton[],
       },
@@ -301,7 +301,7 @@ export class InteractionConfigurations {
    */
   private static requestSubmittedInteraction(): Interaction {
     return {
-      name: ARConstants.INTERACTION_REQUEST_SUBMITTED,
+      name: ARConstants.INTERACTION_REQUEST_SENT,
       uiPanel: UIPanel.MESSAGE,
     };
   }

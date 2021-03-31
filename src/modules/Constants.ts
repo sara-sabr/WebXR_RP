@@ -92,7 +92,12 @@ export class ARConstants {
   /**
    * Request Submitted Interaction
    */
-  static readonly INTERACTION_REQUEST_SUBMITTED = 'request.submitted';
+  static readonly INTERACTION_REQUEST_SENT = 'request.sent';
+
+  /**
+   * Request Submission Overlay Interaction
+   */
+  static readonly INTERACTION_ADD_REQUEST = 'request.added';
 
   /**
    * User Input Interaction

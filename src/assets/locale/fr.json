@@ -28,6 +28,6 @@
     "common.mic": "Microphone",
     "common.choice.return": "Retour",
     "verification.message": "Merci d'avoir soumis votre identification. Votre identité a été vérifié, nous pouvions continuer avec votre requête.",
-    "request.submitted.message": "Merci! Je vais ajouter ces détails à votre requête."
+    "request.sent.message": "Merci! Je vais ajouter ces détails à votre requête."
   }
 }
