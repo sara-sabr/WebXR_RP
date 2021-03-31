@@ -202,7 +202,7 @@ export class InteractionConfigurations {
             interaction: ARConstants.INTERACTION_SERVICE_RETURN,
           },
           {
-            key: 'common.choice.research.request',
+            key: 'submit.request',
             interaction: ARConstants.INTERACTION_REQUEST_SUBMITTED,
           }
         ] as ARButton[],
