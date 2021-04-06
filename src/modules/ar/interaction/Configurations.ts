@@ -203,7 +203,7 @@ export class InteractionConfigurations {
           },
           {
             key: 'submit.request',
-            interaction: ARConstants.INTERACTION_REQUEST_SENT,
+            interaction: ARConstants.INTERACTION_RESEARCH_REQUEST_SUBMIT,
           }
         ] as ARButton[],
       },
@@ -320,7 +320,7 @@ export class InteractionConfigurations {
       InteractionConfigurations.addInteraction(this.etmsServiceInteraction());
       InteractionConfigurations.addInteraction(this.selectResearchInteraction());
       InteractionConfigurations.addInteraction(this.researchServiceInteraction());
-      //InteractionConfigurations.addInteraction(this.serviceReturnInteraction());
+      InteractionConfigurations.addInteraction(this.serviceReturnInteraction());
       InteractionConfigurations.addInteraction(this.selectTPInteraction());
       InteractionConfigurations.addInteraction(this.tpServiceInteraction());
       InteractionConfigurations.addInteraction(this.selectSPInteraction());

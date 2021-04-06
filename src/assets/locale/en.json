@@ -9,7 +9,7 @@
     "service.choice.tp": "Technology Prototype",
     "service.choice.sp": "Solution Prototype",
     "service.select.etms.message": "You have selected monitoring emerging technologies",
-    "service.select.research.message": "You have selected research",
+    "service.select.research.message": "Ok! With our Research service, you can Submit a Research Request.",
     "service.select.tp.message": "You have selected technology prototyping",
     "service.select.sp.message": "You have selected solution prototyping",
     "service.select.return.message": "What other service would you like to get help with?",
@@ -27,7 +27,9 @@
     "common.switch.off" :"Off",
     "common.mic": "Microphone",
     "common.choice.return": "Return",
+    "submit.request": "Submit Request",
     "verification.message": "Thank you for submitting your identification. Your identity has been successfully verified and we can now continue with your request.",
-    "request.sent.message": "Thank you for that information! I will add it to your request."
+    "request.sent.message": "Thank you for that information! I will add it to your request.",
+    "research.request.submitted.message": "Perfect, thank you! To proceed with this request, we need to verify your identity. Please provide a form of government identification and take a picture of it by using the Document Capture feature."
   }
 }

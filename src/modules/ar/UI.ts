@@ -516,15 +516,17 @@ export class ARUI {
       that.scanARIcon.height = 0.15;
     }
 
-    if (show) {
+    if (!show) {
       // Make sure we aren't already showing it.
       if (that.scanARIcon.metadata && that.scanARIcon.metadata.state) {
+        //that.xrGUI.addControl(that.scanARIcon);
         return;
       }
-
-      that.xrGUI.removeControl(that.scanARIcon);
-    } else {
       that.xrGUI.addControl(that.scanARIcon);
+      //that.xrGUI.removeControl(that.scanARIcon);
+    } else {
+      that.xrGUI.removeControl(that.scanARIcon);
+      //that.xrGUI.addControl(that.scanARIcon);
     }
 
     that.scanARIcon.metadata = { state: show };
