@@ -218,6 +218,10 @@ export class ARUI {
    * @returns the configured choice panel
    */
   private createChoicePanel(): Rectangle {
+    // TODO: Have choice panel call Microphone Button function to create btn
+    // TODO: Write a flag to show audio mode - show choices or record button
+    // TODO: Create both panels and hide both - display the one the user selects
+    // TODO: add create microphone button to choice panel
     const choicePanel: Rectangle = new Rectangle();
     choicePanel.thickness = 0;
     choicePanel.name = 'choicePanel';
@@ -236,6 +240,7 @@ export class ARUI {
    * @param eventState what triggered the event
    */
   private choiceSelectedEvent(eventData: Vector2WithInfo, eventState: EventState): void {
+    // TODO: Create new function to - Add event handler on button release (use the same concept as below)
     if (eventState.target instanceof Button) {
       ARUI.getInstance().arController.executeInteraction(eventState.target.metadata.interaction);
     }
@@ -272,6 +277,7 @@ export class ARUI {
    * @param currentInteraction the current interaction
    */
   private updateChoicePanelOptions(currentInteraction: Interaction): void {
+    // TODO: If microphone mode show mic button else show choice stack
     if (!this.activePanel || this.activePanel.name === ARUI.CHOICE_BUTTONS_STACK) {
       // No active panel or not a choice panel, so skip.
       return;
@@ -455,6 +461,10 @@ export class ARUI {
     // Record icon
     const micButton = Button.CreateSimpleButton('mic', '\uf130');
     this.configureMenuButton(micButton, maxWidthInPixel);
+    //TODO: create a function that activates the audio mode
+    micButton.onPointerClickObservable.add(function () {
+      console.log('clicked');
+    });
     menuPanel.addControl(micButton);
 
     this.xrGUI.addControl(menuPanel);
