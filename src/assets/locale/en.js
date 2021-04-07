@@ -1,9 +1,12 @@
 import agentWelcome from '../audio/en/welcome.mp3';
-import agentServiceETMS from '../audio/en/service.etms.mp3';
-import agentServiceResearch from '../audio/en/service.research.mp3';
-import agentServiceTP from '../audio/en/service.tp.mp3';
-import agentServiceSP from '../audio/en/service.sp.mp3';
-import agentServiceReturn from '../audio/en/service.return.mp3';
+import agentServiceSelectETMS from '../audio/en/service.select.etms.mp3';
+import agentServiceSelectResearch from '../audio/en/service.select.research.mp3';
+import agentServiceSelectTP from '../audio/en/service.select.tp.mp3';
+import agentServiceSelectSP from '../audio/en/service.select.sp.mp3';
+import agentServiceSelectReturn from '../audio/en/service.select.return.mp3';
+import agentRequestSent from '../audio/en/request.sent.mp3';
+import agentResearchRequestSubmitted from '../audio/en/research.request.submitted.mp3';
+import agentVerification from '../audio/en/verification.mp3';
 
 /**
  * English translations where en.json and en.js are merged by TranslationService.
@@ -15,11 +18,14 @@ import agentServiceReturn from '../audio/en/service.return.mp3';
 const en = {
   translation: {
     'welcome.audio': agentWelcome,
-    'service.select.etms.audio': agentServiceETMS,
-    'service.select.research.audio': agentServiceResearch,
-    'service.select.tp.audio': agentServiceTP,
-    'service.select.sp.audio': agentServiceSP,
-    'service.select.return.audio': agentServiceReturn,
+    'service.select.etms.audio': agentServiceSelectETMS,
+    'service.select.research.audio': agentServiceSelectResearch,
+    'service.select.tp.audio': agentServiceSelectTP,
+    'service.select.sp.audio': agentServiceSelectSP,
+    'service.select.return.audio': agentServiceSelectReturn,
+    'request.sent.audio': agentRequestSent,
+    'research.request.submitted.audio': agentResearchRequestSubmitted,
+    'verification.audio': agentVerification,
   },
 };
 
