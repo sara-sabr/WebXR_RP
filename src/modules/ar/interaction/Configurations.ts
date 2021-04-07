@@ -214,20 +214,20 @@ export class InteractionConfigurations {
     };
   }
 
-    /**
+  /**
    * Submit Research Request message interaction
    *
    * @returns configured interaction
    */
-  
-     private static submitResearchRequestMsg(): Interaction {
-      return {
-        name: ARConstants.INTERACTION_RESEARCH_REQUEST_SUBMIT,
-        animationKey: 'TalkLong',
-        uiPanel: UIPanel.MESSAGE, 
-        //nextInteraction: ARConstants.INTERACTION_CAMERA_OVERLAY
-      };
-    }
+
+  private static submitResearchRequestMsg(): Interaction {
+    return {
+      name: ARConstants.INTERACTION_RESEARCH_REQUEST_SUBMIT,
+      animationKey: 'TalkLong',
+      uiPanel: UIPanel.MESSAGE,
+      //nextInteraction: ARConstants.INTERACTION_CAMERA_OVERLAY
+    };
+  }
 
   /**
    * Service Choice interaction.
@@ -311,7 +311,7 @@ export class InteractionConfigurations {
     return {
       name: ARConstants.INTERACTION_VERIFICATION,
       uiPanel: UIPanel.MESSAGE,
-      animationKey: 'TalkLong'
+      animationKey: 'Talk',
     };
   }
   /**
@@ -348,8 +348,8 @@ export class InteractionConfigurations {
       InteractionConfigurations.addInteraction(this.mainMenuInteraction());
       InteractionConfigurations.addInteraction(this.cameraOverlayInteraction());
       InteractionConfigurations.addInteraction(this.verifyIDInteraction());
-      // InteractionConfigurations.addInteraction(this.requestSubmittedInteraction());
-      // InteractionConfigurations.addInteraction(this.userInputInteraction());
+      InteractionConfigurations.addInteraction(this.requestSubmittedInteraction());
+      InteractionConfigurations.addInteraction(this.userInputInteraction());
     }
 
     return InteractionConfigurations.CONFIGURATION;
