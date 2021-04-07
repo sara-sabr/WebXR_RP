@@ -89,10 +89,10 @@ export class ARConstants {
    */
   static readonly INTERACTION_VERIFICATION = 'verification';
 
-    /**
+  /**
    * Service Research interaction.
    */
-     static readonly INTERACTION_SUBMIT_RESEARCH = 'submit.request';
+  static readonly INTERACTION_SUBMIT_RESEARCH = 'submit.request';
 
   /**
    * Request Sent Interaction

@@ -316,7 +316,7 @@ export class ARUI {
       button.fontSize = '40pt';
       button.fontWeight = 'bold';
       button.background = 'white';
-      button.shadowColor = "black";
+      button.shadowColor = 'black';
       button.shadowBlur = 12;
       button.shadowOffsetY = 6;
       button.name = messageKey;
