@@ -28,7 +28,7 @@ function generateAudio(translation, language) {
   }
   for (const key in translation) {
     if (key.endsWith('.message')) {
-      const filename = destPath + key.substring(0, key.length - 7) + '.mp3';
+      const filename = destPath + key.substring(0, key.length - 8) + '.mp3';
       console.log('Creating audio file: ' + filename);
       const textToSpeech = translation[key].replace(/\n/g, '');
       synthesizeSpeech(filename, textToSpeech);
