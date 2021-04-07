@@ -69,6 +69,7 @@ export class InteractionConfigurations {
     return {
       name: ARConstants.INTERACTION_SERVICE_RETURN,
       uiPanel: UIPanel.MESSAGE,
+      animationKey: 'Talk',
       nextInteraction: ARConstants.INTERACTION_SERVICE_CHOICE,
     };
   }
@@ -78,10 +79,11 @@ export class InteractionConfigurations {
    *
    * @returns configured interaction
    */
-  private static selectReserachInteraction(): Interaction {
+  private static selectResearchInteraction(): Interaction {
     return {
       name: ARConstants.INTERACTION_SELECT_RESEARCH,
       uiPanel: UIPanel.MESSAGE,
+      animationKey: 'Talk',
       nextInteraction: ARConstants.INTERACTION_RESEARCH_CHOICE,
     };
   }
@@ -95,6 +97,7 @@ export class InteractionConfigurations {
     return {
       name: ARConstants.INTERACTION_SELECT_ETMS,
       uiPanel: UIPanel.MESSAGE,
+      animationKey: 'Talk',
       nextInteraction: ARConstants.INTERACTION_ETMS_CHOICE,
     };
   }
@@ -108,6 +111,7 @@ export class InteractionConfigurations {
     return {
       name: ARConstants.INTERACTION_SELECT_SP,
       uiPanel: UIPanel.MESSAGE,
+      animationKey: 'Talk',
       nextInteraction: ARConstants.INTERACTION_SP_CHOICE,
     };
   }
@@ -121,6 +125,7 @@ export class InteractionConfigurations {
     return {
       name: ARConstants.INTERACTION_SELECT_TP,
       uiPanel: UIPanel.MESSAGE,
+      animationKey: 'Talk',
       nextInteraction: ARConstants.INTERACTION_TP_CHOICE,
     };
   }
@@ -186,14 +191,13 @@ export class InteractionConfigurations {
   }
 
   /**
-   * Return interaction.
+   * Submit Research interaction.
    *
    * @returns configured interaction
    */
   private static researchServiceInteraction(): Interaction {
     return {
       name: ARConstants.INTERACTION_RESEARCH_CHOICE,
-      animationKey: 'Wave',
       uiPanel: UIPanel.CHOICE,
       metaData: {
         arButtons: [
@@ -201,8 +205,27 @@ export class InteractionConfigurations {
             key: 'common.choice.return',
             interaction: ARConstants.INTERACTION_SERVICE_RETURN,
           },
+          {
+            key: 'submit.request',
+            interaction: ARConstants.INTERACTION_RESEARCH_REQUEST_SUBMIT,
+          },
         ] as ARButton[],
       },
+    };
+  }
+
+  /**
+   * Submit Research Request message interaction
+   *
+   * @returns configured interaction
+   */
+
+  private static submitResearchRequestMsg(): Interaction {
+    return {
+      name: ARConstants.INTERACTION_RESEARCH_REQUEST_SUBMIT,
+      animationKey: 'TalkLong',
+      uiPanel: UIPanel.MESSAGE,
+      nextInteraction: ARConstants.INTERACTION_CAMERA_OVERLAY,
     };
   }
 
@@ -214,7 +237,6 @@ export class InteractionConfigurations {
   private static serviceChoiceInteraction(): Interaction {
     return {
       name: ARConstants.INTERACTION_SERVICE_CHOICE,
-      animationKey: 'Talk',
       uiPanel: UIPanel.CHOICE,
       metaData: {
         arButtons: [
@@ -275,7 +297,7 @@ export class InteractionConfigurations {
         arButtons: [
           {
             key: 'submit',
-            interaction: ARConstants.INTERACTION_REQUEST_SUBMITTED,
+            interaction: ARConstants.INTERACTION_REQUEST_SENT,
           },
         ] as ARButton[],
       },
@@ -289,6 +311,7 @@ export class InteractionConfigurations {
     return {
       name: ARConstants.INTERACTION_VERIFICATION,
       uiPanel: UIPanel.MESSAGE,
+      animationKey: 'Talk',
     };
   }
   /**
@@ -297,7 +320,7 @@ export class InteractionConfigurations {
    */
   private static requestSubmittedInteraction(): Interaction {
     return {
-      name: ARConstants.INTERACTION_REQUEST_SUBMITTED,
+      name: ARConstants.INTERACTION_REQUEST_SENT,
       uiPanel: UIPanel.MESSAGE,
     };
   }
@@ -314,8 +337,9 @@ export class InteractionConfigurations {
       InteractionConfigurations.addInteraction(this.serviceChoiceInteraction());
       InteractionConfigurations.addInteraction(this.selectETMSInteraction());
       InteractionConfigurations.addInteraction(this.etmsServiceInteraction());
-      InteractionConfigurations.addInteraction(this.selectReserachInteraction());
+      InteractionConfigurations.addInteraction(this.selectResearchInteraction());
       InteractionConfigurations.addInteraction(this.researchServiceInteraction());
+      InteractionConfigurations.addInteraction(this.submitResearchRequestMsg());
       InteractionConfigurations.addInteraction(this.serviceReturnInteraction());
       InteractionConfigurations.addInteraction(this.selectTPInteraction());
       InteractionConfigurations.addInteraction(this.tpServiceInteraction());

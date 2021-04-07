@@ -90,9 +90,19 @@ export class ARConstants {
   static readonly INTERACTION_VERIFICATION = 'verification';
 
   /**
-   * Request Submitted Interaction
+   * Service Research interaction.
    */
-  static readonly INTERACTION_REQUEST_SUBMITTED = 'request.submitted';
+  static readonly INTERACTION_SUBMIT_RESEARCH = 'submit.request';
+
+  /**
+   * Request Sent Interaction
+   */
+  static readonly INTERACTION_REQUEST_SENT = 'request.sent';
+
+  /**
+   * Request Submission Overlay Interaction
+   */
+  static readonly INTERACTION_RESEARCH_REQUEST_SUBMIT = 'research.request.submitted';
 
   /**
    * User Input Interaction

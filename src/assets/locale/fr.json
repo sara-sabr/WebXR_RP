@@ -9,7 +9,7 @@
     "service.choice.tp": "Prototypage technologique",
     "service.choice.sp": "Prototypage de solutions",
     "service.select.etms.message": "Vous aviez sélectionné le service de surveillances des technologies émergentes.",
-    "service.select.research.message": "Vous aviez sélectionné le service de recherche.",
+    "service.select.research.message": "D'accord! Avec notre service de recherche, vous pouvez soumettre une demande de recherche.",
     "service.select.tp.message": "Vous avez sélectionné le service de prototypage technologique.",
     "service.select.sp.message": "Vous avez sélectionné le service de prototypage de solutions.",
     "service.select.return.message": "Pour quel autre service aimerez-vous obtenir de l'aide?",
@@ -27,7 +27,9 @@
     "common.switch.off" :"Arrêt",
     "common.mic": "Microphone",
     "common.choice.return": "Retour",
+    "submit.request": "Soumettre une demande",
     "verification.message": "Merci d'avoir soumis votre identification. Votre identité a été vérifié, nous pouvions continuer avec votre requête.",
-    "request.submitted.message": "Merci! Je vais ajouter ces détails à votre requête."
+    "request.sent.message": "Merci! Je vais ajouter ces détails à votre requête.",
+    "research.request.submitted.message": "Parfait, merci ! Pour procéder à cette demande, nous devons vérifier votre identité. Veuillez fournir une pièce d'identité officielle en utilisant la fonction de capture de documents."
   }
 }

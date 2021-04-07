@@ -309,20 +309,24 @@ export class ARUI {
 
       button = Button.CreateSimpleButton(key, i18next.t(messageKey));
       button.width = 0.6;
-      button.height = '100px';
-      button.thickness = 0.05;
-      button.cornerRadius = 30;
-      button.color = 'white';
-      button.fontSize = '32pt';
+      button.height = '120px';
+      button.thickness = 6;
+      button.cornerRadius = 20;
+      button.color = '#0072c1';
+      button.fontSize = '40pt';
       button.fontWeight = 'bold';
-      button.background = '#0072c1';
+      button.background = 'white';
+      button.shadowColor = 'black';
+      button.shadowBlur = 12;
+      button.shadowOffsetY = 6;
       button.name = messageKey;
       button.metadata = { interaction: arButtons[idx].interaction };
       choicesPanel.addControl(button);
       button.onPointerClickObservable.add(this.choiceSelectedEvent);
       paddingRect = new Rectangle();
-      paddingRect.height = '1px';
+      paddingRect.height = '15px';
       paddingRect.thickness = 0;
+      choicesPanel.top = 700;
       choicesPanel.addControl(paddingRect);
     }
   }
@@ -373,9 +377,9 @@ export class ARUI {
   private createCameraPanel(): Container {
     const cameraPanel: Rectangle = new Rectangle('cameraPanel');
     const grid: Grid = new Grid('cameraGrid');
-    grid.addColumnDefinition(0.2);
-    grid.addColumnDefinition(0.6);
-    grid.addColumnDefinition(0.2);
+    grid.addColumnDefinition(0.1);
+    grid.addColumnDefinition(0.8);
+    grid.addColumnDefinition(0.1);
     grid.addRowDefinition(0.2);
     grid.addRowDefinition(0.6);
     grid.addRowDefinition(0.2);
@@ -516,15 +520,14 @@ export class ARUI {
       that.scanARIcon.height = 0.15;
     }
 
-    if (show) {
+    if (!show) {
       // Make sure we aren't already showing it.
       if (that.scanARIcon.metadata && that.scanARIcon.metadata.state) {
         return;
       }
-
-      that.xrGUI.removeControl(that.scanARIcon);
-    } else {
       that.xrGUI.addControl(that.scanARIcon);
+    } else {
+      that.xrGUI.removeControl(that.scanARIcon);
     }
 
     that.scanARIcon.metadata = { state: show };
