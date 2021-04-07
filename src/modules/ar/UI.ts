@@ -523,14 +523,11 @@ export class ARUI {
     if (!show) {
       // Make sure we aren't already showing it.
       if (that.scanARIcon.metadata && that.scanARIcon.metadata.state) {
-        //that.xrGUI.addControl(that.scanARIcon);
         return;
       }
       that.xrGUI.addControl(that.scanARIcon);
-      //that.xrGUI.removeControl(that.scanARIcon);
     } else {
       that.xrGUI.removeControl(that.scanARIcon);
-      //that.xrGUI.addControl(that.scanARIcon);
     }
 
     that.scanARIcon.metadata = { state: show };
