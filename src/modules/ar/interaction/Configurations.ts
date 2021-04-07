@@ -225,7 +225,7 @@ export class InteractionConfigurations {
       name: ARConstants.INTERACTION_RESEARCH_REQUEST_SUBMIT,
       animationKey: 'TalkLong',
       uiPanel: UIPanel.MESSAGE,
-      //nextInteraction: ARConstants.INTERACTION_CAMERA_OVERLAY
+      nextInteraction: ARConstants.INTERACTION_CAMERA_OVERLAY,
     };
   }
 
