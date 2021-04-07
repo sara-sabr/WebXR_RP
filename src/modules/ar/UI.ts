@@ -218,10 +218,6 @@ export class ARUI {
    * @returns the configured choice panel
    */
   private createChoicePanel(): Rectangle {
-    // TODO: Have choice panel call Microphone Button function to create btn
-    // TODO: Write a flag to show audio mode - show choices or record button
-    // TODO: Create both panels and hide both - display the one the user selects
-    // TODO: add create microphone button to choice panel
     const choicePanel: Rectangle = new Rectangle();
     choicePanel.thickness = 0;
     choicePanel.name = 'choicePanel';
@@ -240,7 +236,6 @@ export class ARUI {
    * @param eventState what triggered the event
    */
   private choiceSelectedEvent(eventData: Vector2WithInfo, eventState: EventState): void {
-    // TODO: Create new function to - Add event handler on button release (use the same concept as below)
     if (eventState.target instanceof Button) {
       ARUI.getInstance().arController.executeInteraction(eventState.target.metadata.interaction);
     }
@@ -277,7 +272,6 @@ export class ARUI {
    * @param currentInteraction the current interaction
    */
   private updateChoicePanelOptions(currentInteraction: Interaction): void {
-    // TODO: If microphone mode show mic button else show choice stack
     if (!this.activePanel || this.activePanel.name === ARUI.CHOICE_BUTTONS_STACK) {
       // No active panel or not a choice panel, so skip.
       return;
@@ -391,6 +385,8 @@ export class ARUI {
     grid.addRowDefinition(0.2);
     cameraPanel.addControl(grid);
 
+    cameraPanel.zIndex = 20;
+
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
         if (i == 1 && j == 1) {
@@ -441,7 +437,7 @@ export class ARUI {
    * Create the application menu buttons.
    */
   private createAppMenu(): void {
-    const maxWidthInPixel = 150;
+    const maxWidthInPixel = 180;
 
     const menuPanel = new StackPanel('appMenu');
     menuPanel.width = maxWidthInPixel + 'px';
@@ -452,6 +448,9 @@ export class ARUI {
     menuPanel.paddingRight = '5px';
     menuPanel.top = 50;
     menuPanel.left = -25;
+    menuPanel.zIndex = 10;
+
+    var isMicON = false;
 
     const exitButton = Button.CreateSimpleButton('exit', '\uf08b');
     this.configureMenuButton(exitButton, maxWidthInPixel);
@@ -459,11 +458,18 @@ export class ARUI {
     menuPanel.addControl(exitButton);
 
     // Record icon
-    const micButton = Button.CreateSimpleButton('mic', '\uf130');
+    const micButton = Button.CreateSimpleButton('mic', '\uf131');
     this.configureMenuButton(micButton, maxWidthInPixel);
-    //TODO: create a function that activates the audio mode
     micButton.onPointerClickObservable.add(function () {
-      console.log('clicked');
+      if(isMicON == false){ 
+        //micButton.background = 'red';
+        micButton.textBlock.text = '\uf130';
+        isMicON = true;
+      } else {
+        //micButton.background = 'black';
+        micButton.textBlock.text = '\uf131';
+        isMicON = false;
+      }
     });
     menuPanel.addControl(micButton);
 
@@ -490,17 +496,18 @@ export class ARUI {
 
     const buttonText = button.textBlock;
     buttonText.fontFamily = 'FontAwesome';
-    buttonText.color = 'black';
-    buttonText.fontSize = 38;
-    buttonText.paddingTop = 8;
+    buttonText.color = '#0072c1';
+    buttonText.fontSize = 48;
+    buttonText.paddingTop = 10;
+    buttonText.paddingLeft = -1;
     buttonText.fontWeight = 'bold';
     buttonText.zIndex = 100;
 
     const circle = new Ellipse();
     circle.width = 0.85;
     circle.height = 0.85;
-    circle.color = 'white';
-    circle.thickness = 0;
+    circle.color = '#0072c1';
+    circle.thickness = 6;
     circle.background = 'white';
     circle.shadowColor = 'black';
     circle.shadowBlur = 6;
