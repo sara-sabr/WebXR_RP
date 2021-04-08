@@ -450,7 +450,7 @@ export class ARUI {
     menuPanel.left = -25;
     menuPanel.zIndex = 10;
 
-    var isMicON = false;
+    let isMicON = false;
 
     const exitButton = Button.CreateSimpleButton('exit', '\uf08b');
     this.configureMenuButton(exitButton, maxWidthInPixel);
@@ -461,7 +461,7 @@ export class ARUI {
     const micButton = Button.CreateSimpleButton('mic', '\uf131');
     this.configureMenuButton(micButton, maxWidthInPixel);
     micButton.onPointerClickObservable.add(function () {
-      if(isMicON == false){ 
+      if (isMicON == false) {
         //micButton.background = 'red';
         micButton.textBlock.text = '\uf130';
         isMicON = true;
@@ -591,6 +591,8 @@ export class ARUI {
         break;
       case UIPanel.USER_INPUT:
         this.updateUserInputPanel(currentInteraction);
+        break;
+      case UIPanel.MICROPHONE:
         break;
     }
 
