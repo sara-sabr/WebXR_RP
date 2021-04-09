@@ -108,4 +108,9 @@ export class ARConstants {
    * User Input Interaction
    */
   static readonly INTERACTION_USER_INPUT = 'user.input';
+
+  /**
+   * Microphone
+   */
+  static readonly INTERACTION_ACTIVE_MICROPHONE = 'active.microphone';
 }
