@@ -193,23 +193,51 @@ export class ARUI {
    *
    * @returns the configured microphone panel
    */
-  private createMicrophonePanel(): StackPanel {
-    const microphonePanel: StackPanel = this.createStackedPanel('microphone');
-
-    const toggleMic = new ToggleButton('Mic');
-    const toggleText = new TextBlock();
-    toggleText.text = 'Activate Mic';
-    toggleText.color = 'white';
-    toggleText.fontSize = '24';
-    toggleMic.addControl(toggleText);
-    toggleMic.width = 0.3;
-    toggleMic.height = 0.06;
-    toggleMic.background = 'blue';
-    toggleMic.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
-    toggleMic.onPointerDownObservable.add(() => {
-      microphonePanel.addControl(toggleMic);
-    });
+  private createMicrophonePanel(): Rectangle {
+    const microphonePanel: Rectangle = new Rectangle('Microphone Panel');
+    microphonePanel.thickness = 0;
     return microphonePanel;
+  }
+  /**
+   * Updates the active microphone panel to have a mic button linked to the interaction
+   * @param activeMicrophoneInteraction The interaction for the user input panel
+   */
+  private updateActiveMicrophonePanel(activeMicrophoneInteraction: Interaction): void {
+    const microphonePanel = this.activePanel;
+
+    const activeMic: Button = Button.CreateSimpleButton('Mic', '');
+    activeMic.width = '260px';
+    activeMic.height = activeMic.width;
+    activeMic.thickness = 0;
+    activeMic.onPointerClickObservable.add(function () {
+      circle.background = 'white';
+      micText.color = 'red';
+    });
+
+    const micText = new TextBlock();
+    micText.text = '\uf131';
+    micText.fontFamily = 'FontAwesome';
+    micText.color = 'white';
+    micText.fontSize = 70;
+    micText.paddingTop = 10;
+    micText.paddingLeft = -1;
+    micText.fontWeight = 'bold';
+    micText.zIndex = 2;
+
+    const circle = new Ellipse();
+    circle.width = 0.85;
+    circle.height = 0.85;
+    circle.color = 'white';
+    circle.thickness = 6;
+    circle.background = 'red';
+    circle.shadowColor = 'black';
+    circle.shadowBlur = 6;
+    circle.shadowOffsetY = 3;
+    circle.zIndex = 1;
+
+    activeMic.addControl(circle);
+    activeMic.addControl(micText);
+    microphonePanel.addControl(activeMic);
   }
 
   /**
@@ -457,16 +485,19 @@ export class ARUI {
     exitButton.onPointerClickObservable.add(this.exitEventHandler);
     menuPanel.addControl(exitButton);
 
+    //const arButtons = currentInteraction.metaData.arButtons as ARButton[];
+
     // Record icon
     const micButton = Button.CreateSimpleButton('mic', '\uf131');
     this.configureMenuButton(micButton, maxWidthInPixel);
+    //micButton.metadata = { interaction: arButtons[4].interaction };
     micButton.onPointerClickObservable.add(function () {
       if (isMicON == false) {
-        //micButton.background = 'red';
         micButton.textBlock.text = '\uf130';
+        this.activeMicrophoneEventHandler;
+        //micButton.onPointerClickObservable.add(this.choiceSelectedEvent);
         isMicON = true;
       } else {
-        //micButton.background = 'black';
         micButton.textBlock.text = '\uf131';
         isMicON = false;
       }
@@ -481,6 +512,15 @@ export class ARUI {
    */
   private exitEventHandler(): void {
     ARUI.getInstance().arController.exit();
+  }
+
+  /**
+   * Active Microphone Toggle event handler;
+   */
+  private activeMicrophoneEventHandler(arController: ARController): void {
+    this.arController = arController;
+    this.xrGUI = AdvancedDynamicTexture.CreateFullscreenUI('UI');
+    this.uiPanels.set(UIPanel.USER_INPUT, this.createUserInputPanel());
   }
 
   /**
@@ -593,6 +633,7 @@ export class ARUI {
         this.updateUserInputPanel(currentInteraction);
         break;
       case UIPanel.MICROPHONE:
+        this.updateActiveMicrophonePanel(currentInteraction);
         break;
     }
 
