@@ -491,17 +491,18 @@ export class ARUI {
     const micButton = Button.CreateSimpleButton('mic', '\uf131');
     this.configureMenuButton(micButton, maxWidthInPixel);
     //micButton.metadata = { interaction: arButtons[4].interaction };
-    micButton.onPointerClickObservable.add(function () {
-      if (isMicON == false) {
-        micButton.textBlock.text = '\uf130';
-        this.activeMicrophoneEventHandler;
-        //micButton.onPointerClickObservable.add(this.choiceSelectedEvent);
-        isMicON = true;
-      } else {
-        micButton.textBlock.text = '\uf131';
-        isMicON = false;
-      }
-    });
+    micButton.onPointerClickObservable.add(this.exitEventHandler);
+    // micButton.onPointerClickObservable.add(function () {
+    //   if (isMicON == false) {
+    //     micButton.textBlock.text = '\uf130';
+    //     this.activeMicrophoneEventHandler;
+    //     micButton.onPointerClickObservable.add(this.exitEventHandler);
+    //     isMicON = true;
+    //   } else {
+    //     micButton.textBlock.text = '\uf131';
+    //     isMicON = false;
+    //   }
+    // });
     menuPanel.addControl(micButton);
 
     this.xrGUI.addControl(menuPanel);
@@ -517,10 +518,8 @@ export class ARUI {
   /**
    * Active Microphone Toggle event handler;
    */
-  private activeMicrophoneEventHandler(arController: ARController): void {
-    this.arController = arController;
-    this.xrGUI = AdvancedDynamicTexture.CreateFullscreenUI('UI');
-    this.uiPanels.set(UIPanel.USER_INPUT, this.createUserInputPanel());
+  private activeMicrophoneEventHandler(activeMicrophoneInteraction: Interaction): void {
+    this.updateActiveMicrophonePanel(activeMicrophoneInteraction);
   }
 
   /**
