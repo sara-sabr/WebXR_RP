@@ -58,9 +58,9 @@ export class ARUI {
   private activePanel: Container;
 
   /**
-   * Mic mode.
+   * Microphone global variable.
    */
-  private micToggle: ToggleSwitch;
+  private isMicON: boolean;
 
   /**
    * The app.
@@ -478,20 +478,15 @@ export class ARUI {
     menuPanel.left = -25;
     menuPanel.zIndex = 10;
 
-    let isMicON = false;
-
     const exitButton = Button.CreateSimpleButton('exit', '\uf08b');
     this.configureMenuButton(exitButton, maxWidthInPixel);
     exitButton.onPointerClickObservable.add(this.exitEventHandler);
     menuPanel.addControl(exitButton);
 
-    //const arButtons = currentInteraction.metaData.arButtons as ARButton[];
-
     // Record icon
     const micButton = Button.CreateSimpleButton('mic', '\uf131');
     this.configureMenuButton(micButton, maxWidthInPixel);
-    //micButton.metadata = { interaction: arButtons[4].interaction };
-    micButton.onPointerClickObservable.add(this.exitEventHandler);
+    micButton.onPointerClickObservable.add(this.activeMicrophoneEventHandler);
     // micButton.onPointerClickObservable.add(function () {
     //   if (isMicON == false) {
     //     micButton.textBlock.text = '\uf130';
@@ -518,8 +513,8 @@ export class ARUI {
   /**
    * Active Microphone Toggle event handler;
    */
-  private activeMicrophoneEventHandler(activeMicrophoneInteraction: Interaction): void {
-    this.updateActiveMicrophonePanel(activeMicrophoneInteraction);
+  private activeMicrophoneEventHandler(): void {
+    ARUI.getInstance().arController.executeInteraction(ARConstants.INTERACTION_ACTIVE_MICROPHONE);
   }
 
   /**
