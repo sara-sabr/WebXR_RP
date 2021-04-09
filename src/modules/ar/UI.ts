@@ -193,8 +193,9 @@ export class ARUI {
    *
    * @returns the configured microphone panel
    */
-  private createMicrophonePanel(): StackPanel {
-    const microphonePanel: StackPanel = this.createStackedPanel('microphone');
+  private createMicrophonePanel(): Rectangle {
+    const microphonePanel: Rectangle = new Rectangle('Microphone Panel');
+    microphonePanel.thickness = 0;
     return microphonePanel;
   }
   /**
@@ -212,7 +213,7 @@ export class ARUI {
       circle.background = 'white';
       micText.color = 'red';
     });
-    //aciveMic.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
+    
     
     const micText = new TextBlock();
     micText.text = '\uf131';
