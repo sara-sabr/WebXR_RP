@@ -256,10 +256,10 @@ export class InteractionConfigurations {
             key: 'sp',
             interaction: 'service.select.sp',
           },
-          {
-            key: 'microphone',
-            interaction: 'active.microphone',
-          },
+          // {
+          //   key: 'microphone',
+          //   interaction: 'active.microphone',
+          // },
         ] as ARButton[],
       },
     };

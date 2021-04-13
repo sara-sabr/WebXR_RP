@@ -60,7 +60,7 @@ export class ARUI {
   /**
    * Microphone global variable.
    */
-  private isMicON: boolean;
+  public isMicON: Boolean = false;
 
   /**
    * The app.
@@ -107,6 +107,12 @@ export class ARUI {
    * @param userInputInteraction The interaction for the user input panel
    */
   private updateUserInputPanel(userInputInteraction: Interaction): void {
+
+    if (this.isMicON == true){
+      // if the microphone is active then do not show the choice panel
+      return;
+    }
+
     const arButtons = userInputInteraction.metaData.arButtons as ARButton[];
     const panel = this.activePanel;
 
@@ -300,8 +306,8 @@ export class ARUI {
    * @param currentInteraction the current interaction
    */
   private updateChoicePanelOptions(currentInteraction: Interaction): void {
-    if (!this.activePanel || this.activePanel.name === ARUI.CHOICE_BUTTONS_STACK) {
-      // No active panel or not a choice panel, so skip.
+    if (!this.activePanel || this.activePanel.name === ARUI.CHOICE_BUTTONS_STACK|| this.isMicON == true) {
+      // No active panel or not a choice panel, so skip. if the microphone is active then do not show the choice panel
       return;
     }
 
@@ -486,20 +492,20 @@ export class ARUI {
     // Record icon
     const micButton = Button.CreateSimpleButton('mic', '\uf131');
     this.configureMenuButton(micButton, maxWidthInPixel);
+
     micButton.onPointerClickObservable.add(this.activeMicrophoneEventHandler);
-    // micButton.onPointerClickObservable.add(function () {
-    //   if (isMicON == false) {
-    //     micButton.textBlock.text = '\uf130';
-    //     this.activeMicrophoneEventHandler;
-    //     micButton.onPointerClickObservable.add(this.exitEventHandler);
-    //     isMicON = true;
-    //   } else {
+    
+    // micButton.onPointerClickObservable.add(function(){
+    //   if (this.isMicON == true){
     //     micButton.textBlock.text = '\uf131';
-    //     isMicON = false;
+    //     this.isMicON = false;
+    //   } else {
+    //     micButton.textBlock.text = '\uf130';
+    //     this.isMicON = true;
     //   }
     // });
-    menuPanel.addControl(micButton);
 
+    menuPanel.addControl(micButton);
     this.xrGUI.addControl(menuPanel);
   }
 
@@ -513,9 +519,30 @@ export class ARUI {
   /**
    * Active Microphone Toggle event handler;
    */
-  private activeMicrophoneEventHandler(): void {
-    ARUI.getInstance().arController.executeInteraction(ARConstants.INTERACTION_ACTIVE_MICROPHONE);
+  private activeMicrophoneEventHandler() {  
+   
+    const micOnInteraction = ARUI.getInstance().arController.executeInteraction(ARConstants.INTERACTION_ACTIVE_MICROPHONE);
+    this.isMicON = true; 
+    if(this.isMicON === true){
+      return micOnInteraction;
+    }
+       
+    // if (this.isMicON == false){
+    //   // ARUI.getInstance().arController.executeInteraction(ARConstants.INTERACTION_ACTIVE_MICROPHONE);
+    //   micButtonGUI.textBlock.text = '\uf130';
+    //   this.isMicON = true;
+    // } else {
+    //   // ARUI.getInstance().arController.executeInteraction(ARConstants.INTERACTION_VERIFICATION);
+    //   micButtonGUI.textBlock.text = '\uf131';
+    //   this.isMicON = false;
+    // }
   }
+
+
+
+  // if (this.isMicON == true) {
+  //   ARUI.getInstance().arController.executeInteraction(ARConstants.INTERACTION_ACTIVE_MICROPHONE);
+  // }
 
   /**
    * Configure a menu button
