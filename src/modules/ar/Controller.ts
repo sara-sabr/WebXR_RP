@@ -95,6 +95,11 @@ export class ARController implements ITranslate {
   private kioskCoordinates = null;
 
   /**
+   * Microphone global variable.
+   */
+  public isMicON = false;
+
+  /**
    * All the configured interactions.
    */
   private interactionConfigurations: Map<
@@ -392,7 +397,7 @@ export class ARController implements ITranslate {
     }
 
     // Switch GUI.
-    await this.arUI.updateGUI(this.currentInteraction);
+    await this.refreshInteraction();
 
     // Animation
     if (interaction.animationKey) {
@@ -468,5 +473,10 @@ export class ARController implements ITranslate {
   public exit(): void {
     const button = document.getElementsByClassName('babylonVRicon')[0] as HTMLInputElement;
     button.click();
+  }
+
+  public async refreshInteraction(): Promise<void> {
+    // Switch GUI.
+    await this.arUI.updateGUI(this.currentInteraction);
   }
 }

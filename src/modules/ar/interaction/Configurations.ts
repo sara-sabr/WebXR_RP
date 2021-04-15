@@ -256,6 +256,10 @@ export class InteractionConfigurations {
             key: 'sp',
             interaction: 'service.select.sp',
           },
+          // {
+          //   key: 'microphone',
+          //   interaction: 'active.microphone',
+          // },
         ] as ARButton[],
       },
     };
@@ -325,6 +329,16 @@ export class InteractionConfigurations {
     };
   }
   /**
+   * Definition of the Active Microphone Interaction
+   * @returns Configured Active Microphone Interaction
+   */
+  private static activeMicrophoneInteraction(): Interaction {
+    return {
+      name: ARConstants.INTERACTION_ACTIVE_MICROPHONE,
+      uiPanel: UIPanel.MICROPHONE,
+    };
+  }
+  /**
    * Get the configurations.
    */
   public static getConfiguration(): Map<string, Interaction> {
@@ -350,6 +364,7 @@ export class InteractionConfigurations {
       InteractionConfigurations.addInteraction(this.verifyIDInteraction());
       InteractionConfigurations.addInteraction(this.requestSubmittedInteraction());
       InteractionConfigurations.addInteraction(this.userInputInteraction());
+      InteractionConfigurations.addInteraction(this.activeMicrophoneInteraction());
     }
 
     return InteractionConfigurations.CONFIGURATION;

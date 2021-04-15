@@ -3,7 +3,6 @@ import {
   AdvancedDynamicTexture,
   Rectangle,
   Control,
-  ToggleButton,
   Container,
   Vector2WithInfo,
   Button,
@@ -19,7 +18,6 @@ import { ARConstants } from '../Constants';
 import { ARButton } from './interaction/ARButton';
 import { Interaction } from './interaction/Interaction';
 import { UIPanel } from './UIPanel';
-import { ToggleSwitch } from './ToggleSwitch';
 import { ARController } from './Controller';
 
 import ScanARIconLocation from '../../assets/images/AR_ScanFloor_Icon.png';
@@ -58,11 +56,6 @@ export class ARUI {
   private activePanel: Container;
 
   /**
-   * Mic mode.
-   */
-  private micToggle: ToggleSwitch;
-
-  /**
    * The app.
    */
   private arController: ARController;
@@ -71,6 +64,16 @@ export class ARUI {
    * The scan icon for Kiosk mode.
    */
   private scanARIcon: Image;
+
+  /**
+   * The choice stack panel.
+   */
+  private choiceStack: StackPanel;
+
+  /**
+   * The microphone panel.
+   */
+  private microphonePanel: Rectangle;
 
   /**
    * The Singleton's constructor should always be private to prevent direct
@@ -107,6 +110,11 @@ export class ARUI {
    * @param userInputInteraction The interaction for the user input panel
    */
   private updateUserInputPanel(userInputInteraction: Interaction): void {
+    if (ARController.getInstance().isMicON == true) {
+      // if the microphone is active then do not show the choice panel
+      return;
+    }
+
     const arButtons = userInputInteraction.metaData.arButtons as ARButton[];
     const panel = this.activePanel;
 
@@ -193,23 +201,70 @@ export class ARUI {
    *
    * @returns the configured microphone panel
    */
-  private createMicrophonePanel(): StackPanel {
-    const microphonePanel: StackPanel = this.createStackedPanel('microphone');
-
-    const toggleMic = new ToggleButton('Mic');
-    const toggleText = new TextBlock();
-    toggleText.text = 'Activate Mic';
-    toggleText.color = 'white';
-    toggleText.fontSize = '24';
-    toggleMic.addControl(toggleText);
-    toggleMic.width = 0.3;
-    toggleMic.height = 0.06;
-    toggleMic.background = 'blue';
-    toggleMic.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
-    toggleMic.onPointerDownObservable.add(() => {
-      microphonePanel.addControl(toggleMic);
-    });
+  private createMicrophonePanel(): Rectangle {
+    const microphonePanel: Rectangle = new Rectangle('Microphone Panel');
+    microphonePanel.thickness = 0;
     return microphonePanel;
+  }
+  /**
+   * Updates the active microphone panel to have a mic button linked to the interaction
+   * @param activeMicrophoneInteraction The interaction for the user input panel
+   */
+  private createActiveMicrophoneButton(): void {
+    this.microphonePanel = new Rectangle();
+    this.microphonePanel.thickness = 0;
+
+    const activeMic: Button = Button.CreateSimpleButton('Mic', '');
+    activeMic.width = '260px';
+    activeMic.height = activeMic.width;
+    activeMic.thickness = 0;
+    activeMic.top = '30%';
+    activeMic.onPointerDownObservable.add(function () {
+      circle.background = 'white';
+      micText.color = 'red';
+      recordingText.text = 'Listening...';
+    });
+    activeMic.onPointerUpObservable.add(function () {
+      circle.background = 'red';
+      micText.color = 'white';
+      recordingText.text = 'Hold to speak.';
+    });
+
+    const micText = new TextBlock();
+    micText.text = '\uf130';
+    micText.fontFamily = 'FontAwesome';
+    micText.color = 'white';
+    micText.fontSize = 70;
+    micText.paddingTop = 10;
+    micText.paddingLeft = -1;
+    micText.fontWeight = 'bold';
+    micText.zIndex = 2;
+
+    const circle = new Ellipse();
+    circle.width = 0.85;
+    circle.height = 0.85;
+    circle.color = 'white';
+    circle.thickness = 6;
+    circle.background = 'red';
+    circle.shadowColor = 'black';
+    circle.shadowBlur = 6;
+    circle.shadowOffsetY = 3;
+    circle.zIndex = 1;
+
+    const recordingText = new TextBlock();
+    recordingText.text = 'Hold to speak.';
+    recordingText.fontFamily = 'Montserrat';
+    recordingText.fontSize = 70;
+    recordingText.fontWeight = 'bold';
+    recordingText.color = 'white';
+    recordingText.shadowColor = 'black';
+    recordingText.shadowBlur = 4;
+    recordingText.top = '20%';
+
+    activeMic.addControl(circle);
+    activeMic.addControl(micText);
+    this.microphonePanel.addControl(recordingText);
+    this.microphonePanel.addControl(activeMic);
   }
 
   /**
@@ -222,9 +277,11 @@ export class ARUI {
     choicePanel.thickness = 0;
     choicePanel.name = 'choicePanel';
 
-    const choiceStack: StackPanel = this.createStackedPanel('choice');
-    choiceStack.name = ARUI.CHOICE_BUTTONS_STACK;
-    choicePanel.addControl(choiceStack);
+    this.choiceStack = this.createStackedPanel('choice');
+    this.choiceStack.name = ARUI.CHOICE_BUTTONS_STACK;
+    choicePanel.addControl(this.choiceStack);
+
+    this.createActiveMicrophoneButton();
 
     return choicePanel;
   }
@@ -275,6 +332,15 @@ export class ARUI {
     if (!this.activePanel || this.activePanel.name === ARUI.CHOICE_BUTTONS_STACK) {
       // No active panel or not a choice panel, so skip.
       return;
+    }
+
+    if (ARController.getInstance().isMicON === true) {
+      this.activePanel.removeControl(this.choiceStack);
+      this.activePanel.addControl(this.microphonePanel);
+      return;
+    } else {
+      this.activePanel.addControl(this.choiceStack);
+      this.activePanel.removeControl(this.microphonePanel);
     }
 
     const choicesPanel: StackPanel = this.activePanel.getChildByName(
@@ -385,6 +451,8 @@ export class ARUI {
     grid.addRowDefinition(0.2);
     cameraPanel.addControl(grid);
 
+    cameraPanel.zIndex = 20;
+
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
         if (i == 1 && j == 1) {
@@ -435,7 +503,7 @@ export class ARUI {
    * Create the application menu buttons.
    */
   private createAppMenu(): void {
-    const maxWidthInPixel = 150;
+    const maxWidthInPixel = 180;
 
     const menuPanel = new StackPanel('appMenu');
     menuPanel.width = maxWidthInPixel + 'px';
@@ -446,6 +514,7 @@ export class ARUI {
     menuPanel.paddingRight = '5px';
     menuPanel.top = 50;
     menuPanel.left = -25;
+    menuPanel.zIndex = 10;
 
     const exitButton = Button.CreateSimpleButton('exit', '\uf08b');
     this.configureMenuButton(exitButton, maxWidthInPixel);
@@ -453,10 +522,21 @@ export class ARUI {
     menuPanel.addControl(exitButton);
 
     // Record icon
-    const micButton = Button.CreateSimpleButton('mic', '\uf130');
+    const micButton = Button.CreateSimpleButton('mic', '\uf131');
     this.configureMenuButton(micButton, maxWidthInPixel);
-    menuPanel.addControl(micButton);
 
+    micButton.onPointerClickObservable.add(function () {
+      if (ARController.getInstance().isMicON == true) {
+        micButton.textBlock.text = '\uf131';
+        ARController.getInstance().isMicON = false;
+      } else {
+        micButton.textBlock.text = '\uf130';
+        ARController.getInstance().isMicON = true;
+      }
+      ARController.getInstance().refreshInteraction();
+    });
+
+    menuPanel.addControl(micButton);
     this.xrGUI.addControl(menuPanel);
   }
 
@@ -480,17 +560,18 @@ export class ARUI {
 
     const buttonText = button.textBlock;
     buttonText.fontFamily = 'FontAwesome';
-    buttonText.color = 'black';
-    buttonText.fontSize = 38;
-    buttonText.paddingTop = 8;
+    buttonText.color = '#0072c1';
+    buttonText.fontSize = 48;
+    buttonText.paddingTop = 10;
+    buttonText.paddingLeft = -1;
     buttonText.fontWeight = 'bold';
     buttonText.zIndex = 100;
 
     const circle = new Ellipse();
     circle.width = 0.85;
     circle.height = 0.85;
-    circle.color = 'white';
-    circle.thickness = 0;
+    circle.color = '#0072c1';
+    circle.thickness = 6;
     circle.background = 'white';
     circle.shadowColor = 'black';
     circle.shadowBlur = 6;
