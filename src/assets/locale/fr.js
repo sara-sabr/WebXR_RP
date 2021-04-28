@@ -7,6 +7,7 @@ import agentServiceSelectReturn from '../audio/fr/service.select.return.mp3';
 import agentRequestSent from '../audio/fr/request.sent.mp3';
 import agentResearchRequestSubmitted from '../audio/fr/research.request.submitted.mp3';
 import agentVerification from '../audio/fr/verification.mp3';
+import agentInputConfirmation from '../audio/en/input.confirmation.mp3';
 
 /**
  * French translations where fr.json and fr.js are merged by TranslationService.
@@ -26,6 +27,7 @@ const fr = {
     'request.sent.audio': agentRequestSent,
     'research.request.submitted.audio': agentResearchRequestSubmitted,
     'verification.audio': agentVerification,
+    'input.confirmation.audio': agentInputConfirmation,
   },
 };
 
