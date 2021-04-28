@@ -113,4 +113,14 @@ export class ARConstants {
    * Microphone
    */
   static readonly INTERACTION_ACTIVE_MICROPHONE = 'active.microphone';
+
+  /**
+   * Input confirmation
+   */
+  static readonly INTERACTION_INPUT_CONFIRMATION = 'input.confirmation';
+
+  /**
+   * User initialization of call
+   */
+  static readonly INTERACTION_USER_INIT = 'user.init.call';
 }
