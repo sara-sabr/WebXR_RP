@@ -561,7 +561,7 @@ export class ARUI {
     panel.addControl(caller_container);
 
     const caller_name = new TextBlock();
-    caller_name.text = 'Unknown';
+    caller_name.text = 'Agent Carter';
     caller_name.fontFamily = 'Montserrat';
     caller_name.fontSize = 80;
     caller_name.color = 'white';
