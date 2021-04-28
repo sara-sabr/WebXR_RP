@@ -339,6 +339,28 @@ export class InteractionConfigurations {
     };
   }
   /**
+   * Camera overlay interaction
+   * @returns configured interaction
+   */
+  private static callOverlayInteraction(): Interaction {
+    return {
+      name: ARConstants.INTERACTION_CALL_OVERLAY,
+      uiPanel: UIPanel.CALL,
+      metaData: {
+        arButtons: [
+          {
+            key: 'common.choice.return',
+            interaction: ARConstants.INTERACTION_SERVICE_RETURN,
+          },
+          {
+            key: 'verification',
+            interaction: ARConstants.INTERACTION_VERIFICATION,
+          },
+        ] as ARButton[],
+      },
+    };
+  }
+  /**
    * Get the configurations.
    */
   public static getConfiguration(): Map<string, Interaction> {
@@ -365,6 +387,7 @@ export class InteractionConfigurations {
       InteractionConfigurations.addInteraction(this.requestSubmittedInteraction());
       InteractionConfigurations.addInteraction(this.userInputInteraction());
       InteractionConfigurations.addInteraction(this.activeMicrophoneInteraction());
+      InteractionConfigurations.addInteraction(this.callOverlayInteraction());
     }
 
     return InteractionConfigurations.CONFIGURATION;

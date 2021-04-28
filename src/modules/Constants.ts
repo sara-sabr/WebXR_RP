@@ -113,4 +113,9 @@ export class ARConstants {
    * Microphone
    */
   static readonly INTERACTION_ACTIVE_MICROPHONE = 'active.microphone';
+
+  /**
+   * Camera Overlay Interaction
+   */
+  static readonly INTERACTION_CALL_OVERLAY = 'call';
 }

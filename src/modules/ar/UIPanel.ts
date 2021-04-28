@@ -31,4 +31,9 @@ export enum UIPanel {
    * Key for user input
    */
   USER_INPUT = 'user input',
+
+  /**
+   * Key for call live agent UI.
+   */
+  CALL = 'call',
 }
