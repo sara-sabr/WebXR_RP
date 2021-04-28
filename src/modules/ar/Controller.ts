@@ -157,7 +157,7 @@ export class ARController implements ITranslate {
     window.addEventListener('resize', this.resizeEventHandler);
 
     // Initial.
-    this.executeInteraction(ARConstants.INTERACTION_CALL_OVERLAY);
+    this.executeInteraction(ARConstants.INTERACTION_KIOSK);
   }
 
   /**
