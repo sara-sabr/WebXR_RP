@@ -243,7 +243,7 @@ export class InteractionConfigurations {
   }
   /**
    * Initializing the user call button
-   * 
+   *
    * @returns Configured interaction
    */
   private static userInitCall(): Interaction {
