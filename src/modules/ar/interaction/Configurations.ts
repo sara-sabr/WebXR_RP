@@ -230,6 +230,37 @@ export class InteractionConfigurations {
   }
 
   /**
+   * Input Confirmation Message Interaction
+   *
+   * @returns Configured interaction
+   */
+  private static inputConfirmationMsg(): Interaction {
+    return {
+      name: ARConstants.INTERACTION_INPUT_CONFIRMATION,
+      uiPanel: UIPanel.MESSAGE,
+      nextInteraction: ARConstants.INTERACTION_USER_INIT,
+    };
+  }
+  /**
+   * Initializing the user call button
+   * 
+   * @returns Configured interaction
+   */
+  private static userInitCall(): Interaction {
+    return {
+      name: ARConstants.INTERACTION_USER_INIT,
+      uiPanel: UIPanel.CHOICE,
+      metaData: {
+        arButtons: [
+          {
+            key: 'call.agent',
+            interaction: ARConstants.INTERACTION_RESEARCH_REQUEST_SUBMIT,
+          },
+        ] as ARButton[],
+      },
+    };
+  }
+  /**
    * Service Choice interaction.
    *
    * @returns configured interaction
@@ -256,10 +287,6 @@ export class InteractionConfigurations {
             key: 'sp',
             interaction: 'service.select.sp',
           },
-          // {
-          //   key: 'microphone',
-          //   interaction: 'active.microphone',
-          // },
         ] as ARButton[],
       },
     };
@@ -365,6 +392,8 @@ export class InteractionConfigurations {
       InteractionConfigurations.addInteraction(this.requestSubmittedInteraction());
       InteractionConfigurations.addInteraction(this.userInputInteraction());
       InteractionConfigurations.addInteraction(this.activeMicrophoneInteraction());
+      InteractionConfigurations.addInteraction(this.inputConfirmationMsg());
+      InteractionConfigurations.addInteraction(this.userInitCall());
     }
 
     return InteractionConfigurations.CONFIGURATION;
