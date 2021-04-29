@@ -21,6 +21,7 @@ import { UIPanel } from './UIPanel';
 import { ARController } from './Controller';
 
 import ScanARIconLocation from '../../assets/images/AR_ScanFloor_Icon.png';
+import { ReflectionTextureBaseBlock } from 'babylonjs/Materials/Node/Blocks/Dual/reflectionTextureBaseBlock';
 
 /**
  * UI Singleton.
@@ -74,6 +75,11 @@ export class ARUI {
    * The microphone panel.
    */
   private microphonePanel: Rectangle;
+
+  /**
+   * The microphone panel.
+   */
+  private callPanel: Rectangle;
 
   /**
    * The Singleton's constructor should always be private to prevent direct
@@ -481,6 +487,143 @@ export class ARUI {
   }
 
   /**
+   * Create the call panel.
+   *
+   * @returns a configured call panel
+   */
+  private createCallPanel(): Container {
+    const callPanel: Rectangle = new Rectangle();
+    const callPanelOverlay: Rectangle = new Rectangle();
+
+    callPanel.zIndex = 20;
+    
+    callPanelOverlay.background = 'black';
+    callPanelOverlay.width = 1;
+    callPanelOverlay.height = 1;
+    callPanelOverlay.alpha = 0.5;
+    callPanelOverlay.thickness = 0;
+    callPanel.addControl(callPanelOverlay);
+
+    return callPanel;
+  }
+  /**
+   * updateCallButtons
+   * @param callOverlayInteraction expects the callOverlay Interaction
+   */
+  private updateCallButtons(callOverlayInteraction: Interaction): void {
+    const panel = this.activePanel;
+    const arButtons = callOverlayInteraction.metaData.arButtons as ARButton[];
+
+    const caller_container: Rectangle = new Rectangle();
+    caller_container.width = '460px';
+    caller_container.height = caller_container.width;
+    caller_container.thickness = 0;
+    caller_container.verticalAlignment = Control.VERTICAL_ALIGNMENT_CENTER;
+    caller_container.top = -320;
+
+    const caller_icon = new TextBlock();
+    caller_icon.text = '\uf007';
+    caller_icon.fontFamily = 'FontAwesome';
+    caller_icon.color = 'grey';
+    caller_icon.fontSize = 220;
+    caller_icon.paddingTop = 0;
+    caller_icon.paddingLeft = -2;
+    caller_icon.zIndex = 4;
+
+    const caller_circle = new Ellipse();
+    caller_circle.width = 0.80;
+    caller_circle.height = 0.80;
+    caller_circle.color = 'white';
+    caller_circle.thickness = 0;
+    caller_circle.background = 'white';
+    caller_circle.zIndex = 3;
+    
+    const caller_bg01 = new Ellipse();
+    caller_bg01.width = 0.90;
+    caller_bg01.height = 0.90;
+    caller_bg01.thickness = 0;
+    caller_bg01.alpha = 0.3;
+    caller_bg01.background = 'white';
+    caller_bg01.zIndex = 2;
+    
+    const caller_bg02 = new Ellipse();
+    caller_bg02.width = 1;
+    caller_bg02.height = 1;
+    caller_bg02.thickness = 0;
+    caller_bg02.alpha = 0.3;
+    caller_bg02.background = 'white';
+    caller_bg02.zIndex = 1;
+
+    caller_container.addControl(caller_circle);
+    caller_container.addControl(caller_icon);
+    caller_container.addControl(caller_bg01);
+    caller_container.addControl(caller_bg02);
+    panel.addControl(caller_container);
+
+    const caller_name = new TextBlock();
+    caller_name.text = 'Agent Carter';
+    caller_name.fontFamily = 'Montserrat';
+    caller_name.fontSize = 80;
+    caller_name.color = 'white';
+    caller_name.zIndex = 4;
+    caller_name.verticalAlignment = Control.VERTICAL_ALIGNMENT_CENTER;
+
+    panel.addControl(caller_name);
+    
+    const call_time = new TextBlock();
+    call_time.text = "00:00:00";
+    call_time.fontFamily = 'Montserrat';
+    call_time.fontSize = 60;
+    call_time.color = 'white';
+    call_time.zIndex = 4;
+    call_time.top = -650;
+    call_time.verticalAlignment = Control.VERTICAL_ALIGNMENT_CENTER;
+
+    panel.addControl(call_time);
+
+    const endCall_button: Button = Button.CreateSimpleButton('Mic', '');
+    endCall_button.width = '260px';
+    endCall_button.height = endCall_button.width;
+    endCall_button.thickness = 0;
+    endCall_button.top = '30%';
+    endCall_button.onPointerDownObservable.add(function () {
+      endCall_circle.background = 'white';
+      endCall_icon.color = 'red';
+    });
+    endCall_button.onPointerUpObservable.add(function () {
+      endCall_circle.background = 'red';
+      endCall_icon.color = 'white';
+    });
+
+    const endCall_icon = new TextBlock();
+    endCall_icon.text = '\uf095';
+    endCall_icon.fontFamily = 'FontAwesome';
+    endCall_icon.color = 'white';
+    endCall_icon.fontSize = 140;
+    endCall_icon.paddingTop = -4;
+    endCall_icon.paddingLeft = -20;
+    endCall_icon.fontWeight = 'bold';
+    endCall_icon.zIndex = 2;
+    endCall_icon.rotation = 2.35;
+
+    const endCall_circle = new Ellipse();
+    endCall_circle.width = 0.95;
+    endCall_circle.height = 0.95;
+    endCall_circle.color = 'white';
+    endCall_circle.thickness = 0;
+    endCall_circle.background = 'red';
+    endCall_circle.shadowColor = 'black';
+    endCall_circle.shadowBlur = 6;
+    endCall_circle.shadowOffsetY = 3;
+    endCall_circle.zIndex = 1;
+
+    endCall_button.addControl(endCall_circle);
+    endCall_button.addControl(endCall_icon);
+    panel.addControl(endCall_button);
+  }
+
+
+  /**
    * Setup the GUI.
    */
   async setup(arController: ARController): Promise<void> {
@@ -491,6 +634,7 @@ export class ARUI {
     // Add all panels.
     this.uiPanels.set(UIPanel.MESSAGE, this.createMessagePanel());
     this.uiPanels.set(UIPanel.CAMERA, this.createCameraPanel());
+    this.uiPanels.set(UIPanel.CALL, this.createCallPanel());
     this.uiPanels.set(UIPanel.CHOICE, this.createChoicePanel());
     this.uiPanels.set(UIPanel.MAIN_MENU, this.createMainMenuPanel());
     this.uiPanels.set(UIPanel.MICROPHONE, this.createMicrophonePanel());
@@ -652,6 +796,9 @@ export class ARUI {
         break;
       case UIPanel.CAMERA:
         this.updateCameraButtons(currentInteraction);
+        break;
+      case UIPanel.CALL:
+        this.updateCallButtons(currentInteraction);
         break;
       case UIPanel.USER_INPUT:
         this.updateUserInputPanel(currentInteraction);
