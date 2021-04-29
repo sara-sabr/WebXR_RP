@@ -30,6 +30,8 @@
     "submit.request": "Soumettre une demande",
     "verification.message": "Merci d'avoir soumis votre identification. Votre identité a été vérifié, nous pouvions continuer avec votre requête.",
     "request.sent.message": "Merci! Je vais ajouter ces détails à votre requête.",
-    "research.request.submitted.message": "Parfait, merci ! Pour procéder à cette demande, nous devons vérifier votre identité. Veuillez fournir une pièce d'identité officielle en utilisant la fonction de capture de documents."
+    "research.request.submitted.message": "Parfait, merci ! Pour procéder à cette demande, nous devons vérifier votre identité. Veuillez fournir une pièce d'identité officielle en utilisant la fonction de capture de documents.",
+    "input.confirmation.message": "Merci, je vais ajouter ces détails à votre requête. Pour compléter votre requête, s’il vous plait appelez un agent en appuyant sur le bouton d'appel.",
+    "call.agent": "Appeler un agent"
   }
 }

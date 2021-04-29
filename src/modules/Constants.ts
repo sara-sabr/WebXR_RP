@@ -118,4 +118,14 @@ export class ARConstants {
    * Camera Overlay Interaction
    */
   static readonly INTERACTION_CALL_OVERLAY = 'call';
+  
+  /**
+   * Input confirmation
+   */
+  static readonly INTERACTION_INPUT_CONFIRMATION = 'input.confirmation';
+
+  /**
+   * User initialization of call
+   */
+  static readonly INTERACTION_USER_INIT = 'user.init.call';
 }
