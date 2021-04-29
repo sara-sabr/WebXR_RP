@@ -21,7 +21,6 @@ import { UIPanel } from './UIPanel';
 import { ARController } from './Controller';
 
 import ScanARIconLocation from '../../assets/images/AR_ScanFloor_Icon.png';
-import { ReflectionTextureBaseBlock } from 'babylonjs/Materials/Node/Blocks/Dual/reflectionTextureBaseBlock';
 
 /**
  * UI Singleton.
@@ -496,7 +495,7 @@ export class ARUI {
     const callPanelOverlay: Rectangle = new Rectangle();
 
     callPanel.zIndex = 20;
-    
+
     callPanelOverlay.background = 'black';
     callPanelOverlay.width = 1;
     callPanelOverlay.height = 1;
@@ -531,21 +530,21 @@ export class ARUI {
     caller_icon.zIndex = 4;
 
     const caller_circle = new Ellipse();
-    caller_circle.width = 0.80;
-    caller_circle.height = 0.80;
+    caller_circle.width = 0.8;
+    caller_circle.height = 0.8;
     caller_circle.color = 'white';
     caller_circle.thickness = 0;
     caller_circle.background = 'white';
     caller_circle.zIndex = 3;
-    
+
     const caller_bg01 = new Ellipse();
-    caller_bg01.width = 0.90;
-    caller_bg01.height = 0.90;
+    caller_bg01.width = 0.9;
+    caller_bg01.height = 0.9;
     caller_bg01.thickness = 0;
     caller_bg01.alpha = 0.3;
     caller_bg01.background = 'white';
     caller_bg01.zIndex = 2;
-    
+
     const caller_bg02 = new Ellipse();
     caller_bg02.width = 1;
     caller_bg02.height = 1;
@@ -569,9 +568,9 @@ export class ARUI {
     caller_name.verticalAlignment = Control.VERTICAL_ALIGNMENT_CENTER;
 
     panel.addControl(caller_name);
-    
+
     const call_time = new TextBlock();
-    call_time.text = "00:00:00";
+    call_time.text = '00:00:00';
     call_time.fontFamily = 'Montserrat';
     call_time.fontSize = 60;
     call_time.color = 'white';
@@ -621,7 +620,6 @@ export class ARUI {
     endCall_button.addControl(endCall_icon);
     panel.addControl(endCall_button);
   }
-
 
   /**
    * Setup the GUI.

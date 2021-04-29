@@ -118,7 +118,7 @@ export class ARConstants {
    * Camera Overlay Interaction
    */
   static readonly INTERACTION_CALL_OVERLAY = 'call';
-  
+
   /**
    * Input confirmation
    */
