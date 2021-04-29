@@ -16,6 +16,7 @@ import {
   PointerInfo,
   WebXRState,
   IWebXRHitResult,
+  Tools,
 } from 'babylonjs';
 
 import 'babylonjs-loaders'; // Required to load GLFT files
@@ -413,6 +414,11 @@ export class ARController implements ITranslate {
     } else {
       this.executeInteractionAfterSound();
     }
+    
+    if(this.currentInteraction.name === ARConstants.INTERACTION_SERVICE_CHOICE){
+      this.takeScreenShot();
+    }
+
   }
 
   /**
@@ -467,6 +473,12 @@ export class ARController implements ITranslate {
     }
   }
 
+  /**
+   * Function to take a screenshot within BabylonJS
+   */
+  public takeScreenShot(): void{
+    Tools.CreateScreenshotUsingRenderTarget(this.engine, this.scene.getCameraByName('pov-camera'), 800);
+  }
   /**
    * Exit full screen.
    */
