@@ -23,6 +23,9 @@
     "homepage.pcInstall":
       "<strong>Chrome 87+</strong> with <strong><a href=\"https://chrome.google.com/webstore/detail/webxr-api-emulator/mjddjgeghkdijejnciaefnkjmkafnnje?hl=en\">WebXR API Emulator</a></strong> installed and configured.",
     "homepage.preBtn": "Select the button below to launch the AR application!",
+    "login.title": "Login",
+    "login.user": "Username",
+    "login.pass": "Password",
     "common.switch.on" :"On",
     "common.switch.off" :"Off",
     "common.mic": "Microphone",

@@ -23,6 +23,9 @@
     "homepage.pcInstall":
       "<strong>Chrome 87+</strong> avec <strong><a href=\"https://chrome.google.com/webstore/detail/webxr-api-emulator/mjddjgeghkdijejnciaefnkjmkafnnje?hl=fr\">WebXR API Emulator</a></strong> installé et configuré.",
     "homepage.preBtn": "Sélectionnez le bouton ci-dessous pour lancer l'application de RA!",
+    "login.title": "Connexion",
+    "login.user": "Nom d'utilisateur",
+    "login.pass": "Mot de passe",
     "common.switch.on" :"Marche",
     "common.switch.off" :"Arrêt",
     "common.mic": "Microphone",

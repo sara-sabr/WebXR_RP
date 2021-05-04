@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>R&P WebAR Prototype</title>
+</head>
+<body>
+    <div>
+        <a id="homepage.toggleLanguage" href="#">Change Language</a>
+    </div>
+    <div id="versionBanner">
+        <p id="versionText">Version: <%= htmlWebpackPlugin.options.packageVersion %> (<%= htmlWebpackPlugin.options.buildDate %>)</p>
+    </div>
+    <div class="wrapper">
+        <img id="rp-logo" alt="Recherche & prototypage / Research & Prototyping">
+        <h1 id="homepage.header">R&P WebAR Prototype</h1>
+
+        <div class="container">
+            <div class="section">
+                <div class="card">
+                    <div class="card-container">
+                        <br>
+                        <input type="text" class="loginField" id='login.user' placeholder="Username"> 
+                        <input type="text" class="loginField" id='login.pass' placeholder="Password"> 
+                        <button class="loginButton" id="login.title" onclick="">Login</button> 
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+          </div>
+
+        <br>
+
+    </div>
+
+</body>
+
+<script type="text/javascript">
+
+    document.getElementById("login.title").onclick = function () {
+         alert("Login Button Pressed");
+     };
+
+</script>
+
+</html>

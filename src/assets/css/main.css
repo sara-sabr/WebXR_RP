@@ -117,3 +117,27 @@ max-width: 400px; /* new */
 .card-container {
     padding: 10px;
 }
+
+.loginField {
+    width: 80%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11pt;
+    border-radius: 5px; /* 5px rounded corners */
+    border: solid 1px #ddd;
+    background-color: #efefef;
+    padding: 10px 20px 10px 20px;
+    margin: 10px 0px 10px 0px;
+}
+.loginButton {
+    width: 40%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12pt;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px; /* 5px rounded corners */
+    border: solid 1px #0072c1;
+    background-color: #0072c1;
+    padding: 10px 20px 10px 20px;
+    margin: 10px 0px 10px 0px;
+}
