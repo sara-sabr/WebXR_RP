@@ -26,9 +26,11 @@
                 <div class="card">
                     <div class="card-container">
                         <br>
-                        <input type="text" class="loginField" id='login.user' placeholder="Username"> 
-                        <input type="text" class="loginField" id='login.pass' placeholder="Password"> 
-                        <button class="loginButton" id="login.title" onclick="">Login</button> 
+                        <form action="" method="POST">
+                            <input type="text" class="loginField" id='username' name="username" placeholder="Username"> 
+                            <input type="text" class="loginField" id='password' name="password" placeholder="Password"> 
+                            <button type="submit" class="loginButton" id="login.title">Login</button> 
+                        </form>
                         <br><br>
                     </div>
                 </div>
@@ -43,9 +45,39 @@
 
 <script type="text/javascript">
 
-    document.getElementById("login.title").onclick = function () {
-         alert("Login Button Pressed");
-     };
+    // document.getElementById("login.title").onclick = function () {
+    //      alert("Login Button Pressed");
+    //  };
+
+    var form = document.querySelector("form");
+
+    function literallyAnything(){
+        fetch('https://jsonplaceholder.typicode.com/todos/1')
+        .then(response => response.json())
+        .then(json => console.log(json))
+    }
+    literallyAnything();
+    
+//     form.addEventListener("submit", (event) => {
+//         fetch('http://localhost:3000/auth/login', {
+//             method: 'POST',
+//             mode: 'no-cors',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({ username: form.elements.username.value, password:form.elements.password.value })
+//         })
+//         .then(response => response.json())
+//         .then(data => {
+//             console.log('The JWT Token :', data);
+//         })
+//         .catch((error) => {
+//             console.error('Error:', error);
+//         });
+//         console.log("Username:", form.elements.username.value);
+//         console.log("Password:", form.elements.password.value);
+//         event.preventDefault();
+//   } )
 
 </script>
 
