@@ -7,7 +7,7 @@ import agentServiceSelectReturn from '../audio/fr/service.select.return.mp3';
 import agentRequestSent from '../audio/fr/request.sent.mp3';
 import agentResearchRequestSubmitted from '../audio/fr/research.request.submitted.mp3';
 import agentVerification from '../audio/fr/verification.mp3';
-import agentInputConfirmation from '../audio/en/input.confirmation.mp3';
+import agentInputConfirmation from '../audio/fr/input.confirmation.mp3';
 import agentCallEnd from '../audio/fr/call.end.mp3';
 
 /**
