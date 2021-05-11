@@ -22,6 +22,7 @@ import { ARController } from './Controller';
 
 import ScanARIconLocation from '../../assets/images/AR_ScanFloor_Icon.png';
 import { ReflectionTextureBaseBlock } from 'babylonjs/Materials/Node/Blocks/Dual/reflectionTextureBaseBlock';
+import { MicrophoneState } from './MicrophoneState';
 
 /**
  * UI Singleton.
@@ -45,6 +46,11 @@ export class ARUI {
    * XR GUI - "Dialog"
    */
   private message: TextBlock = null;
+
+  /**
+   * XR GUI - debug.
+   */
+  private debugMessage: TextBlock = null;
 
   /**
    * Map of UI panels.
@@ -229,11 +235,13 @@ export class ARUI {
       circle.background = 'white';
       micText.color = 'red';
       recordingText.text = 'Listening...';
+      ARController.getInstance().triggerMicrophoneEvent(MicrophoneState.STARTING);
     });
     activeMic.onPointerUpObservable.add(function () {
       circle.background = 'red';
       micText.color = 'white';
       recordingText.text = 'Hold to speak.';
+      ARController.getInstance().triggerMicrophoneEvent(MicrophoneState.REQUEST_FINISH);
     });
 
     const micText = new TextBlock();
@@ -496,7 +504,7 @@ export class ARUI {
     const callPanelOverlay: Rectangle = new Rectangle();
 
     callPanel.zIndex = 20;
-    
+
     callPanelOverlay.background = 'black';
     callPanelOverlay.width = 1;
     callPanelOverlay.height = 1;
@@ -537,7 +545,7 @@ export class ARUI {
     caller_circle.thickness = 0;
     caller_circle.background = 'white';
     caller_circle.zIndex = 3;
-    
+
     const caller_bg01 = new Ellipse();
     caller_bg01.width = 0.90;
     caller_bg01.height = 0.90;
@@ -545,7 +553,7 @@ export class ARUI {
     caller_bg01.alpha = 0.3;
     caller_bg01.background = 'white';
     caller_bg01.zIndex = 2;
-    
+
     const caller_bg02 = new Ellipse();
     caller_bg02.width = 1;
     caller_bg02.height = 1;
@@ -569,7 +577,7 @@ export class ARUI {
     caller_name.verticalAlignment = Control.VERTICAL_ALIGNMENT_CENTER;
 
     panel.addControl(caller_name);
-    
+
     const call_time = new TextBlock();
     call_time.text = "00:00:00";
     call_time.fontFamily = 'Montserrat';
@@ -641,6 +649,38 @@ export class ARUI {
     this.uiPanels.set(UIPanel.USER_INPUT, this.createUserInputPanel());
 
     this.createAppMenu();
+    this.createDebug();
+  }
+
+  /**
+   * Create the debug window.
+   */
+  private createDebug(): void {
+    const debugPanel: Rectangle = new Rectangle();
+    debugPanel.thickness = 0;
+    debugPanel.height = '10%';
+    debugPanel.name = 'DebugPanel';
+    debugPanel.zIndex = 9;
+    debugPanel.verticalAlignment = Control.VERTICAL_ALIGNMENT_BOTTOM;
+
+    this.debugMessage = new TextBlock();
+    this.debugMessage.height = '100%';
+    this.debugMessage.color = "white";
+    this.debugMessage.text = "testing";
+
+    if (ARController.getInstance().isDebugMode()) {
+      debugPanel.addControl(this.debugMessage);
+      this.xrGUI.addControl(debugPanel);
+    }
+  }
+
+  /**
+   * The debug message.
+   *
+   * @param message the message to show
+   */
+  public setDebugText(message:string):void{
+    this.debugMessage.text = message;
   }
 
   /**
