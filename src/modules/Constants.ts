@@ -128,4 +128,9 @@ export class ARConstants {
    * User initialization of call
    */
   static readonly INTERACTION_USER_INIT = 'user.init.call';
+
+  /**
+   * User initialization of call
+   */
+  static readonly INTERACTION_CALL_END = 'call.end';
 }
