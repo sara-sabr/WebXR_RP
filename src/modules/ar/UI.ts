@@ -78,6 +78,11 @@ export class ARUI {
   /**
    * The microphone panel.
    */
+  private userInputPanel: Rectangle;
+
+  /**
+   * The microphone panel.
+   */
   private callPanel: Rectangle;
 
   /**
@@ -115,23 +120,23 @@ export class ARUI {
    * @param userInputInteraction The interaction for the user input panel
    */
   private updateUserInputPanel(userInputInteraction: Interaction): void {
-    if (ARController.getInstance().isMicON == true) {
-      // if the microphone is active then do not show the choice panel
-      return;
-    }
+    // if (ARController.getInstance().isMicON == true) {
+    //   // if the microphone is active then do not show the choice panel
+    //   return;
+    // }
 
     const arButtons = userInputInteraction.metaData.arButtons as ARButton[];
     const panel = this.activePanel;
 
     const submit: Button = Button.CreateSimpleButton('submit', 'Submit');
-    submit.width = 0.8;
+    submit.width = 0.65;
     submit.background = '#0072c1';
     submit.color = 'white';
-    submit.height = '100px';
+    submit.height = '120px';
     submit.fontWeight = 'bold';
     submit.cornerRadius = 30;
     submit.thickness = 0.05;
-    submit.fontSize = '32pt';
+    submit.fontSize = '40pt';
     submit.top = '200px';
     submit.metadata = { interaction: arButtons[0].interaction };
     submit.onPointerClickObservable.add(this.choiceSelectedEvent);
@@ -142,26 +147,42 @@ export class ARUI {
    * @returns The configured user input panel
    */
   private createUserInputPanel(): Container {
-    const panel: Rectangle = new Rectangle();
-    panel.background = 'white';
-    panel.width = 0.8;
-    panel.height = 0.3;
-    panel.top = '300px';
-    panel.cornerRadius = 15;
-    panel.color = 'grey';
+    const userInputPanel: Rectangle = new Rectangle();
+    userInputPanel.background = 'white';
+    userInputPanel.width = 0.8;
 
-    const input: InputText = new InputText();
+    userInputPanel.height = 0.3;
+    userInputPanel.top = '650px';
+    userInputPanel.cornerRadius = 15;
+    userInputPanel.color = 'grey';
+
+    //const input: InputText = new InputText();
+    const input: TextBlock = new TextBlock();
     input.width = 0.85;
     input.height = 0.5;
     input.top = -90;
-    input.text = 'Enter request here.';
+    input.text = '*Text Input feature is not currently implemented.';
     input.color = '#333333';
-    input.background = '#f8f8ff';
+    //input.background = '#f8f8ff';
     input.fontSize = '32px';
-    panel.addControl(input);
+    input.zIndex = 20;
+    input.left = 10;
+    input.textHorizontalAlignment = TextBlock.HORIZONTAL_ALIGNMENT_LEFT;
+    userInputPanel.addControl(input);
 
-    return panel;
+    // added temporarily because InputText crashes the app
+    // so crating this rect to make it look like a input field
+    const inputBox_Fake: Rectangle = new Rectangle();
+    inputBox_Fake.width = 0.85;
+    inputBox_Fake.height = 0.5;
+    inputBox_Fake.top = -90;
+    inputBox_Fake.color = '#333333';
+    inputBox_Fake.background = '#f8f8ff';
+    userInputPanel.addControl(inputBox_Fake);
+
+    return userInputPanel;
   }
+  
   /**
    * Setup the message panel.
    *
@@ -339,12 +360,20 @@ export class ARUI {
       return;
     }
 
-    if (ARController.getInstance().isMicON === true) {
+    if (ARController.getInstance().isMicON === true && this.choiceStack) {
       this.activePanel.removeControl(this.choiceStack);
       this.activePanel.addControl(this.microphonePanel);
       return;
     } else {
       this.activePanel.addControl(this.choiceStack);
+      this.activePanel.removeControl(this.microphonePanel);
+    }
+    if (ARController.getInstance().isMicON === true && this.userInputPanel) {
+      this.activePanel.removeControl(this.userInputPanel);
+      this.activePanel.addControl(this.microphonePanel);
+      return;
+    } else {
+      this.activePanel.addControl(this.userInputPanel);
       this.activePanel.removeControl(this.microphonePanel);
     }
 
@@ -512,7 +541,8 @@ export class ARUI {
   private updateCallButtons(callOverlayInteraction: Interaction): void {
     const panel = this.activePanel;
     const arButtons = callOverlayInteraction.metaData.arButtons as ARButton[];
-
+    
+    // caller image & info - START
     const caller_container: Rectangle = new Rectangle();
     caller_container.width = '460px';
     caller_container.height = caller_container.width;
@@ -579,12 +609,15 @@ export class ARUI {
     call_time.verticalAlignment = Control.VERTICAL_ALIGNMENT_CENTER;
 
     panel.addControl(call_time);
+    // END
 
-    const endCall_button: Button = Button.CreateSimpleButton('Mic', '');
+    // START - endCall button
+    const endCall_button: Button = Button.CreateSimpleButton('EndCall', '');
     endCall_button.width = '260px';
     endCall_button.height = endCall_button.width;
     endCall_button.thickness = 0;
     endCall_button.top = '30%';
+    endCall_button.zIndex = 30;
     endCall_button.onPointerDownObservable.add(function () {
       endCall_circle.background = 'white';
       endCall_icon.color = 'red';
@@ -593,6 +626,9 @@ export class ARUI {
       endCall_circle.background = 'red';
       endCall_icon.color = 'white';
     });
+
+    endCall_button.metadata = { interaction: arButtons[0].interaction };
+    endCall_button.onPointerClickObservable.add(this.choiceSelectedEvent);
 
     const endCall_icon = new TextBlock();
     endCall_icon.text = '\uf095';
@@ -619,6 +655,7 @@ export class ARUI {
     endCall_button.addControl(endCall_circle);
     endCall_button.addControl(endCall_icon);
     panel.addControl(endCall_button);
+    // END - endCall Button
   }
 
   /**
