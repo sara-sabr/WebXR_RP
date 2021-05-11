@@ -202,13 +202,14 @@ export class InteractionConfigurations {
       metaData: {
         arButtons: [
           {
-            key: 'common.choice.return',
-            interaction: ARConstants.INTERACTION_SERVICE_RETURN,
-          },
-          {
             key: 'submit.request',
             interaction: ARConstants.INTERACTION_RESEARCH_REQUEST_SUBMIT,
           },
+          {
+            key: 'common.choice.return',
+            interaction: ARConstants.INTERACTION_SERVICE_RETURN,
+          },
+          
         ] as ARButton[],
       },
     };
@@ -238,6 +239,7 @@ export class InteractionConfigurations {
     return {
       name: ARConstants.INTERACTION_INPUT_CONFIRMATION,
       uiPanel: UIPanel.MESSAGE,
+      animationKey: 'TalkLong',
       nextInteraction: ARConstants.INTERACTION_USER_INIT,
     };
   }
@@ -254,7 +256,7 @@ export class InteractionConfigurations {
         arButtons: [
           {
             key: 'call.agent',
-            interaction: ARConstants.INTERACTION_RESEARCH_REQUEST_SUBMIT,
+            interaction: ARConstants.INTERACTION_CALL_OVERLAY,
           },
         ] as ARButton[],
       },
@@ -328,7 +330,7 @@ export class InteractionConfigurations {
         arButtons: [
           {
             key: 'submit',
-            interaction: ARConstants.INTERACTION_REQUEST_SENT,
+            interaction: ARConstants.INTERACTION_INPUT_CONFIRMATION,
           },
         ] as ARButton[],
       },
@@ -342,9 +344,11 @@ export class InteractionConfigurations {
     return {
       name: ARConstants.INTERACTION_VERIFICATION,
       uiPanel: UIPanel.MESSAGE,
-      animationKey: 'Talk',
+      animationKey: 'TalkLong',
+      nextInteraction: ARConstants.INTERACTION_USER_INPUT,
     };
   }
+
   /**
    * Definition of the Request Submitted Interaction
    * @returns Configured Request Submitted Interaction
@@ -353,6 +357,8 @@ export class InteractionConfigurations {
     return {
       name: ARConstants.INTERACTION_REQUEST_SENT,
       uiPanel: UIPanel.MESSAGE,
+      animationKey: 'Talk',
+      nextInteraction: ARConstants.INTERACTION_USER_INIT,
     };
   }
   /**
@@ -366,7 +372,7 @@ export class InteractionConfigurations {
     };
   }
   /**
-   * Camera overlay interaction
+   * Call overlay interaction
    * @returns configured interaction
    */
   private static callOverlayInteraction(): Interaction {
@@ -376,15 +382,25 @@ export class InteractionConfigurations {
       metaData: {
         arButtons: [
           {
-            key: 'common.choice.return',
-            interaction: ARConstants.INTERACTION_SERVICE_RETURN,
-          },
-          {
-            key: 'verification',
-            interaction: ARConstants.INTERACTION_VERIFICATION,
+            key: 'call.end',
+            interaction: ARConstants.INTERACTION_CALL_END,
           },
         ] as ARButton[],
       },
+    };
+  }
+
+  /**
+   * Select technology prototyping service interaction.
+   *
+   * @returns configured interaction
+   */
+  private static callEndInterction(): Interaction {
+    return {
+      name: ARConstants.INTERACTION_CALL_END,
+      uiPanel: UIPanel.MESSAGE,
+      animationKey: 'TalkLong',
+      nextInteraction: ARConstants.INTERACTION_SERVICE_CHOICE,
     };
   }
   /**
@@ -417,6 +433,7 @@ export class InteractionConfigurations {
       InteractionConfigurations.addInteraction(this.callOverlayInteraction());
       InteractionConfigurations.addInteraction(this.inputConfirmationMsg());
       InteractionConfigurations.addInteraction(this.userInitCall());
+      InteractionConfigurations.addInteraction(this.callEndInterction());
     }
 
     return InteractionConfigurations.CONFIGURATION;
