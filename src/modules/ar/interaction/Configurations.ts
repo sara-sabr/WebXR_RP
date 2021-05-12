@@ -209,7 +209,6 @@ export class InteractionConfigurations {
             key: 'common.choice.return',
             interaction: ARConstants.INTERACTION_SERVICE_RETURN,
           },
-          
         ] as ARButton[],
       },
     };

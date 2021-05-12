@@ -10,7 +10,7 @@ import {
   Image,
   StackPanel,
   Grid,
-  InputText,
+  //InputText,
 } from 'babylonjs-gui';
 import { EventState } from 'babylonjs/Misc/observable';
 import i18next from 'i18next';
@@ -183,7 +183,7 @@ export class ARUI {
 
     return userInputPanel;
   }
-  
+
   /**
    * Setup the message panel.
    *
@@ -503,10 +503,7 @@ export class ARUI {
         }
       }
     }
-    const textAbove: TextBlock = new TextBlock(
-      'aboveDialog',
-      i18next.t('camera.message')
-    );
+    const textAbove: TextBlock = new TextBlock('aboveDialog', i18next.t('camera.message'));
     textAbove.color = 'white';
     textAbove.fontSize = '40pt';
     textAbove.textWrapping = true;
@@ -543,7 +540,7 @@ export class ARUI {
   private updateCallButtons(callOverlayInteraction: Interaction): void {
     const panel = this.activePanel;
     const arButtons = callOverlayInteraction.metaData.arButtons as ARButton[];
-    
+
     // caller image & info - START
     const caller_container: Rectangle = new Rectangle();
     caller_container.width = '460px';
