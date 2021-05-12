@@ -10,7 +10,6 @@ import {
   Image,
   StackPanel,
   Grid,
-  //InputText,
 } from 'babylonjs-gui';
 import { EventState } from 'babylonjs/Misc/observable';
 import i18next from 'i18next';
@@ -120,11 +119,6 @@ export class ARUI {
    * @param userInputInteraction The interaction for the user input panel
    */
   private updateUserInputPanel(userInputInteraction: Interaction): void {
-    // if (ARController.getInstance().isMicON == true) {
-    //   // if the microphone is active then do not show the choice panel
-    //   return;
-    // }
-
     const arButtons = userInputInteraction.metaData.arButtons as ARButton[];
     const panel = this.activePanel;
 
@@ -156,7 +150,6 @@ export class ARUI {
     userInputPanel.cornerRadius = 15;
     userInputPanel.color = 'grey';
 
-    //const input: InputText = new InputText();
     const input: TextBlock = new TextBlock();
     input.width = 0.85;
     input.height = 0.5;
@@ -164,7 +157,6 @@ export class ARUI {
     input.text = i18next.t('input.field.placeholder');
     input.textWrapping = true;
     input.color = '#333333';
-    //input.background = '#f8f8ff';
     input.fontSize = '32px';
     input.zIndex = 20;
     input.left = 10;
@@ -172,7 +164,7 @@ export class ARUI {
     userInputPanel.addControl(input);
 
     // added temporarily because InputText crashes the app
-    // so crating this rect to make it look like a input field
+    // creating this rect to make it look like a input field
     const inputBox_Fake: Rectangle = new Rectangle();
     inputBox_Fake.width = 0.85;
     inputBox_Fake.height = 0.5;
@@ -541,7 +533,7 @@ export class ARUI {
     const panel = this.activePanel;
     const arButtons = callOverlayInteraction.metaData.arButtons as ARButton[];
 
-    // caller image & info - START
+    // START - caller image & info
     const caller_container: Rectangle = new Rectangle();
     caller_container.width = '460px';
     caller_container.height = caller_container.width;
