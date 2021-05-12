@@ -27,11 +27,18 @@
     "common.switch.off" :"Off",
     "common.mic": "Microphone",
     "common.choice.return": "Return",
+    "common.submit": "Submit",
     "submit.request": "Submit Request",
     "verification.message": "Thank you for submitting your identification. Your identity has been successfully verified and we can now continue with your request.",
     "request.sent.message": "Thank you for that information! I will add it to your request.",
     "research.request.submitted.message": "Perfect, thank you! To proceed with this request, we need to verify your identity. Please provide a form of government identification and take a picture of it by using the Document Capture feature.",
     "input.confirmation.message": "Thank you for that information! I will add it to your Request. To complete your request, you will need to connect with a Live Agent by pressing the Call Agent button.",
-    "call.agent": "Call Agent"
+    "input.field.placeholder": "*Text Input feature is not currently implemented.",
+    "microphone.text.static": "Hold to Speak.",
+    "microphone.text.pressed": "Listening...",
+    "camera.button": "Take Photo",
+    "camera.message": "Place the document in the scanning area.",
+    "call.agent": "Call Agent",
+    "call.end.message": "Welcome back! The connected agent has sucessfully submitted your request. Thank you for your submission and we will be in touch with you! Would you like help with any of our other services?"
   }
 }
