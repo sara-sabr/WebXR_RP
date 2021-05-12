@@ -53,7 +53,7 @@ export class InteractionConfigurations {
             interaction: ARConstants.INTERACTION_SERVICE_RETURN,
           },
           {
-            key: 'verification',
+            key: 'camera.button',
             interaction: ARConstants.INTERACTION_VERIFICATION,
           },
         ] as ARButton[],
@@ -329,7 +329,7 @@ export class InteractionConfigurations {
       metaData: {
         arButtons: [
           {
-            key: 'submit',
+            key: 'common.submit',
             interaction: ARConstants.INTERACTION_INPUT_CONFIRMATION,
           },
         ] as ARButton[],

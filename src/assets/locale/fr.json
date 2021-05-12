@@ -27,11 +27,17 @@
     "common.switch.off" :"Arrêt",
     "common.mic": "Microphone",
     "common.choice.return": "Retour",
+    "common.submit": "Soumettre",
     "submit.request": "Soumettre une demande",
     "verification.message": "Merci d'avoir soumis votre identification. Votre identité a été vérifié, nous pouvions continuer avec votre requête.",
     "request.sent.message": "Merci! Je vais ajouter ces détails à votre requête.",
     "research.request.submitted.message": "Parfait, merci ! Pour procéder à cette demande, nous devons vérifier votre identité. Veuillez fournir une pièce d'identité officielle en utilisant la fonction de capture de documents.",
     "input.confirmation.message": "Merci, je vais ajouter ces détails à votre requête. Pour compléter votre requête, s’il vous plait appelez un agent en appuyant sur le bouton d'appel.",
+    "input.field.placeholder": "*La fonctionnalité du champ de texte n'est pas encore mise en application.",
+    "microphone.text.static": "Tenez pour parler.",
+    "microphone.text.pressed": "Écoutez...",
+    "camera.button": "Prenez une photo",
+    "camera.message": "Placez le document dans la plage de balayage.",
     "call.agent": "Appeler un agent",
     "call.end.message": "Bienvenue! L'agent connecté a soumis votre demande avec succès. Merci pour votre demande et nous serons en contact avec vous! Souhaitez-vous de l'aide pour l'un de nos autres services?"
   }

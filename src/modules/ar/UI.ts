@@ -128,7 +128,7 @@ export class ARUI {
     const arButtons = userInputInteraction.metaData.arButtons as ARButton[];
     const panel = this.activePanel;
 
-    const submit: Button = Button.CreateSimpleButton('submit', 'Submit');
+    const submit: Button = Button.CreateSimpleButton('submit', i18next.t(arButtons[0].key));
     submit.width = 0.65;
     submit.background = '#0072c1';
     submit.color = 'white';
@@ -161,7 +161,8 @@ export class ARUI {
     input.width = 0.85;
     input.height = 0.5;
     input.top = -90;
-    input.text = '*Text Input feature is not currently implemented.';
+    input.text = i18next.t('input.field.placeholder');
+    input.textWrapping = true;
     input.color = '#333333';
     //input.background = '#f8f8ff';
     input.fontSize = '32px';
@@ -248,12 +249,12 @@ export class ARUI {
     activeMic.onPointerDownObservable.add(function () {
       circle.background = 'white';
       micText.color = 'red';
-      recordingText.text = 'Listening...';
+      recordingText.text = i18next.t('microphone.text.pressed');
     });
     activeMic.onPointerUpObservable.add(function () {
       circle.background = 'red';
       micText.color = 'white';
-      recordingText.text = 'Hold to speak.';
+      recordingText.text = i18next.t('microphone.text.static');
     });
 
     const micText = new TextBlock();
@@ -278,7 +279,7 @@ export class ARUI {
     circle.zIndex = 1;
 
     const recordingText = new TextBlock();
-    recordingText.text = 'Hold to speak.';
+    recordingText.text = i18next.t('microphone.text.static');
     recordingText.fontFamily = 'Montserrat';
     recordingText.fontSize = 70;
     recordingText.fontWeight = 'bold';
@@ -451,7 +452,7 @@ export class ARUI {
     cancelButton.onPointerClickObservable.add(this.choiceSelectedEvent);
     grid.addControl(cancelButton, 2, 1);
 
-    const takePhoto: Button = Button.CreateSimpleButton('but1', 'Take Photo');
+    const takePhoto: Button = Button.CreateSimpleButton('but1', i18next.t(arButtons[1].key));
     takePhoto.width = 0.65;
     takePhoto.height = '120px';
     takePhoto.color = 'white';
@@ -504,10 +505,11 @@ export class ARUI {
     }
     const textAbove: TextBlock = new TextBlock(
       'aboveDialog',
-      'Place the document in the scanning area.'
+      i18next.t('camera.message')
     );
     textAbove.color = 'white';
     textAbove.fontSize = '40pt';
+    textAbove.textWrapping = true;
     textAbove.top = -850;
     cameraPanel.addControl(textAbove);
 
