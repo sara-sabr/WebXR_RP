@@ -4,6 +4,7 @@
   "description": "ESDC IT RP XR Prototype",
   "private": true,
   "dependencies": {
+    "@types/dom-mediacapture-record": "^1.0.7",
     "babylonjs": "^5.0.0-alpha.9",
     "babylonjs-gui": "^5.0.0-alpha.9",
     "babylonjs-loaders": "^5.0.0-alpha.9",

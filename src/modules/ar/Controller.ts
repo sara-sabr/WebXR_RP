@@ -29,6 +29,8 @@ import AgentAsset from '../../assets/models/Malcolm.gltf';
 import { ARConstants } from '../Constants';
 import { ITranslate } from '../translation/ITranslate';
 import { ARUI } from './UI';
+import { Microphone } from './Microphone';
+import { MicrophoneState } from './MicrophoneState';
 
 /**
  * AR world singleton class.
@@ -100,6 +102,11 @@ export class ARController implements ITranslate {
   public isMicON = false;
 
   /**
+   * Microphone module interactions.
+   */
+  private readonly microphone: Microphone = Microphone.SINGLETON;
+
+  /**
    * All the configured interactions.
    */
   private interactionConfigurations: Map<
@@ -112,6 +119,9 @@ export class ARController implements ITranslate {
    */
   private currentInteraction: Interaction;
 
+  /**
+   * Reference to UI.
+   */
   private arUI: ARUI;
 
   /**
@@ -288,6 +298,37 @@ export class ARController implements ITranslate {
         this.scene.onPointerObservable.remove(this.placeKioskPointerObserve);
         this.placeKioskPointerObserve = null;
       }
+    }
+  }
+
+  /**
+   * Note very redudamentary check as doesn't take into account proper get parameters.
+   *
+   * @returns true if debug=true set as a GET parameter.
+   */
+  public isDebugMode(): boolean {
+    return window.location.href.indexOf('debug=true') >= 0;
+  }
+
+  /**
+   * Trigger a microphone event.
+   *
+   * Probably better to do a observer pattern, but that can be done later.
+   *
+   * @param event the event requested.
+   */
+  public triggerMicrophoneEvent(event: MicrophoneState, data?: any[]): void {
+    if (event === MicrophoneState.STARTING) {
+      this.microphone.startAudioRecording();
+    } else if (event === MicrophoneState.REQUEST_FINISH) {
+      this.microphone.stopAudioRecording();
+    } else if (event === MicrophoneState.FINISHED) {
+      const blob = new Blob(data, {
+        type: 'audio/webm',
+      });
+      const audioUrl = URL.createObjectURL(blob);
+      const audio = new Audio(audioUrl);
+      audio.play();
     }
   }
 

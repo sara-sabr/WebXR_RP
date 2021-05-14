@@ -20,6 +20,7 @@ import { UIPanel } from './UIPanel';
 import { ARController } from './Controller';
 
 import ScanARIconLocation from '../../assets/images/AR_ScanFloor_Icon.png';
+import { MicrophoneState } from './MicrophoneState';
 
 /**
  * UI Singleton.
@@ -43,6 +44,11 @@ export class ARUI {
    * XR GUI - "Dialog"
    */
   private message: TextBlock = null;
+
+  /**
+   * XR GUI - debug.
+   */
+  private debugMessage: TextBlock = null;
 
   /**
    * Map of UI panels.
@@ -242,11 +248,13 @@ export class ARUI {
       circle.background = 'white';
       micText.color = 'red';
       recordingText.text = i18next.t('microphone.text.pressed');
+      ARController.getInstance().triggerMicrophoneEvent(MicrophoneState.STARTING);
     });
     activeMic.onPointerUpObservable.add(function () {
       circle.background = 'red';
       micText.color = 'white';
       recordingText.text = i18next.t('microphone.text.static');
+      ARController.getInstance().triggerMicrophoneEvent(MicrophoneState.REQUEST_FINISH);
     });
 
     const micText = new TextBlock();
@@ -667,6 +675,38 @@ export class ARUI {
     this.uiPanels.set(UIPanel.USER_INPUT, this.createUserInputPanel());
 
     this.createAppMenu();
+    this.createDebug();
+  }
+
+  /**
+   * Create the debug window.
+   */
+  private createDebug(): void {
+    const debugPanel: Rectangle = new Rectangle();
+    debugPanel.thickness = 0;
+    debugPanel.height = '10%';
+    debugPanel.name = 'DebugPanel';
+    debugPanel.zIndex = 9;
+    debugPanel.verticalAlignment = Control.VERTICAL_ALIGNMENT_BOTTOM;
+
+    this.debugMessage = new TextBlock();
+    this.debugMessage.height = '100%';
+    this.debugMessage.color = 'white';
+    this.debugMessage.text = 'testing';
+
+    if (ARController.getInstance().isDebugMode()) {
+      debugPanel.addControl(this.debugMessage);
+      this.xrGUI.addControl(debugPanel);
+    }
+  }
+
+  /**
+   * The debug message.
+   *
+   * @param message the message to show
+   */
+  public setDebugText(message: string): void {
+    this.debugMessage.text = message;
   }
 
   /**
