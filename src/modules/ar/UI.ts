@@ -20,7 +20,6 @@ import { UIPanel } from './UIPanel';
 import { ARController } from './Controller';
 
 import ScanARIconLocation from '../../assets/images/AR_ScanFloor_Icon.png';
-import { ReflectionTextureBaseBlock } from 'babylonjs/Materials/Node/Blocks/Dual/reflectionTextureBaseBlock';
 import { MicrophoneState } from './MicrophoneState';
 
 /**
