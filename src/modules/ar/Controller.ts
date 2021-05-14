@@ -317,7 +317,7 @@ export class ARController implements ITranslate {
    *
    * @param event the event requested.
    */
-  public triggerMicrophoneEvent(event: MicrophoneState, data?: any[]) {
+  public triggerMicrophoneEvent(event: MicrophoneState, data?: any[]): void {
     if (event === MicrophoneState.STARTING) {
       this.microphone.startAudioRecording();
     } else if (event === MicrophoneState.REQUEST_FINISH) {
