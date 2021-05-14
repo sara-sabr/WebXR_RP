@@ -109,10 +109,8 @@ export class ARController implements ITranslate {
   /**
    * All the configured interactions.
    */
-  private interactionConfigurations: Map<
-    string,
-    Interaction
-  > = InteractionConfigurations.getConfiguration();
+  private interactionConfigurations: Map<string, Interaction> =
+    InteractionConfigurations.getConfiguration();
 
   /**
    * Current interaction.
