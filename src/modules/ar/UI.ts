@@ -691,8 +691,8 @@ export class ARUI {
 
     this.debugMessage = new TextBlock();
     this.debugMessage.height = '100%';
-    this.debugMessage.color = "white";
-    this.debugMessage.text = "testing";
+    this.debugMessage.color = 'white';
+    this.debugMessage.text = 'testing';
 
     if (ARController.getInstance().isDebugMode()) {
       debugPanel.addControl(this.debugMessage);
@@ -705,7 +705,7 @@ export class ARUI {
    *
    * @param message the message to show
    */
-  public setDebugText(message:string):void{
+  public setDebugText(message: string): void {
     this.debugMessage.text = message;
   }
 

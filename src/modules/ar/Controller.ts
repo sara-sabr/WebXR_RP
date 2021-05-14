@@ -104,7 +104,7 @@ export class ARController implements ITranslate {
   /**
    * Microphone module interactions.
    */
-  private readonly microphone:Microphone = Microphone.SINGLETON;
+  private readonly microphone: Microphone = Microphone.SINGLETON;
 
   /**
    * All the configured interactions.
@@ -306,8 +306,8 @@ export class ARController implements ITranslate {
    *
    * @returns true if debug=true set as a GET parameter.
    */
-  public isDebugMode():boolean {
-    return window.location.href.indexOf("debug=true") >= 0;
+  public isDebugMode(): boolean {
+    return window.location.href.indexOf('debug=true') >= 0;
   }
 
   /**
@@ -317,14 +317,14 @@ export class ARController implements ITranslate {
    *
    * @param event the event requested.
    */
-  public triggerMicrophoneEvent(event: MicrophoneState, data?:any[]) {
+  public triggerMicrophoneEvent(event: MicrophoneState, data?: any[]) {
     if (event === MicrophoneState.STARTING) {
       this.microphone.startAudioRecording();
     } else if (event === MicrophoneState.REQUEST_FINISH) {
       this.microphone.stopAudioRecording();
     } else if (event === MicrophoneState.FINISHED) {
-      var blob = new Blob(data, {
-        'type': 'audio/webm'
+      const blob = new Blob(data, {
+        type: 'audio/webm',
       });
       const audioUrl = URL.createObjectURL(blob);
       const audio = new Audio(audioUrl);
