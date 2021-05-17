@@ -26,7 +26,7 @@ module.exports = (env) => {
     plugins: [
       new CleanWebpackPlugin({ cleanStaleWebpackAssets: !debugMode }),
       new HtmlWebpackPlugin({
-        template: './src/login.html',
+        template: './src/index.html',
         packageVersion: packageVersion.version,
         buildDate: buildDate,
       }),
