@@ -75,7 +75,7 @@ export class Microphone {
     });
 
     _self.mediaRecorder.addEventListener('stop', function () {
-      _self.microphoneState = MicrophoneState.FINISHED;
+      _self.convertCurrentAudioToWav();
     });
   }
 
@@ -112,14 +112,20 @@ export class Microphone {
               fileLink.download = 'test';
               fileLink.click();
 
+              ARUI.getInstance().setDebugText("Downloaded");
+              _self.microphoneState = MicrophoneState.FINISHED;
               ARController.getInstance().triggerMicrophoneEvent(
                 _self.microphoneState,
                 wavBlob
               );
+
               _self.microphoneState = MicrophoneState.IDLE;
 
            },
-          function(e){ ARUI.getInstance().setDebugText(e.message); }
+          function(e){
+            _self.microphoneState = MicrophoneState.IDLE;
+            ARUI.getInstance().setDebugText(e.message);
+          }
       );
     };
   }
