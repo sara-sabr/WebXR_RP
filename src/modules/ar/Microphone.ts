@@ -25,7 +25,7 @@ export class Microphone {
   /**
    * Audio context to convert.
    */
-  private audioCtx = new window.AudioContext;
+  private audioCtx = new window.AudioContext();
 
   /**
    * Browser media recorder.
@@ -47,10 +47,8 @@ export class Microphone {
    * @param stream the stream that's being initialized.
    */
   private setupRecordAudio(stream: MediaStream): void {
-
     // const options = { mimeType: 'audio/webm' };
-    const options = {mimeType : 'audio/webm',
-                    codecs : "opus"};
+    const options = { mimeType: 'audio/webm', codecs: 'opus' };
 
     const _self = Microphone.SINGLETON;
     _self.mediaRecorder = new MediaRecorder(stream, options);
@@ -80,52 +78,55 @@ export class Microphone {
   }
 
   public convertCurrentAudioToWav(): void {
-    const blob = new Blob(this.recordAudioChunks, {type:'audio/wav; codec=audio/pcm; samplerate=16000'})
+    const blob = new Blob(this.recordAudioChunks, {
+      type: 'audio/wav; codec=audio/pcm; samplerate=16000',
+    });
 
-    var arrayBuffer;
-    var fileReader = new FileReader();
-    var _self = this;
+    //    let arrayBuffer;
+    const fileReader = new FileReader();
+    const self = this;
 
-    fileReader.onload = function(event) {
-      arrayBuffer = event.target.result;
-    };
+    // fileReader.onload = function (event) {
+    //   arrayBuffer = event.target.result;
+    // };
 
     // Convert the webm to wav for Microsft support.
     fileReader.readAsArrayBuffer(blob);
-    fileReader.onloadend=function(d){
-      _self.audioCtx.decodeAudioData(
-          fileReader.result as ArrayBuffer,
-          function(buffer) {
-              try {
-                var wav = audioBuffer(buffer);
-              } catch (e) {
-                ARUI.getInstance().setDebugText(e.message);
-                return;
-              }
-
-              ARUI.getInstance().setDebugText("Converted to WAV");
-              var fileLink = document.createElement('a');
-              var wavBlob = new Blob([wav],{type:'audio/wav; codec=audio/pcm; samplerate=16000'})
-              const audioUrl2 = URL.createObjectURL(wavBlob);
-              ARUI.getInstance().setDebugText("Created URL");
-              fileLink.href = audioUrl2;
-              fileLink.download = 'test';
-              fileLink.click();
-
-              ARUI.getInstance().setDebugText("Downloaded");
-              _self.microphoneState = MicrophoneState.FINISHED;
-              ARController.getInstance().triggerMicrophoneEvent(
-                _self.microphoneState,
-                wavBlob
-              );
-
-              _self.microphoneState = MicrophoneState.IDLE;
-
-           },
-          function(e){
-            _self.microphoneState = MicrophoneState.IDLE;
+    fileReader.onloadend = function () {
+      self.audioCtx.decodeAudioData(
+        fileReader.result as ArrayBuffer,
+        function (buffer) {
+          let wav: ArrayBuffer;
+          try {
+            wav = audioBuffer(buffer);
+            ARUI.getInstance().setDebugText('Converted to WAV');
+          } catch (e) {
             ARUI.getInstance().setDebugText(e.message);
+            return;
           }
+
+          const wavBlob = new Blob([wav], { type: 'audio/wav; codec=audio/pcm; samplerate=16000' });
+
+          if (ARController.getInstance().isDebugMode) {
+            // Downlod the file when in debug mode.
+            const fileLink = document.createElement('a');
+            const audioUrl2 = URL.createObjectURL(wavBlob);
+            ARUI.getInstance().setDebugText('Created URL');
+            fileLink.href = audioUrl2;
+            fileLink.download = 'test';
+            fileLink.click();
+            ARUI.getInstance().setDebugText('Downloaded');
+          }
+
+          self.microphoneState = MicrophoneState.FINISHED;
+          ARController.getInstance().triggerMicrophoneEvent(self.microphoneState, wavBlob);
+
+          self.microphoneState = MicrophoneState.IDLE;
+        },
+        function (e) {
+          self.microphoneState = MicrophoneState.IDLE;
+          ARUI.getInstance().setDebugText(e.message);
+        }
       );
     };
   }
