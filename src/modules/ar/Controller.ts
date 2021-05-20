@@ -315,16 +315,13 @@ export class ARController implements ITranslate {
    *
    * @param event the event requested.
    */
-  public triggerMicrophoneEvent(event: MicrophoneState, data?: any[]): void {
+  public triggerMicrophoneEvent(event: MicrophoneState, data?: Blob): void {
     if (event === MicrophoneState.STARTING) {
       this.microphone.startAudioRecording();
     } else if (event === MicrophoneState.REQUEST_FINISH) {
       this.microphone.stopAudioRecording();
     } else if (event === MicrophoneState.FINISHED) {
-      const blob = new Blob(data, {
-        type: 'audio/webm',
-      });
-      const audioUrl = URL.createObjectURL(blob);
+      const audioUrl = URL.createObjectURL(data);
       const audio = new Audio(audioUrl);
       audio.play();
     }

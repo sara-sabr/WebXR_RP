@@ -5,13 +5,15 @@
         "moduleResolution": "node",
         "outDir": "./dist/",
         "sourceMap": true,
+        "allowSyntheticDefaultImports": true,
         "allowJs": true
       },
 
     "types": [
       "babylonjs",
       "babylonjs-gui",
-      "babylonjs-loader"
+      "babylonjs-loader",
+      "audiobuffer-to-wav"
   ],
     "include": ["./src/**/*"],
     "exclude": ["node_modules", "**/*.spec.ts"]
