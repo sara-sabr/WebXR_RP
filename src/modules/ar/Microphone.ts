@@ -1,6 +1,7 @@
 import { ARController } from './Controller';
 import { MicrophoneState } from './MicrophoneState';
 import { ARUI } from './UI';
+import audioBuffer from 'audiobuffer-to-wav';
 
 /**
  * Micrphone module.
@@ -22,6 +23,11 @@ export class Microphone {
   private recordAudioChunks = [];
 
   /**
+   * Audio context to convert.
+   */
+  private audioCtx = new window.AudioContext;
+
+  /**
    * Browser media recorder.
    */
   private mediaRecorder: MediaRecorder;
@@ -40,13 +46,17 @@ export class Microphone {
    *
    * @param stream the stream that's being initialized.
    */
-  private setupRecordAudio(stream): void {
-    const options = { mimeType: 'audio/webm' };
+  private setupRecordAudio(stream: MediaStream): void {
+
+    // const options = { mimeType: 'audio/webm' };
+    const options = {mimeType : 'audio/webm',
+                    codecs : "opus"};
+
     const _self = Microphone.SINGLETON;
     _self.mediaRecorder = new MediaRecorder(stream, options);
 
     // Listeners.
-    _self.mediaRecorder.addEventListener('dataavailable', function (e: BlobEvent) {
+    _self.mediaRecorder.addEventListener('dataavailable', function (e) {
       if (
         _self.microphoneState === MicrophoneState.FINISHING ||
         _self.microphoneState === MicrophoneState.IDLE
@@ -66,12 +76,52 @@ export class Microphone {
 
     _self.mediaRecorder.addEventListener('stop', function () {
       _self.microphoneState = MicrophoneState.FINISHED;
-      ARController.getInstance().triggerMicrophoneEvent(
-        _self.microphoneState,
-        _self.recordAudioChunks
-      );
-      _self.microphoneState = MicrophoneState.IDLE;
     });
+  }
+
+  public convertCurrentAudioToWav(): void {
+    const blob = new Blob(this.recordAudioChunks, {type:'audio/wav; codec=audio/pcm; samplerate=16000'})
+
+    var arrayBuffer;
+    var fileReader = new FileReader();
+    var _self = this;
+
+    fileReader.onload = function(event) {
+      arrayBuffer = event.target.result;
+    };
+
+    // Convert the webm to wav for Microsft support.
+    fileReader.readAsArrayBuffer(blob);
+    fileReader.onloadend=function(d){
+      _self.audioCtx.decodeAudioData(
+          fileReader.result as ArrayBuffer,
+          function(buffer) {
+              try {
+                var wav = audioBuffer(buffer);
+              } catch (e) {
+                ARUI.getInstance().setDebugText(e.message);
+                return;
+              }
+
+              ARUI.getInstance().setDebugText("Converted to WAV");
+              var fileLink = document.createElement('a');
+              var wavBlob = new Blob([wav],{type:'audio/wav; codec=audio/pcm; samplerate=16000'})
+              const audioUrl2 = URL.createObjectURL(wavBlob);
+              ARUI.getInstance().setDebugText("Created URL");
+              fileLink.href = audioUrl2;
+              fileLink.download = 'test';
+              fileLink.click();
+
+              ARController.getInstance().triggerMicrophoneEvent(
+                _self.microphoneState,
+                wavBlob
+              );
+              _self.microphoneState = MicrophoneState.IDLE;
+
+           },
+          function(e){ ARUI.getInstance().setDebugText(e.message); }
+      );
+    };
   }
 
   /**
