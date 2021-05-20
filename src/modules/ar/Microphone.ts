@@ -82,18 +82,12 @@ export class Microphone {
       type: 'audio/wav; codec=audio/pcm; samplerate=16000',
     });
 
-    //    let arrayBuffer;
     const fileReader = new FileReader();
-    const self = this;
-
-    // fileReader.onload = function (event) {
-    //   arrayBuffer = event.target.result;
-    // };
 
     // Convert the webm to wav for Microsft support.
     fileReader.readAsArrayBuffer(blob);
-    fileReader.onloadend = function () {
-      self.audioCtx.decodeAudioData(
+    fileReader.onloadend = () => {
+      this.audioCtx.decodeAudioData(
         fileReader.result as ArrayBuffer,
         function (buffer) {
           let wav: ArrayBuffer;
@@ -118,13 +112,13 @@ export class Microphone {
             ARUI.getInstance().setDebugText('Downloaded');
           }
 
-          self.microphoneState = MicrophoneState.FINISHED;
-          ARController.getInstance().triggerMicrophoneEvent(self.microphoneState, wavBlob);
+          this.microphoneState = MicrophoneState.FINISHED;
+          ARController.getInstance().triggerMicrophoneEvent(this.microphoneState, wavBlob);
 
-          self.microphoneState = MicrophoneState.IDLE;
+          this.microphoneState = MicrophoneState.IDLE;
         },
         function (e) {
-          self.microphoneState = MicrophoneState.IDLE;
+          this.microphoneState = MicrophoneState.IDLE;
           ARUI.getInstance().setDebugText(e.message);
         }
       );
