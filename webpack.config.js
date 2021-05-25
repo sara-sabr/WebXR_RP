@@ -10,9 +10,9 @@ module.exports = (env) => {
   const build = env.NODE_ENV ? env.NODE_ENV : 'production';
   const debugMode = env.debugMode ? env.debugMode : false;
   const apiServer =
-    env.NODE_ENV === 'production'
-      ? 'https://it-rp-xr.azurewebsites.net/'
-      : 'https://localhost:8000/';
+    env.NODE_ENV === 'development'
+      ? 'https://localhost:8000/':
+        'https://it-rp-xr.azurewebsites.net/';
 
   console.log('Webpack is building for...');
   console.log('Environment: ', build);
