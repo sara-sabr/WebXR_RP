@@ -9,12 +9,17 @@ const buildDate = new Date().toLocaleString('en-CA', {
 module.exports = (env) => {
   const build = env.NODE_ENV ? env.NODE_ENV : 'production';
   const debugMode = env.debugMode ? env.debugMode : false;
+  const apiServer =
+    env.NODE_ENV === 'production'
+      ? 'https://it-rp-xr.azurewebsites.net/'
+      : 'https://localhost:8000/';
 
   console.log('Webpack is building for...');
   console.log('Environment: ', build);
   console.log('Debug Mode: ', debugMode);
   console.log('Package Version', packageVersion.version);
   console.log('Build Date', buildDate);
+  console.log('API Server', apiServer);
   return {
     mode: build,
     devtool: debugMode == true ? 'inline-source-map' : undefined,
@@ -29,6 +34,7 @@ module.exports = (env) => {
         template: './src/index.html',
         packageVersion: packageVersion.version,
         buildDate: buildDate,
+        apiServer: apiServer,
       }),
     ],
     output: {

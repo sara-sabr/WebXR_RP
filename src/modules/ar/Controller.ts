@@ -321,9 +321,33 @@ export class ARController implements ITranslate {
     } else if (event === MicrophoneState.REQUEST_FINISH) {
       this.microphone.stopAudioRecording();
     } else if (event === MicrophoneState.FINISHED) {
-      const audioUrl = URL.createObjectURL(data);
-      const audio = new Audio(audioUrl);
-      audio.play();
+      const formData = new FormData();
+      formData.append('file', data);
+
+      const fetchOptions = {
+        method: 'POST',
+        body: formData,
+      };
+      ARUI.getInstance().setDebugText('Sending voice over');
+      try {
+        fetch(window['xrApiServer'] + 'audio/upload', fetchOptions)
+          .then((data) => {
+            ARUI.getInstance().setDebugText('Response done');
+            return data.arrayBuffer();
+          })
+          .then((buffer) => {
+            try {
+              const soundObject = new Sound('chatbot-response', buffer, this.scene, () => {
+                //will only run when the sound object has decoded and downloaded the audio
+                soundObject.play();
+              });
+            } catch (ee) {
+              ARUI.getInstance().setDebugText(ee);
+            }
+          });
+      } catch (e) {
+        ARUI.getInstance().setDebugText(e);
+      }
     }
   }
 

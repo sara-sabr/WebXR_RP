@@ -29,10 +29,11 @@
                         <div class="card-container">
                             <br>
                             <script>
+                                window.xrApiServer = '<%= htmlWebpackPlugin.options.apiServer %>';
                                 function submitLogin(event){
                                     var beforeLog = document.getElementById("beforeLogin");
                                     var afterLog = document.getElementById("afterLogin");
-                                    let authURL = 'https://it-rp-xr.azurewebsites.net/auth/login';
+                                    let authURL = window.xrApiServer + 'auth/login';
                                     let login = {
                                         username: document.getElementById('username').value,
                                         password: document.getElementById('password').value,
@@ -45,10 +46,15 @@
                                         body: JSON.stringify(login),
                                     }
                                     fetch(authURL, fetchOptions).then(data => data.json()).then( data => {
-                                        sessionStorage.setItem('access_token', data.access_token);
+
+                                        if (data.access_token) {
+                                            sessionStorage.setItem('access_token', data.access_token);
+                                            beforeLog.style.display = "none";
+                                            afterLog.style.display = "block";
+                                        } else {
+                                            // Access Denied
+                                        }
                                     })
-                                    beforeLog.style.display = "none";
-                                    afterLog.style.display = "block";
                                     event.preventDefault();
                                 }
                             </script>
