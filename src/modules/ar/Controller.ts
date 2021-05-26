@@ -326,6 +326,9 @@ export class ARController implements ITranslate {
 
       const fetchOptions = {
         method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + sessionStorage.getItem('access_token'),
+        },
         body: formData,
       };
       ARUI.getInstance().setDebugText('Sending voice over');
