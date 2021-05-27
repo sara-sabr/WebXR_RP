@@ -253,8 +253,9 @@ export class ARUI {
     activeMic.onPointerUpObservable.add(function () {
       circle.background = 'red';
       micText.color = 'white';
-      recordingText.text = i18next.t('microphone.text.static');
+      recordingText.text = i18next.t('microphone.text.processing');
       ARController.getInstance().triggerMicrophoneEvent(MicrophoneState.REQUEST_FINISH);
+      recordingText.text = i18next.t('microphone.text.static');
     });
 
     const micText = new TextBlock();
