@@ -100,18 +100,6 @@ export class Microphone {
           }
 
           const wavBlob = new Blob([wav], { type: 'audio/wav; codec=audio/pcm; samplerate=16000' });
-
-          if (ARController.getInstance().isDebugMode) {
-            // Downlod the file when in debug mode.
-            const fileLink = document.createElement('a');
-            const audioUrl2 = URL.createObjectURL(wavBlob);
-            ARUI.getInstance().setDebugText('Created URL');
-            fileLink.href = audioUrl2;
-            fileLink.download = 'test';
-            fileLink.click();
-            ARUI.getInstance().setDebugText('Downloaded');
-          }
-
           this.microphoneState = MicrophoneState.FINISHED;
           ARController.getInstance().triggerMicrophoneEvent(this.microphoneState, wavBlob);
 

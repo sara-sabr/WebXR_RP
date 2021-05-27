@@ -39,6 +39,7 @@
     "input.field.placeholder": "*La fonctionnalité du champ de texte n'est pas encore mise en application.",
     "microphone.text.static": "Tenez pour parler.",
     "microphone.text.pressed": "Écoutez...",
+    "microphone.text.processing": "Traitement ...",
     "camera.button": "Prenez une photo",
     "camera.message": "Placez le document dans la plage de balayage.",
     "call.agent": "Appeler un agent",
