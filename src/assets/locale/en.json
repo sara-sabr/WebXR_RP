@@ -39,6 +39,7 @@
     "input.field.placeholder": "*Text Input feature is not currently implemented.",
     "microphone.text.static": "Hold to Speak.",
     "microphone.text.pressed": "Listening...",
+    "microphone.text.loading": "Processing...",
     "camera.button": "Take Photo",
     "camera.message": "Place the document in the scanning area.",
     "call.agent": "Call Agent",
