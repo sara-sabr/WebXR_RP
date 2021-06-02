@@ -143,9 +143,9 @@ max-width: 400px; /* new */
 }
 
 #beforeLogin {
-    display: none;
+    display: block;
 }
 
 #afterLogin {
-    display: block;
+    display: none;
 }
