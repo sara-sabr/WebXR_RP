@@ -327,7 +327,7 @@ export class ARController implements ITranslate {
       const fetchOptions = {
         method: 'POST',
         headers: {
-          'Authorization': 'Bearer ' + sessionStorage.getItem('access_token'),
+          Authorization: 'Bearer ' + sessionStorage.getItem('access_token'),
         },
         body: formData,
       };
