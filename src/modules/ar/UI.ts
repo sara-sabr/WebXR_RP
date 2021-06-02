@@ -329,6 +329,10 @@ export class ARUI {
     this.microphonePanel.addControl(activeMic);
   }
 
+  public resetMicPanel(): void{
+    this.microphonePanel.dispose();
+    this.createActiveMicrophoneButton();
+  }
   /**
    * The choice panel.
    *
