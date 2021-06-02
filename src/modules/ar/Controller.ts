@@ -347,10 +347,12 @@ export class ARController implements ITranslate {
               });
             } catch (ee) {
               ARUI.getInstance().setDebugText(ee);
+              ARUI.getInstance().resetMicPanel();
             }
           });
       } catch (e) {
         ARUI.getInstance().setDebugText(e);
+        ARUI.getInstance().resetMicPanel();
       }
     }
   }
