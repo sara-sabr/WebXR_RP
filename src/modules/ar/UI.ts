@@ -292,7 +292,7 @@ export class ARUI {
     recordingText.shadowColor = 'black';
     recordingText.shadowBlur = 4;
     recordingText.top = '20%';
-    
+
     const spinnerImage = new Image('loading-spinner', SpinnerImageLocation);
     spinnerImage.width = 1;
     spinnerImage.height = 1;
@@ -310,7 +310,7 @@ export class ARUI {
     this.microphonePanel.addControl(activeMic);
   }
 
-  public resetMicPanel(): void{
+  public resetMicPanel(): void {
     this.microphonePanel.dispose();
     this.createActiveMicrophoneButton();
     this.activePanel.addControl(this.microphonePanel);
