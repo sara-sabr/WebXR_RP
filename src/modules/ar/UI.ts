@@ -259,7 +259,6 @@ export class ARUI {
       activeMic.addControl(spinnerImage);
       recordingText.text = i18next.t('microphone.text.loading');
       ARController.getInstance().triggerMicrophoneEvent(MicrophoneState.REQUEST_FINISH);
-      recordingText.text = i18next.t('microphone.text.static');
     });
 
     const micText = new TextBlock();
