@@ -20,6 +20,7 @@ import { UIPanel } from './UIPanel';
 import { ARController } from './Controller';
 
 import ScanARIconLocation from '../../assets/images/AR_ScanFloor_Icon.png';
+import SpinnerImageLocation from '../../assets/images/loading-spinner.png';
 import { MicrophoneState } from './MicrophoneState';
 
 /**
@@ -244,16 +245,19 @@ export class ARUI {
     activeMic.height = activeMic.width;
     activeMic.thickness = 0;
     activeMic.top = '30%';
+    activeMic.alpha = 1;
     activeMic.onPointerDownObservable.add(function () {
+      activeMic.alpha = 1;
       circle.background = 'white';
       micText.color = 'red';
       recordingText.text = i18next.t('microphone.text.pressed');
       ARController.getInstance().triggerMicrophoneEvent(MicrophoneState.STARTING);
     });
     activeMic.onPointerUpObservable.add(function () {
-      circle.background = 'red';
-      micText.color = 'white';
-      recordingText.text = i18next.t('microphone.text.processing');
+      activeMic.removeControl(circle);
+      activeMic.removeControl(micText);
+      activeMic.addControl(spinnerImage);
+      recordingText.text = i18next.t('microphone.text.loading');
       ARController.getInstance().triggerMicrophoneEvent(MicrophoneState.REQUEST_FINISH);
       recordingText.text = i18next.t('microphone.text.static');
     });
@@ -279,7 +283,7 @@ export class ARUI {
     circle.shadowOffsetY = 3;
     circle.zIndex = 1;
 
-    const recordingText = new TextBlock();
+    const recordingText = new TextBlock('recordingText');
     recordingText.text = i18next.t('microphone.text.static');
     recordingText.fontFamily = 'Montserrat';
     recordingText.fontSize = 70;
@@ -289,12 +293,28 @@ export class ARUI {
     recordingText.shadowBlur = 4;
     recordingText.top = '20%';
 
+    const spinnerImage = new Image('loading-spinner', SpinnerImageLocation);
+    spinnerImage.width = 1;
+    spinnerImage.height = 1;
+    spinnerImage.zIndex = 6;
+    spinnerImage.rotation = 0;
+    spinnerImage.alpha = 1;
+
+    setInterval(() => {
+      spinnerImage.rotation = spinnerImage.rotation + 0.015;
+    }, 1);
+
     activeMic.addControl(circle);
     activeMic.addControl(micText);
     this.microphonePanel.addControl(recordingText);
     this.microphonePanel.addControl(activeMic);
   }
 
+  public resetMicPanel(): void {
+    this.microphonePanel.dispose();
+    this.createActiveMicrophoneButton();
+    this.activePanel.addControl(this.microphonePanel);
+  }
   /**
    * The choice panel.
    *

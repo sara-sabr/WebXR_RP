@@ -341,15 +341,18 @@ export class ARController implements ITranslate {
           .then((buffer) => {
             try {
               const soundObject = new Sound('chatbot-response', buffer, this.scene, () => {
+                ARUI.getInstance().resetMicPanel();
                 //will only run when the sound object has decoded and downloaded the audio
                 soundObject.play();
               });
             } catch (ee) {
               ARUI.getInstance().setDebugText(ee);
+              ARUI.getInstance().resetMicPanel();
             }
           });
       } catch (e) {
         ARUI.getInstance().setDebugText(e);
+        ARUI.getInstance().resetMicPanel();
       }
     }
   }
