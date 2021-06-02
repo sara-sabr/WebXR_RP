@@ -254,8 +254,6 @@ export class ARUI {
       ARController.getInstance().triggerMicrophoneEvent(MicrophoneState.STARTING);
     });
     activeMic.onPointerUpObservable.add(function () {
-      //circle.background = 'red';
-      //micText.color = 'white';
       activeMic.removeControl(circle);
       activeMic.removeControl(micText);
       activeMic.addControl(spinnerImage);
@@ -293,24 +291,6 @@ export class ARUI {
     recordingText.shadowColor = 'black';
     recordingText.shadowBlur = 4;
     recordingText.top = '20%';
-
-    // const spinner = new TextBlock();
-    // spinner.text = '\uf110';
-    // spinner.fontFamily = 'FontAwesome';
-    // spinner.color = 'white';
-    // spinner.fontSize = 240;
-    // spinner.top = 11;
-    // spinner.shadowColor = 'black';
-    // spinner.shadowBlur = 4;
-    // spinner.zIndex = 4;
-
-    // const spinnerWrap  = new Rectangle();
-    // spinnerWrap.width = 1;
-    // spinnerWrap.height = 1;
-    // spinnerWrap.thickness = 0;
-    // spinnerWrap.rotation = 0;
-    
-    // spinnerWrap.addControl(spinner);
     
     const spinnerImage = new Image('loading-spinner', SpinnerImageLocation);
     spinnerImage.width = 1;
@@ -332,6 +312,7 @@ export class ARUI {
   public resetMicPanel(): void{
     this.microphonePanel.dispose();
     this.createActiveMicrophoneButton();
+    this.activePanel.addControl(this.microphonePanel);
   }
   /**
    * The choice panel.
