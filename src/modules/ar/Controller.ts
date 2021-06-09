@@ -24,7 +24,7 @@ import i18next from 'i18next';
 import { InteractionConfigurations } from './interaction/Configurations';
 import { Interaction } from './interaction/Interaction';
 
-import KioskAsset from '../../assets/models/RP_Kiosk.gltf';
+import KioskAsset from '../../assets/models/SC_Kiosk.gltf';
 import AgentAsset from '../../assets/models/Malcolm.gltf';
 import { ARConstants } from '../Constants';
 import { ITranslate } from '../translation/ITranslate';
