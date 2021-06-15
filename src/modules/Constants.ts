@@ -147,5 +147,30 @@ export class ARConstants {
   /**
    * User initialization of call
    */
-  static readonly INTERACTION_CALL_END = 'call.end';
+   static readonly INTERACTION_CALL_END = 'call.end';
+
+  /**
+   * Survey Q1.
+   */
+   static readonly INTERACTION_SURVEY_Q1 = 'survey.q1';
+
+  /**
+   * Survey Q1 - options.
+   */
+   static readonly INTERACTION_SURVEY_Q1_SELECT = 'survey.q1.select';
+
+  /**
+   * Survey Q2.
+   */
+   static readonly INTERACTION_SURVEY_Q2 = 'survey.q2';
+
+   /**
+   * Survey Q2 - options.
+   */
+   static readonly INTERACTION_SURVEY_Q2_SELECT = 'survey.q2.select';
+
+  /**
+   * Survey Q2.
+   */
+   static readonly INTERACTION_THANKYOU = 'thankyou';
 }

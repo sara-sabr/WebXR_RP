@@ -11,6 +11,9 @@ import agentInputConfirmation from '../audio/en/input.confirmation.mp3';
 import agentCallEnd from '../audio/en/call.end.mp3';
 import agentPilot from '../audio/en/pilot.mp3';
 import agentMainOptions from '../audio/en/main.select.msca.mp3';
+import agentSurvey1 from '../audio/en/survey.q1.mp3';
+import agentSurvey2 from '../audio/en/survey.q2.mp3';
+import agentThankYou from '../audio/en/thankyou.mp3';
 
 /**
  * English translations where en.json and en.js are merged by TranslationService.
@@ -34,6 +37,9 @@ const en = {
     'verification.audio': agentVerification,
     'input.confirmation.audio': agentInputConfirmation,
     'call.end.audio': agentCallEnd,
+    'survey.q1.audio': agentSurvey1,
+    'survey.q2.audio': agentSurvey2,
+    'thankyou.audio': agentThankYou,
   },
 };
 

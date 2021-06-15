@@ -136,7 +136,7 @@ export class InteractionConfigurations {
       name: ARConstants.INTERACTION_SELECT_RESEARCH,
       uiPanel: UIPanel.MESSAGE,
       animationKey: 'Talk',
-      nextInteraction: ARConstants.INTERACTION_RESEARCH_CHOICE,
+      nextInteraction: ARConstants.INTERACTION_RESEARCH_REQUEST_SUBMIT,
     };
   }
 
@@ -327,19 +327,19 @@ export class InteractionConfigurations {
         arButtons: [
           {
             key: 'etms',
-            interaction: 'service.select.etms',
+            interaction: ARConstants.INTERACTION_SELECT_ETMS,
           },
           {
             key: 'research',
-            interaction: 'service.select.research',
+            interaction: ARConstants.INTERACTION_SELECT_RESEARCH,
           },
           {
             key: 'tp',
-            interaction: 'service.select.tp',
+            interaction: ARConstants.INTERACTION_SELECT_TP,
           },
           {
             key: 'sp',
-            interaction: 'service.select.sp',
+            interaction: ARConstants.INTERACTION_SELECT_SP,
           },
         ] as ARButton[],
       },
@@ -452,9 +452,112 @@ export class InteractionConfigurations {
       name: ARConstants.INTERACTION_CALL_END,
       uiPanel: UIPanel.MESSAGE,
       animationKey: 'TalkLong',
-      nextInteraction: ARConstants.INTERACTION_SERVICE_CHOICE,
+      nextInteraction: ARConstants.INTERACTION_SURVEY_Q1,
     };
   }
+
+  /**
+   * Select survey question 1 interaction.
+   *
+   * @returns configured interaction
+   */
+   private static requestSurveyQ1Interaction(): Interaction {
+    return {
+      name: ARConstants.INTERACTION_SURVEY_Q1,
+      uiPanel: UIPanel.MESSAGE,
+      animationKey: 'TalkLong',
+      nextInteraction: ARConstants.INTERACTION_SURVEY_Q1_SELECT,
+    };
+  }
+
+  /**
+   * Survey Q1 Select interaction.
+   *
+   * @returns configured interaction
+   */
+   private static requestSurveyQ1SelectInteraction(): Interaction {
+    return {
+      name: ARConstants.INTERACTION_SURVEY_Q1_SELECT,
+      uiPanel: UIPanel.CHOICE,
+      metaData: {
+        arButtons: [
+          {
+            key: '1',
+            interaction: ARConstants.INTERACTION_SURVEY_Q2,
+          },
+          {
+            key: '2',
+            interaction: ARConstants.INTERACTION_SURVEY_Q2,
+          },
+          {
+            key: '3',
+            interaction: ARConstants.INTERACTION_SURVEY_Q2,
+          },
+          {
+            key: '4',
+            interaction: ARConstants.INTERACTION_SURVEY_Q2,
+          },
+          {
+            key: '5',
+            interaction: ARConstants.INTERACTION_SURVEY_Q2,
+          },
+        ] as ARButton[],
+      },
+    };
+  }
+
+  /**
+   * Select survey question 2 interaction.
+   *
+   * @returns configured interaction
+   */
+   private static requestSurveyQ2Interaction(): Interaction {
+    return {
+      name: ARConstants.INTERACTION_SURVEY_Q2,
+      uiPanel: UIPanel.MESSAGE,
+      animationKey: 'TalkLong',
+      nextInteraction: ARConstants.INTERACTION_SURVEY_Q2_SELECT,
+    };
+  }
+
+  /**
+   * End interaction.
+   *
+   * @returns configured interaction
+   */
+   private static thankyouInteraction(): Interaction {
+    return {
+      name: ARConstants.INTERACTION_THANKYOU,
+      uiPanel: UIPanel.MESSAGE,
+      animationKey: 'TalkLong',
+      nextInteraction: ARConstants.INTERACTION_MAIN_OPTIONS,
+    };
+  }
+
+  /**
+   * Survey Q2 Select interaction.
+   *
+   * @returns configured interaction
+   */
+   private static requestSurveyQ2SelectInteraction(): Interaction {
+    return {
+      name: ARConstants.INTERACTION_SURVEY_Q2_SELECT,
+      uiPanel: UIPanel.CHOICE,
+      metaData: {
+        arButtons: [
+          {
+            key: 'yes',
+            interaction: ARConstants.INTERACTION_THANKYOU,
+          },
+          {
+            key: 'no',
+            interaction: ARConstants.INTERACTION_THANKYOU,
+          },
+        ] as ARButton[],
+      },
+    };
+  }
+
   /**
    * Get the configurations.
    */
@@ -489,6 +592,11 @@ export class InteractionConfigurations {
       InteractionConfigurations.addInteraction(this.inputConfirmationMsg());
       InteractionConfigurations.addInteraction(this.userInitCall());
       InteractionConfigurations.addInteraction(this.callEndInterction());
+      InteractionConfigurations.addInteraction(this.requestSurveyQ1Interaction());
+      InteractionConfigurations.addInteraction(this.requestSurveyQ2Interaction());
+      InteractionConfigurations.addInteraction(this.requestSurveyQ1SelectInteraction());
+      InteractionConfigurations.addInteraction(this.requestSurveyQ2SelectInteraction());
+      InteractionConfigurations.addInteraction(this.thankyouInteraction());
     }
 
     return InteractionConfigurations.CONFIGURATION;
