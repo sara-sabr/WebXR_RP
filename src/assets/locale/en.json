@@ -32,7 +32,7 @@
     "common.choice.return": "Return",
     "common.submit": "Submit",
     "submit.request": "Submit Request",
-    "verification.message": "Thank you for submitting your identification. Your identity has been successfully verified and we can now continue with your request.",
+    "verification.message": "Thank you for submitting your identification. You will need to provide your date of birth.",
     "request.sent.message": "Thank you for that information! I will add it to your request.",
     "research.request.submitted.message": "Perfect, thank you! To proceed with this request, we need to verify your identity. Please provide a form of government identification and take a picture of it by using the Document Capture feature.",
     "input.confirmation.message": "Thank you for that information! I will add it to your Request. To complete your request, you will need to connect with a Live Agent by pressing the Call Agent button.",
