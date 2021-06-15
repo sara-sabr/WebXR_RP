@@ -9,6 +9,7 @@ import agentResearchRequestSubmitted from '../audio/fr/research.request.submitte
 import agentVerification from '../audio/fr/verification.mp3';
 import agentInputConfirmation from '../audio/fr/input.confirmation.mp3';
 import agentCallEnd from '../audio/fr/call.end.mp3';
+import agentPilot from '../audio/fr/pilot.mp3';
 
 /**
  * French translations where fr.json and fr.js are merged by TranslationService.
@@ -20,6 +21,7 @@ import agentCallEnd from '../audio/fr/call.end.mp3';
 const fr = {
   translation: {
     'welcome.audio': agentWelcome,
+    'pilot.audio': agentPilot,
     'service.select.etms.audio': agentServiceSelectETMS,
     'service.select.research.audio': agentServiceSelectResearch,
     'service.select.tp.audio': agentServiceSelectTP,

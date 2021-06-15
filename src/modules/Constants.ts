@@ -22,7 +22,22 @@ export class ARConstants {
   /**
    * Welcome interaction.
    */
-  static readonly INTERACTION_WELCOME = 'welcome';
+   static readonly INTERACTION_WELCOME = 'welcome';
+
+  /**
+   * Main Options interaction.
+   */
+   static readonly INTERACTION_MAIN_OPTIONS = 'main';
+
+  /**
+   * Main MSCA interaction.
+   */
+  static readonly INTERACTION_MAIN_CHOICE_MSCA = 'main.select.msca';
+
+  /**
+   * Pilot interaction.
+   */
+   static readonly INTERACTION_PILOT = 'pilot';
 
   /**
    * Select Research interaction.

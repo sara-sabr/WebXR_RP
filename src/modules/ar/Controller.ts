@@ -379,7 +379,7 @@ export class ARController implements ITranslate {
       that.agent.setEnabled(true);
 
       // Execute welcome interaction when kiosk is placed
-      that.executeInteraction(ARConstants.INTERACTION_WELCOME);
+      that.executeInteraction(that.currentInteraction.metaData.nextInteraction as string);
 
       that.kioskCoordinates.transformationMatrix.decompose(
         undefined,

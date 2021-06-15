@@ -17,10 +17,13 @@ export class InteractionConfigurations {
    *
    * @returns configured interaction
    */
-  private static placeKioskInteraction(): Interaction {
+   private static placeKioskInteraction(): Interaction {
     return {
       name: ARConstants.INTERACTION_KIOSK,
       uiPanel: UIPanel.MESSAGE,
+      metaData: {
+        nextInteraction: ARConstants.INTERACTION_PILOT
+      }
     };
   }
 
@@ -29,12 +32,60 @@ export class InteractionConfigurations {
    *
    * @returns configured interaction
    */
-  private static welcomeInteraction(): Interaction {
+   private static welcomeInteraction(): Interaction {
     return {
       name: ARConstants.INTERACTION_WELCOME,
       uiPanel: UIPanel.MESSAGE,
       animationKey: 'Hello',
+      nextInteraction: ARConstants.INTERACTION_MAIN_OPTIONS,
+    };
+  }
+
+  /**
+   * Main Choice interaction.
+   *
+   * @returns configured interaction
+   */
+   private static mainChoiceInteraction(): Interaction {
+    return {
+      name: ARConstants.INTERACTION_MAIN_OPTIONS,
+      uiPanel: UIPanel.CHOICE,
+      metaData: {
+        arButtons: [
+          {
+            key: 'msca',
+            interaction: ARConstants.INTERACTION_MAIN_CHOICE_MSCA,
+          },
+        ] as ARButton[],
+      },
+    };
+  }
+
+  /**
+   * MSCA Register interaction.
+   *
+   * @returns configured interaction
+   */
+   private static mscaChoiceInteraction(): Interaction {
+    return {
+      name: ARConstants.INTERACTION_MAIN_CHOICE_MSCA,
+      uiPanel: UIPanel.MESSAGE,
+      animationKey: 'Talk',
       nextInteraction: ARConstants.INTERACTION_SERVICE_CHOICE,
+    };
+  }
+
+  /**
+   * Notice interaction.
+   *
+   * @returns configured interaction
+   */
+   private static noticeInteraction(): Interaction {
+    return {
+      name: ARConstants.INTERACTION_PILOT,
+      uiPanel: UIPanel.MESSAGE,
+      animationKey: 'Hello',
+      nextInteraction: ARConstants.INTERACTION_WELCOME,
     };
   }
 
@@ -60,6 +111,7 @@ export class InteractionConfigurations {
       },
     };
   }
+
   /**
    * Service Return interaction.
    *
@@ -261,6 +313,7 @@ export class InteractionConfigurations {
       },
     };
   }
+
   /**
    * Service Choice interaction.
    *
@@ -411,6 +464,9 @@ export class InteractionConfigurations {
 
       // Add the interactions.
       InteractionConfigurations.addInteraction(this.placeKioskInteraction());
+      InteractionConfigurations.addInteraction(this.noticeInteraction());
+      InteractionConfigurations.addInteraction(this.mainChoiceInteraction());
+      InteractionConfigurations.addInteraction(this.mscaChoiceInteraction());
       InteractionConfigurations.addInteraction(this.welcomeInteraction());
       InteractionConfigurations.addInteraction(this.serviceChoiceInteraction());
       InteractionConfigurations.addInteraction(this.selectETMSInteraction());

@@ -2,6 +2,8 @@
   "translation": {
     "homepage.toggleLanguage": "English",
     "intro.message": "Visez le plancher pour faire apparaitre le kiosque.",
+    "pilot.message":
+      "Il s'agit d'un prototype et n'implique en aucune façon qu'un tel service à EDSC sera offert où la réalité augmentée est disponible.\n\n L'objectif de ce prototype est de faire évoluer les limites et de voir ce qu'une technologie donnée pourrait faire.",
     "welcome.message":
     "Bienvenue au prototype RA de l’équipe recherche et prototypage. Je m'appelle Simon, vôtre agent virtuel. Comment puis-je vous aider?",
     "service.choice.etms": "SSTE",

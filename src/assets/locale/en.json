@@ -2,17 +2,21 @@
   "translation": {
     "homepage.toggleLanguage": "Français",
     "intro.message": "Scan the floor to place the kiosk",
+    "pilot.message":
+      "This is a prototype and does not imply any possibility of a future ESDC service where augmented/mixed reality is available/offered. The purpose of this prototype is to push the boundaries and see what a given technology could do.",
     "welcome.message":
-      "Welcome to Service Canada AR. I'm Simon, your virtual agent. How can I help you?",
+      "Welcome to the My Service Canada Account registration and sign-in virtual assistant. I'm Simon and I can provide you with some guidance on MSCA. How can I help you?",
+    "main.choice.msca": "How do I register for MSCA?",
+    "main.select.msca.message": "Let's help you register for MSCA! First, tell us if you have at least one of the following:\n• a personal access code.\n• an Employment Insurance access code.\n• a provincial digital ID (such as MyAlberta Digital ID and the BC Services Card).\n• a Canada Revenue Agency My Account.",
     "service.choice.etms": "Personal access code (PAC)",
     "service.choice.research": "Provincial Digital ID",
     "service.choice.tp": "Employment Insurance access code",
     "service.choice.sp": "Canada Revenue Agency My Account",
-    "service.select.etms.message": "You have selected personal access code.",
+    "service.select.etms.message": "Alright. The next step is to sign in with one of the following credentials: • a Sign-In Partner (register with your bank).  • a GCKey.",
     "service.select.research.message": "If you are an Alberta or British Columbia resident, you can use your verified provincial digital ID to register and sign in to My Service Canada Account immediately.",
-    "service.select.tp.message": "You have selected Employment Insurance access code",
-    "service.select.sp.message": "You have selected Canada Revenue Agency My Account",
-    "service.select.return.message": "What other service would you like to get help with?",
+    "service.select.tp.message": "Alright. The next step is to sign in with one of the following credentials: • a Sign-In Partner (register with your bank).  • a GCKey.",
+    "service.select.sp.message": "Please note that the link between My Service Canada Account (MSCA) and the Canada Revenue Agency's My Account Online Service is temporarily unavailable. We apologize for the inconvenience.",
+    "service.select.return.message": "How would you like to register for MSCA?",
     "homepage.header": "R&P WebAR Prototype",
     "homepage.blurb":
       "This is a prototype and does not imply any possibility of a future ESDC service where augmented/mixed reality is available/offered. The purpose of this prototype is to push the boundaries and see what a given technology could do.",
