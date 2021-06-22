@@ -87,9 +87,19 @@ export class ARUI {
   private userInputPanel: Rectangle;
 
   /**
-   * The microphone panel.
+   * Call timer duration.
    */
-  private callPanel: Rectangle;
+  private callTime: TextBlock;
+
+  /**
+   * Call timer reference to setTimeout.
+   */
+  private callDuration: number;
+
+  /**
+   * Call timer.
+   */
+  private startCallTime: Date;
 
   /**
    * The Singleton's constructor should always be private to prevent direct
@@ -618,16 +628,16 @@ export class ARUI {
 
     panel.addControl(caller_name);
 
-    const call_time = new TextBlock();
-    call_time.text = '00:00:00';
-    call_time.fontFamily = 'Montserrat';
-    call_time.fontSize = 60;
-    call_time.color = 'white';
-    call_time.zIndex = 4;
-    call_time.top = -650;
-    call_time.verticalAlignment = Control.VERTICAL_ALIGNMENT_CENTER;
+    this.callTime = new TextBlock();
+    this.callTime.text = '00:00:00';
+    this.callTime.fontFamily = 'Montserrat';
+    this.callTime.fontSize = 60;
+    this.callTime.color = 'white';
+    this.callTime.zIndex = 4;
+    this.callTime.top = -650;
+    this.callTime.verticalAlignment = Control.VERTICAL_ALIGNMENT_CENTER;
 
-    panel.addControl(call_time);
+    panel.addControl(this.callTime);
     // END
 
     // START - endCall button
@@ -895,5 +905,33 @@ export class ARUI {
 
     // Update the message.
     this.updateDialogMessage(currentInteraction);
+  }
+
+  /**
+   * Start the call timer.
+   */
+  public startCallTimer():void {
+    this.startCallTime = new Date();
+    this.callTimerTick();
+  }
+
+  private callTimerTick():void {
+    this.callDuration = window.setInterval(() => {
+      const callCounter = (new Date()).getTime() - ARUI.getInstance().startCallTime.getTime();
+      const hour = ~~(callCounter / 3600000);
+      const minute = ~~((callCounter % 3600000) / (60000));
+      const second = ~~((callCounter  % 60000) / 1000);
+      ARUI.getInstance().setDebugText(hour + " :" + minute + " :" + second);
+      const result = ('00' + hour).slice(-2) + ':' + ('00' + minute).slice(-2) + ':' + ('00' + second).slice(-2);
+      ARUI.getInstance().callTime.text = result;
+    }, 1000);
+  }
+
+  /**
+   * Stop the call timer.
+   */
+  public stopCallTimer():void {
+    window.clearInterval(this.callDuration);
+    this.callTime.text = '00:00:00';
   }
 }

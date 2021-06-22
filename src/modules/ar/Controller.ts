@@ -455,6 +455,10 @@ export class ARController implements ITranslate {
       return;
     }
 
+    if (this.currentInteraction && this.currentInteraction.beforeNextTransition) {
+      this.currentInteraction.beforeNextTransition(this.currentInteraction);
+    }
+
     this.currentInteraction = interaction;
 
     // Execute before interaction hook.

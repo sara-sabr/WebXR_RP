@@ -1,4 +1,5 @@
 import { ARConstants } from '../../Constants';
+import { ARUI } from '../UI';
 import { UIPanel } from '../UIPanel';
 import { ARButton } from './ARButton';
 import { Interaction } from './Interaction';
@@ -439,6 +440,13 @@ export class InteractionConfigurations {
           },
         ] as ARButton[],
       },
+      beforeInteraction: function () {
+        ARUI.getInstance().setDebugText('Starting');
+        ARUI.getInstance().startCallTimer();
+      },
+      beforeNextTransition: function () {
+        ARUI.getInstance().stopCallTimer();
+      }
     };
   }
 
