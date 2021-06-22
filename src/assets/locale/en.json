@@ -48,15 +48,15 @@
     "camera.message": "Place the identification in the scanning area.",
     "call.agent": "Call Agent",
     "call.end.message": "Welcome back! You have sucessfully registered for MSCA. Can you please answer a two question survey?",
-    "survey.q1.choice.1": "1 (Hard)",
-    "survey.q1.choice.2": "2",
-    "survey.q1.choice.3": "3",
-    "survey.q1.choice.4": "4",
-    "survey.q1.choice.5": "5 (Easy)",
+    "survey.q1.select.choice.1": "1 (Hard)",
+    "survey.q1.select.choice.2": "2",
+    "survey.q1.select.choice.3": "3",
+    "survey.q1.select.choice.4": "4",
+    "survey.q1.select.choice.5": "5 (Easy)",
     "survey.q1.message": "How easy was it to use this AR experience?",
     "survey.q2.message": "Did this chatbot help you avoid calling or visiting the Government of Canada?",
-    "survey.q2.choice.yes": "Yes",
-    "survey.q2.choice.no": "No",
+    "survey.q2.select.choice.yes": "Yes",
+    "survey.q2.select.choice.no": "No",
     "thankyou.message": "Thank you for contacting Service Canada."
   }
 }
