@@ -46,13 +46,27 @@ Azure Cognitive Services were used in development to allow for the dynamic proce
 Later the Speech to Text functionality was integrated in order to allow the user to speak a question to the AR world's agent which would recognize the text. This let the application integrate with an external chatbot in order to receive an answer to the user's question and using text to speech again the AR world could verbally answer the question using the answer that was retrieved.
 
 ## Journey Map
-TODO: Blurb to explain the journey map, add it in as a figure.
+
+As a starting point the team created a Journey Map planning out how the user would interact with the application. This aided in communicating to the development team what interaction chains a user would expect when using the application. 
+
+![Figure 1: Image of Journey Map](docs/AR%20Prototype%20Journey%20Map.png)
+Figure 1: Image of Initial Journey Map
+
+Figure 1 shows the entire process for one operation end-to-end from the user's perspective. First the arrows/chevrons point in the direction that the user will experience these screens, starting from the "Place Kiosk" screen in the top left of the Journey Map until the "Request Submitted" screen in the bottom left. 
+
+The colours of the journey map blocks signify if it is a screen that users will interact with (orange) or if it just a confirmation/informational screen (blue). As well the icons in the top right of the screens themselves indicate whether or not that screen was implemented sucessfully (green checkmark), In Progress (grey clock icon) or unsuccessful implementation (red "X"). 
+If there is a red "X" you will find the reason for the unsuccessful implementation in the following "Findings" section.
+
+The Journey Map blocks also describe what the user should expect depending on which "mode" the application is. The two available modes are "Conversation mode ON" which indicates that the user is speaking using the microphone to navigate the application (the screen on the left represents the layout for this mode), or "Conversation Mode OFF" which uses the buttons presented on the screen to navigate the application (the screen on the right represents the layout for this mode).
+
+The final component of a Journey Map block is the "Technical Considerations" section, this outlines the technical considerations and if they were achieved or not. Like with the above screens these too have an icon depicting if the implementation of the technical components were successful or unsuccesful. 
+
 
 ## Findings
 
 ### WebXR
 1. WebXR is currently a Work in Progress standard, but working towards standardization. Due to this the support for WebXR in Operating Systems and mainstream browsers is limited. 
-2. Full support of the features in the prototype was only available on Android devices with ARCore and with Chrome version 89+. 
+2. Full support of the features in the prototype was only available on Android devices with ARCore and with Chrome version 87+. 
 3. Limited support of the features in the prototype were offerred to iOS users using the WebXR Viewer application released by Mozilla. As well as for development Mozilla released an extension that could be installed in Chrome and Firefox to simulate the WebXR environment. However both of these applications were limited in that they could not interact with the BabylonJS GUI elements.
  
 ### BabylonJS
