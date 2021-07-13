@@ -20,7 +20,7 @@ Table 1: Expected Services Physical vs WebXR Prototype
 ### WebXR
 WebXR was used to test out the capabilities of this technology, as well as to reduce the need to maintain multiple versions of the same application for different Mobile Operating Systems. 
 
-In order to use WebXR it required an engine to implement the standard and after some experimenting we found a list of functionalities that would be required in the engine for the prototype. Table 2 shows a breakdown of the required functionality. Please note that this table is only accurate as of the initial assessement (May 2020) and features lists may change. 
+In order to use WebXR it required an engine to implement the standard and after some experimenting we found a list of functionalities that would be required in the engine for the prototype. Table 2 shows a breakdown of the required functionality. Please note that this table is only accurate as of the initial assessement (May 2021) and features lists may change. 
 
 | Functionality | A-Frame | BabylonJS | ThreeJS |
 |---------------|---------|-----------|---------|
@@ -66,13 +66,13 @@ The final component of a Journey Map block is the "Technical Considerations" sec
 
 ### WebXR
 1. WebXR is currently a Work in Progress standard, but working towards standardization. Due to this the support for WebXR in Operating Systems and mainstream browsers is limited. 
-2. Full support of the features in the prototype was only available on Android devices with ARCore and with Chrome version 87+. 
-3. Limited support of the features in the prototype were offerred to iOS users using the WebXR Viewer application released by Mozilla. As well as for development Mozilla released an extension that could be installed in Chrome and Firefox to simulate the WebXR environment. However both of these applications were limited in that they could not interact with the BabylonJS GUI elements.
+2. Full support of the features in the prototype was only available on Android devices with ARCore and with Chrome version 87+. [WebXR Browser Compatibility (mozilla.org)][1]
+3. Limited support of the features in the prototype were offerred to iOS users using the WebXR Viewer application released by Mozilla [iOS Web Viewer (apple.com)][2]. As well as for development Mozilla released an extension that could be installed in Chrome and Firefox to simulate the WebXR environment [WebXR Emulator Extension (github.com)][3]. However both of these applications were limited in that they could not interact with the BabylonJS GUI elements.
  
 ### BabylonJS
 1. Due to Security policies in Chrome, the AudioContext is not allowed to start until user input/interaction is done with the webpage. This meant that the prototype could not speak an initial welcome message, and was remedied by manually unlocking the AudioContext engine before the welcome message was played.
-2. GUI Text Input does not function properly on a mobile. This is a currently known issue within the BabylonJS documentation, the Text Input element cannot invoke the onscreen keyboard so as a workaround it sends an alert window to get the input. This however causes the AR world to freeze as on mobile this prompt window does not get sent to the front above the AR world. 
-4. Unable to take a screenshot of the AR world including the video stream. In an attempt to satisfy the requirement in Table 1 to verify documents in order to validate a user, there was an attempt to use the internal BabylonJS tools to take a screenshot through a makeshift viewfinder. This failed as detailed in a GitHub issue where the screenshot tools could only access and take a screenshot of the AR world but not the underlying video stream.
+2. GUI Text Input does not function properly on mobile. This is a currently [known issue][4] within the BabylonJS documentation, the Text Input element cannot invoke the onscreen keyboard so as a workaround it sends an alert window to get the input. This however causes the AR world to freeze on a mobile device as the window prompt does not retain focus while in the AR world.
+4. Unable to take a [screenshot][5] of the AR world including the video stream. In an attempt to satisfy the requirement in Table 1 to verify documents in order to validate a user, there was an attempt to use the internal BabylonJS tools to take a screenshot through a makeshift viewfinder. This failed as detailed in a GitHub issue where the screenshot tools could only access and take a screenshot of the AR world but not the underlying video stream.
 
 ### Azure Cognitive Services
 1. The neural trained voices provided in the Azure Cognitive services still sound robotic and unnatural. There is no workaround for this. 
@@ -87,5 +87,9 @@ Quality of life improvements could be made to the prototype in its current state
 
 Another improvement could be the addition of a skip button, which would allow users to skip the response if they know that the response is not what they are looking for, similar to interrupting an agent in a service centre to clarify a question. This would avoid a user being stuck listening to a response that they know is irrelevant for the entirity of the text to speech response.
 
-## References
-TODO: Link the issues as references and the babylonjs documentation.
+
+[1]: https://developer.mozilla.org/en-US/docs/Web/API/WebXR_Device_API#browser_compatibility
+[2]: https://apps.apple.com/us/app/webxr-viewer/id1295998056
+[3]: https://github.com/MozillaReality/WebXR-emulator-extension
+[4]: https://github.com/sara-sabr/WebXR_RP/issues/49
+[5]: https://github.com/sara-sabr/WebXR_RP/issues/55
