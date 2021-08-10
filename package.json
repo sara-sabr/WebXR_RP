@@ -10,13 +10,13 @@
     "babylonjs-loaders": "^5.0.0-alpha.37",
     "i18next": "^19.9.2",
     "i18next-browser-languagedetector": "^6.1.2",
-    "microsoft-cognitiveservices-speech-sdk": "^1.18.0"
+    "microsoft-cognitiveservices-speech-sdk": "^1.18.1"
   },
   "devDependencies": {
     "@types/audiobuffer-to-wav": "^1.0.1",
     "@types/dom-mediacapture-record": "^1.0.10",
-    "@typescript-eslint/eslint-plugin": "^4.29.0",
-    "@typescript-eslint/parser": "^4.29.0",
+    "@typescript-eslint/eslint-plugin": "^4.29.1",
+    "@typescript-eslint/parser": "^4.29.1",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^5.2.7",
     "eslint": "^7.32.0",
