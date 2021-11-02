@@ -5,12 +5,12 @@
   "private": true,
   "dependencies": {
     "audiobuffer-to-wav": "^1.0.0",
-    "babylonjs": "^5.0.0-alpha.59",
-    "babylonjs-gui": "^5.0.0-alpha.59",
-    "babylonjs-loaders": "^5.0.0-alpha.59",
+    "babylonjs": "^5.0.0-alpha.60",
+    "babylonjs-gui": "^5.0.0-alpha.60",
+    "babylonjs-loaders": "^5.0.0-alpha.60",
     "i18next": "^19.9.2",
     "i18next-browser-languagedetector": "^6.1.2",
-    "microsoft-cognitiveservices-speech-sdk": "^1.18.1"
+    "microsoft-cognitiveservices-speech-sdk": "^1.19.0"
   },
   "devDependencies": {
     "@types/audiobuffer-to-wav": "^1.0.1",
