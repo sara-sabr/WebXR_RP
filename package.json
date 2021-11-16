@@ -5,9 +5,9 @@
   "private": true,
   "dependencies": {
     "audiobuffer-to-wav": "^1.0.0",
-    "babylonjs": "^5.0.0-alpha.60",
-    "babylonjs-gui": "^5.0.0-alpha.60",
-    "babylonjs-loaders": "^5.0.0-alpha.60",
+    "babylonjs": "^5.0.0-alpha.61",
+    "babylonjs-gui": "^5.0.0-alpha.61",
+    "babylonjs-loaders": "^5.0.0-alpha.61",
     "i18next": "^19.9.2",
     "i18next-browser-languagedetector": "^6.1.2",
     "microsoft-cognitiveservices-speech-sdk": "^1.19.0"
@@ -28,7 +28,7 @@
     "style-loader": "^2.0.0",
     "ts-loader": "^8.3.0",
     "typescript": "^4.4.4",
-    "webpack": "^5.64.0",
+    "webpack": "^5.64.1",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^3.11.3"
   },
