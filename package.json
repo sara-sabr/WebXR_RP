@@ -5,9 +5,9 @@
   "private": true,
   "dependencies": {
     "audiobuffer-to-wav": "^1.0.0",
-    "babylonjs": "^5.0.0-alpha.64",
-    "babylonjs-gui": "^5.0.0-alpha.64",
-    "babylonjs-loaders": "^5.0.0-alpha.64",
+    "babylonjs": "^5.0.0-alpha.65",
+    "babylonjs-gui": "^5.0.0-alpha.65",
+    "babylonjs-loaders": "^5.0.0-alpha.65",
     "i18next": "^19.9.2",
     "i18next-browser-languagedetector": "^6.1.2",
     "microsoft-cognitiveservices-speech-sdk": "^1.19.0"
